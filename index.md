@@ -83,7 +83,7 @@ _**Get the oily rag out, its time to get your hands dirty...**_ *[Read the guide
 ## [The Options Menu](options "Read about Options and Preferences")
 The Options Menu takes you gently through virtually every available option and preference helping you to get TV Rename to behave just the way you want.&emsp; *[Read more...](options "TV Rename's Options and Preferences")* 
 
-## [The Tools Menu](tools Read about TV Rename's Tools")
+## [The Tools Menu](tools "Read about TV Rename's Tools")
 The Tools Menu discusses some of TV Rename's other features including forcing updates and the like.&emsp; *[Read more...](tools "TV Rename's Tools")* 
 
 ## [Command Line Interface](cmd-line "Read about using the CLI")
