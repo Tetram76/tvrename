@@ -45,7 +45,7 @@ _**Organise your TV Shows with the Swiss-Army-Knife of media management tools.**
 {:class="release" style="font-size:1.2rem; font-weight:bold;"}
 Latest Release:
 
-Running on Windows XP and later it looks after all your TV show files; making them presentable for Kodi (XBMC), Mede8er, pyTivo and other media hubs.
+Running on Windows 7 and later it looks after all your TV show files; making them presentable for Kodi (XBMC), Mede8er, pyTivo and other media hubs.
 
 On the surface TV Rename will "fix" the names of tv shows...
 
