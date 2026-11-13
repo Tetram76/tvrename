@@ -16,7 +16,7 @@ Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/s
 | `tests/TVRename.Tests/` | Tests de l'application (xunit), dont la couverture est mesurée par l'analyse SonarQube Cloud. |
 | `tests/TVRename.Repository.Tests/` | Tests du dépôt : structure du `.speckit/`, table des moments d'`AGENTS.md`. |
 | `scripts/` | Outillage du dépôt (ex. `Get-SpeckitConcepts.ps1`, concepts du `.speckit/` qui régissent les fichiers modifiés d'une branche). |
-| `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release, veille mensuelle de l'amont (`upstream-watch.yml`), qui liste dans un ticket de suivi ce que l'amont a apporté depuis le dernier commit analysé. |
+| `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release, veille mensuelle de l'amont (`upstream-watch.yml`), qui tient dans un ticket de suivi les évolutions de l'amont que l'agent n'a pas encore traitées. |
 | `dotnet-tools.json` | Outils .NET locaux (`dotnet tool restore`), dont l'analyseur de SonarQube Cloud. |
 
 ## Développement local

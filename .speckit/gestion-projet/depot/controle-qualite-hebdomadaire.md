@@ -2,7 +2,7 @@
 type: Gouvernance
 title: 'Contrôle qualité hebdomadaire'
 description: 'Contrôle hebdomadaire du code global de main (SonarQube Cloud, règles de style, tests de mutation), rien de bloquant, ticket de suivi de la dette qualité par urgence (critique, prioritaire, au fil de l''eau), traitement borné à une Pull Request par semaine ; à lire quand le traitement est dû ou pour modifier le contrôle.'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T12:00:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T18:40:00Z }
 ---
 
 # Contrôle qualité hebdomadaire
@@ -49,5 +49,5 @@ Au moment que fixe [Traitement du contrôle qualité à la reprise du travail](t
 - **Au fil de l'eau** (exigence de l'utilisateur) : ces entrées ne sont jamais traitées en elles-mêmes ; l'une d'elles se corrige quand un chantier modifie de toute façon le fichier concerné, dans la Pull Request de ce chantier.
 - **Report** : un ticket ([Issues](../revue-tickets/issues.md)) porte la correction ; l'entrée reste relevée jusqu'à elle, au fil de l'eau.
 - **Rejet** : porté, avec sa raison, par le mécanisme de l'outil, pour que le contrôle suivant ne relève plus l'entrée : marquage dans SonarQube Cloud ([Analyse SonarQube Cloud](../revue-tickets/analyse-sonarqube-cloud.md), trace) ; suppression de la règle de style à l'endroit en cause, avec sa justification ; commentaire de désactivation de Stryker.NET sur le mutant (mutant équivalent), avec sa raison.
-- **Trace** : un problème de SonarQube Cloud reste prioritaire jusqu'à sa correction ou son marquage (rejet, ou report accepté avec son ticket, [Analyse SonarQube Cloud](../revue-tickets/analyse-sonarqube-cloud.md)), qui le retire des problèmes ouverts. Une entrée corrigée ou rejetée disparaît au contrôle suivant ; une entrée critique reste critique tant qu'elle l'est. L'agent ajoute à la description du ticket, après la liste, une section « Traitement du `<date>` », qui donne la conclusion du traitement : rien à faire, ou la Pull Request et les tickets qu'il a produits.
+- **Trace** : un problème de SonarQube Cloud reste prioritaire jusqu'à sa correction ou son marquage (rejet, ou report accepté avec son ticket, [Analyse SonarQube Cloud](../revue-tickets/analyse-sonarqube-cloud.md)), qui le retire des problèmes ouverts ; une entrée critique reste critique tant qu'elle l'est. Le ticket est un état, pas un historique ([Issues](../revue-tickets/issues.md#tickets-de-suivi-des-harnais)) : traitement acquis par le marquage dans SonarQube Cloud, ou par la fusion de la Pull Request qui corrige l'entrée ou porte son rejet dans le code.
   - **Alternative écartée (ticket séparé pour la dette existante)** : la référence du contrôle la porte déjà, dans son ticket de suivi.

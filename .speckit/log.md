@@ -2,7 +2,9 @@
 
 ## 2026-11-13
 
-* **Veille de l'amont** : harnais `upstream-watch.yml` mis en place ; la ligne « Dernier commit analysé » de l'analyse donne le point de départ du relevé suivant, à défaut `archive/master`, et le ticket de suivi est fermé quand il ne liste plus rien ; workflow ajouté aux autres workflows du CI ; chantier #4 barré dans le suivi de la Phase 0 (#17).
+* **Tickets de suivi des harnais** : un état, pas un historique (exigences de l'utilisateur) : description en trois parties, objectif, dates (`Dernier contrôle`, `Dernière prise en compte`) et points à corriger, sans décompte ni compte rendu ; traitement dû quand la ligne `Dernière prise en compte` manque ; point traité aussitôt retiré ; relevé des versions, traitement du contrôle qualité et veille de l'amont alignés (#17).
+
+* **Veille de l'amont** : harnais `upstream-watch.yml` mis en place ; ses points sont les évolutions de l'amont que l'agent n'a pas encore traitées, chaque exécution n'ajoutant que celles reçues depuis la précédente (la première fois, depuis `archive/master`) ; ticket fermé quand il ne liste plus rien ; workflow ajouté aux autres workflows du CI ; chantier #4 barré dans le suivi de la Phase 0 (#17).
 
 * **Plateformes** : l'application ne vise que Windows et Linux, en natif à terme, le travail actuel portant sur Windows seul (exigence de l'utilisateur, Stack cible) ; retrait du code propre aux autres plateformes ajouté aux notes de découpage de la Phase 2, support natif de Linux à celles de la Phase 4 (#15).
 
