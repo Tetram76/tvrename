@@ -75,43 +75,29 @@ jobs:
           gh api --paginate "repos/$UPSTREAM/compare/$base...$head?per_page=100" \
             --jq '.commits[] | [.sha, (.author.login // .commit.author.name), (.commit.message | split("\n")[0])] | @tsv' \
             > commits.tsv
-          cut -f 1 commits.tsv > hashes.txt
 
-          # The pull requests merged since the starting point whose merge commit is one of these commits, whatever the
-          # merge method: each one is an evolution, at the place of its merge commit, which stands for its commits.
-          : > pulls.tsv
-          : > pulled.txt
-          if [ -s commits.tsv ]; then
-            since=$(gh api "repos/$UPSTREAM/commits/$base" --jq .commit.committer.date)
-            gh api --paginate -X GET search/issues -f per_page=100 \
-              -f q="repo:$UPSTREAM is:pr is:merged base:$branch merged:>=$since" --jq '.items[].number' \
-              | sort -n > candidates.txt
-            while read -r number; do
-              pull=$(gh api "repos/$UPSTREAM/pulls/$number" --jq '[.merge_commit_sha, .user.login, .title] | @tsv')
-              merge_commit=${pull%%$'\t'*}
-              grep -qxF "$merge_commit" hashes.txt || continue
-              printf '%s\t%s\n' "$number" "$pull" >> pulls.tsv
-              gh api --paginate "repos/$UPSTREAM/pulls/$number/commits?per_page=100" --jq '.[].sha' >> pulled.txt
-            done < candidates.txt
-          fi
-
+          # An evolution is a merged pull request, whatever its merge method, or a commit outside any. GitHub keeps for
+          # each commit of the default branch the merged pull request that introduced it, rebased commits included,
+          # whose hashes differ from those of the pull request's own commits: asked once per commit, it groups them.
+          # A pull request is one point, at its first commit in the list, linked through its merge commit.
           # Upstream text goes into code spans, where GitHub neither notifies a mention nor links a reference to an
-          # issue, which would name an issue of this repository or add the issue to the timeline of an upstream one.
-          # Pull requests are linked through their merge commit, for the same reason. An evolution whose merge commit
-          # the points still listed already hold (a marker set back by hand) is not added twice.
+          # issue, which would name an issue of this repository or add the issue to the timeline of an upstream one;
+          # pull requests are not linked by their URL, for the same reason. An evolution the points still listed already
+          # hold (a marker set back by hand) is not added twice.
           code() { printf '`%s`' "${1//\`/\'}"; }
           commit() { printf '[`%s`](%s/commit/%s)' "${1:0:7}" "$url" "$1"; }
-          : > new.txt
+          : > listed.txt
           while IFS=$'\t' read -r hash author title; do
-            pull=$(awk -F '\t' -v hash="$hash" '$2 == hash' pulls.tsv)
-            if [ -z "$pull" ] && grep -qxF "$hash" pulled.txt; then
-              continue
-            fi
-            grep -qF "$hash" known.txt && continue
+            pull=$(gh api "repos/$UPSTREAM/commits/$hash/pulls" --jq "[.[] | select(.merged_at != null and \
+              .base.ref == \"$branch\")][0] // empty | [.number, .merge_commit_sha, .user.login, .title] | @tsv")
             if [ -n "$pull" ]; then
-              IFS=$'\t' read -r number _ author title <<< "$pull"
+              IFS=$'\t' read -r number hash author title <<< "$pull"
+              grep -qxF "#$number" listed.txt && continue
+              echo "#$number" >> listed.txt
+              grep -qF "$hash" known.txt && continue
               echo "- PR n° $number, $(commit "$hash") : $(code "$title") ($(code "$author"))"
             else
+              grep -qF "$hash" known.txt && continue
               echo "- $(commit "$hash") : $(code "$title") ($(code "$author"))"
             fi
           done < commits.tsv > new.txt
