@@ -1,0 +1,11 @@
+# Revue et tickets
+
+* [Règle de merge : non-régression, porte de qualité et revue Codex obligatoires](regle-de-merge-non-regression-porte-de-qualite-et-revue-codex-obligatoires.md) - Conditions de fusion d'une PR : non-régression, porte de qualité, approbation de Codex, validation fonctionnelle s'il y a lieu ; contrôles locaux avant push.
+* [Validation fonctionnelle](validation-fonctionnelle.md) - Quand un chantier est validé par l'utilisateur (comportement visible, rétro-documentation), avec quel environnement, à quel moment et comment la demander.
+* [Verrouillage des Pull Requests fusionnées](verrouillage-des-pull-requests-fusionnees.md) - Verrouillage « Resolved » des commentaires d'une PR fusionnée.
+* [Revue de code](revue-de-code.md) - Règles générales d'application des retours des agents de revue : contre-vérification, application ou rejet, robustesse à l'épreuve de l'utilisateur.
+* [Analyse SonarQube Cloud](analyse-sonarqube-cloud.md) - Traitement de l'analyse SonarQube Cloud de chaque PR : moment, problèmes, porte de qualité, marquage et son commentaire, remonté à Sonar au cas par cas, dispense, indisponibilité.
+* [Revue Codex (bloquante)](revue-codex-bloquante.md) - Revue Codex, condition du merge : ouverture de la PR, budget épuisé, statut et traitement des retours, cycle et surveillance.
+* [Issues](issues.md) - Usage des tickets GitHub : chantiers du plan, bugs et fonctionnalités hors plan, type de tout ticket (Bug, Feature, Task), tickets de suivi des harnais et leurs étiquettes (celle du harnais, `harness`) ; recherche d'un ticket existant avant toute création.
+* [Suivi par tickets](suivi-par-tickets.md) - Un ticket par chantier, correspondance ticket/PR, découpage, consolidation, clôture et verrouillage, statut dans le suivi ; contenu d'un ticket.
+* [Lien entre Pull Requests et Issues](lien-entre-pull-requests-et-issues.md) - Référencement du ticket dans la PR, mot-clé de fermeture, tickets associés.

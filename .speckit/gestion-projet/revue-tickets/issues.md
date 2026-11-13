@@ -1,0 +1,51 @@
+---
+type: Gouvernance
+title: 'Issues'
+description: 'Usage des tickets GitHub : chantiers du plan, bugs et fonctionnalités hors plan, type de tout ticket (Bug, Feature, Task), tickets de suivi des harnais et leurs étiquettes (celle du harnais, `harness`) ; recherche d''un ticket existant avant toute création.'
+tags: [socle]
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T12:00:00Z }
+---
+
+# Issues
+
+Les Issues GitHub (« tickets ») servent à :
+
+- tracer **chaque chantier** du plan d'implémentation (cf. [Suivi par tickets](suivi-par-tickets.md) ci-dessous) ;
+- tracer ponctuellement des **bugs** à corriger ou des **fonctionnalités** à implémenter dans le futur, hors plan d'implémentation ;
+- porter l'état d'un **harnais**, contrôle périodique de l'application ou du dépôt (§ Tickets de suivi des harnais).
+
+## Type d'un ticket
+
+Tout ticket reçoit, dès sa création, un **type** GitHub (*issue type*), parmi les trois du dépôt (exigence de l'utilisateur) :
+
+- **`Bug`** : un élément de l'**application** déjà réalisé se comporte ou s'affiche autrement qu'attendu, au regard du `.speckit/`, des maquettes, du reste de l'application (ex. un formulaire qui ne pose pas le focus que posent les autres) ou de ce que l'utilisateur en attend sans avoir à le demander. Le ticket décrit un constat ou une cause, sans changement d'exigence.
+  - **Le type suit le problème, pas la solution** : un défaut reste un `Bug` même si sa correction ajoute un mécanisme ou retravaille un texte.
+  - Qu'un ticket soit une demande de l'utilisateur n'en fait pas une `Feature` : seule compte la nature du travail.
+  - `Bug` est réservé à l'application : un défaut de l'outillage du dépôt (test instable, workflow, script) est une `Task`.
+- **`Feature`** : un comportement ou une capacité de l'application, visible de l'utilisateur, que le `.speckit/` ne prévoit pas encore : un changement d'exigence, que l'utilisateur décide et qui est écrit dans `fonctionnel/` avant sa réalisation ([Gouvernance documentaire](../gouvernance/gouvernance-documentaire.md#qui-décide-du-contenu)).
+- **`Task`** : tout ce qui ne change pas le comportement visible de l'application : ticket de suivi d'un harnais, toujours ; chantier technique (outillage, CI, harnais, déploiement, exploitation, sécurité, montée de version) ; travail technique interne, comme celui de la reprise des données.
+
+Un chantier fonctionnel du plan est un `Bug` ou une `Feature` selon la nature du travail à faire ; un chantier technique du plan est une `Task`. Un sous-ticket reçoit le type de son propre contenu, qui peut différer de celui de son ticket parent.
+
+## Tickets de suivi des harnais
+
+Chaque harnais tient **un** ticket de suivi, ouvert tant qu'il a quelque chose à suivre, que ne réalise aucune Pull Request et qui n'a pas de jalon ([Versions et releases](../depot/versions-et-releases.md)). Il est désigné par ses étiquettes, jamais par son titre, que l'utilisateur peut changer :
+
+| Harnais | Ce que suit son ticket | Étiquette du harnais |
+| --- | --- | --- |
+| Sécurité et mises à jour ([Mises à jour des dépendances](../depot/mises-a-jour-des-dependances.md)) | vulnérabilités connues | `security-audit` |
+| Qualité ([Contrôle qualité hebdomadaire](../depot/controle-qualite-hebdomadaire.md)) | dette qualité du code de `main` | `quality-audit` |
+| Veille de l'amont ([Reprise depuis l'amont](../depot/reprise-depuis-l-amont.md)) | évolutions de l'amont depuis le dernier point analysé | `upstream-watch` |
+
+- **Étiquette du harnais** : elle réunit **tous** les tickets d'un harnais, son ticket de suivi comme les chantiers qui le créent ou le font évoluer (exigence de l'utilisateur).
+- **Étiquette `harness`** : commune aux tickets de suivi, elle n'est portée **que** par eux (exigence de l'utilisateur), jamais par un chantier, fût-il celui d'un harnais : elle les réunit en une liste, à part des chantiers.
+- **Ticket de suivi retrouvé par ses deux étiquettes** : un harnais, comme l'agent, le retrouve par l'étiquette du harnais **et** `harness`, jamais par la première seule, qui désigne aussi ses chantiers. Qui crée un ticket de suivi, harnais ou agent, lui pose les deux.
+
+## Avant de créer un ticket
+
+**Aucun ticket n'est créé sans avoir d'abord cherché s'il en existe déjà un** sur le même sujet, ouvert ou fermé : un doublon disperse le suivi d'un même problème entre plusieurs tickets, et oblige l'utilisateur à le relever.
+
+- La recherche porte sur les tickets du dépôt, **ouverts et fermés**, par plusieurs mots-clés tirés du sujet : nom du test, du fichier ou du symbole en cause, symptôme, écran ou fonctionnalité, numéro du ticket ou de la Pull Request d'origine.
+- Un ticket **ouvert** sur le sujet est complété (commentaire : nouvelle occurrence, élément nouveau de la cause ou de la correction) et cité là où le nouveau ticket l'aurait été, au lieu d'en créer un autre.
+- Un ticket **fermé** sur le sujet est relu : un problème qui revient après sa correction est un ticket nouveau, qui le cite ; un problème écarté (*not planned*) n'est pas recréé sans élément nouveau.
+- La recherche et ce qu'elle a trouvé sont signalés à l'utilisateur avec la création, ou le complément, du ticket.
