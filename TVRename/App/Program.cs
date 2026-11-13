@@ -29,7 +29,7 @@ public static class Program
     {
         // Before the first log, which goes to the data folder.
         SeparateInstance? separateInstance = SeparateInstance();
-        if (separateInstance is not null && !SetupSeparateAppDataFolder(separateInstance))
+        if (!SetupSeparateAppDataFolder(separateInstance))
         {
             Environment.Exit(1);
         }
@@ -151,12 +151,17 @@ public static class Program
 #endif
 
     /// <summary>
-    /// Moves the data folder of the application to the one of the separate instance.
+    /// Moves the data folder of the application to the one of the separate instance, if any.
     /// </summary>
     /// <returns>false when the folder cannot be used: the application then stops, rather than writing to the default
     /// folder that a separate instance leaves untouched.</returns>
-    private static bool SetupSeparateAppDataFolder(SeparateInstance separateInstance)
+    private static bool SetupSeparateAppDataFolder(SeparateInstance? separateInstance)
     {
+        if (separateInstance is null)
+        {
+            return true;
+        }
+
         try
         {
             PathManager.SetUserDefinedAppDataPath(separateInstance.Folder);
