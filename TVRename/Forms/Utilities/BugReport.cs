@@ -163,9 +163,4 @@ public partial class BugReport : Form
     {
         Clipboard.SetDataObject(txtEmailText.Text);
     }
-
-    private void linkForum_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-        "https://groups.google.com/forum/#!forum/tvrename".OpenUrlInBrowser();
-    }
 }

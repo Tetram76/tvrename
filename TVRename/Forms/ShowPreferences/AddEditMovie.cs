@@ -390,24 +390,6 @@ public partial class AddEditMovie : Form, ICodeWindow
         return true;
     }
 
-    #region HelpWindows
-
-    private void pbBasics_Click(object sender, EventArgs e) => OpenInfoWindow("#basics");
-
-    private void pbAdvanced_Click(object sender, EventArgs e) => OpenInfoWindow("#advanced");
-
-    private void pbAliases_Click(object sender, EventArgs e) => OpenInfoWindow("#aliases");
-
-    private void pbFolders_Click(object sender, EventArgs e) => OpenInfoWindow("#folders");
-    private void pbCustomFN_Click(object sender, EventArgs e) => OpenInfoWindow("#custom-file-naming");
-
-    private static void OpenInfoWindow(string page)
-    {
-        $"https://www.tvrename.com/main/movies{page}".OpenUrlInBrowser();
-    }
-
-    #endregion HelpWindows
-
     private void SetShow(int code)
     {
         selectedShow.CustomShowName = txtCustomShowName.Text;

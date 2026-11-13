@@ -28,7 +28,7 @@ internal class UpcomingiCAL(TVDoc i) : UpcomingExporter(i)
 
         try
         {
-            Calendar calendar = new() { ProductId = "Upcoming Shows Exported by TV Rename https://www.tvrename.com" };
+            Calendar calendar = new() { ProductId = "Upcoming Shows Exported by TV Rename" };
 
             foreach (CalendarEvent? ev in episodes.Select(CreateEvent).Where(ev => ev is not null))
             {

@@ -958,9 +958,6 @@ public partial class UI : Form, IDialogParent
         return MediaConfiguration.MediaType.both;
     }
 
-    private void visitWebsiteToolStripMenuItem_Click(object sender, EventArgs eventArgs) =>
-        "http://tvrename.com".OpenUrlInBrowser();
-
     private async void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
         try
@@ -1606,54 +1603,11 @@ public partial class UI : Form, IDialogParent
     internal static string GenerateShowUiName(MovieConfiguration show) => PostpendTheIfNeeded(show.ShowName);
     internal static string GenerateShowUiName(ShowConfiguration show) => PostpendTheIfNeeded(show.ShowName);
 
-    public static string QuickStartGuide() => "https://www.tvrename.com/guides/quick-start-guide";
-
-    private void ShowTVQuickStartGuide()
-    {
-        try
-        {
-            chrInformation.SetHtmlEmbed(QuickStartGuide());
-            chrImages.SetHtmlEmbed(QuickStartGuide());
-            chrSummary.SetHtmlEmbed(QuickStartGuide());
-            chrTvTrailer.SetHtmlEmbed(QuickStartGuide());
-        }
-        catch (COMException ex)
-        {
-            //Fail gracefully - no RHS episode guide is not too big of a problem.
-            Logger.Warn(ex, "Could not update UI for the QuickStart Guide");
-        }
-        catch (Exception ex)
-        {
-            //Fail gracefully - no RHS episode guide is not too big of a problem.
-            Logger.Error(ex);
-        }
-    }
-
-    private void ShowMovieQuickStartGuide()
-    {
-        try
-        {
-            chrMovieInformation.SetHtmlEmbed(QuickStartGuide());
-            chrMovieImages.SetHtmlEmbed(QuickStartGuide());
-            chrMovieTrailer.SetHtmlEmbed(QuickStartGuide());
-        }
-        catch (COMException ex)
-        {
-            //Fail gracefully - no RHS episode guide is not too big of a problem.
-            Logger.Warn(ex, "Could not update UI for the QuickStart Guide");
-        }
-        catch (Exception ex)
-        {
-            //Fail gracefully - no RHS episode guide is not too big of a problem.
-            Logger.Error(ex);
-        }
-    }
-
     private async Task FillEpGuideHtmlAsync()
     {
         if (MyShowTree.Nodes.Count == 0)
         {
-            ShowTVQuickStartGuide();
+            ClearInfoWindows();
         }
         else
         {
@@ -1666,19 +1620,13 @@ public partial class UI : Form, IDialogParent
     {
         if (movieTree.Nodes.Count == 0)
         {
-            ShowMovieQuickStartGuide();
+            ClearMovieInfoWindows();
         }
         else
         {
             TreeNode? n = movieTree.SelectedNode;
             await FillMovieGuideHtml(TreeNodeToMovieItem(n));
         }
-    }
-
-    private void ShowQuickStartGuide()
-    {
-        ShowMovieQuickStartGuide();
-        ShowTVQuickStartGuide();
     }
 
     private static MovieConfiguration? TreeNodeToMovieItem(TreeNode? n)
@@ -2148,12 +2096,6 @@ public partial class UI : Form, IDialogParent
     {
         tmrShowUpcomingPopup.Stop();
         FocusWindow();
-    }
-
-    private void buyMeADrinkToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        BuyMeADrink bmad = new();
-        bmad.ShowDialog(this);
     }
 
     public async Task GotoEpguideForAsync(ShowConfiguration si, bool changeTab)
@@ -3633,8 +3575,6 @@ public partial class UI : Form, IDialogParent
         }
     }
 
-    private void quickstartGuideToolStripMenuItem_Click(object sender, EventArgs e) => ShowQuickStartGuide();
-
     private ProcessedSeason? CurrentlySelectedSeason()
     {
         ProcessedSeason? currentSeas = TreeNodeToSeason(MyShowTree.SelectedNode);
@@ -4467,9 +4407,6 @@ public partial class UI : Form, IDialogParent
         }
     }
 
-    private void visitSupportForumToolStripMenuItem_Click(object sender, EventArgs e)
-        => "https://groups.google.com/forum/#!forum/tvrename".OpenUrlInBrowser();
-
     private async void checkForNewVersionToolStripMenuItem_Click(object sender, EventArgs e)
     {
         ServerRelease? result = await CheckForUpdates().ConfigureAwait(false);
@@ -4648,12 +4585,6 @@ public partial class UI : Form, IDialogParent
         logToolStripMenuItem_Click(sender, e);
 
         await Beta.LogShowEpisodeSizesAsync(mDoc);
-    }
-
-    private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        LicenceInfoForm form = new();
-        form.ShowDialog(this);
     }
 
     private void QuickRenameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5411,9 +5342,6 @@ public partial class UI : Form, IDialogParent
             Logger.Error(ex);
         }
     }
-
-    private void requestANewFeatureToolStripMenuItem_Click(object sender, EventArgs e)
-        => "https://github.com/TV-Rename/tvrename/issues/new/choose".OpenUrlInBrowser();
 
     private async void yTSMoviePreviewToolStripMenuItem_Click(object sender, EventArgs e)
     {

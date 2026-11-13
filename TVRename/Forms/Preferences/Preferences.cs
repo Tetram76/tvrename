@@ -2064,34 +2064,6 @@ public partial class Preferences : Form
 
     #endregion Folder Add & Remove
 
-    #region HelpWindows
-
-    private void pbGeneral_Click(object sender, EventArgs e) => OpenInfoWindow("#the-general-tab");
-    private void pbDisplay_Click(object sender, EventArgs e) => OpenInfoWindow("#the-display-tab");
-    private void pbSources_Click(object sender, EventArgs e) => OpenInfoWindow("#data-sources");
-    private void pbLibraryFolders_Click(object sender, EventArgs e) => OpenInfoWindow("#the-library-folders-tab");
-    private void pbMovieDefaults_Click(object sender, EventArgs e) => OpenInfoWindow("#movies-defaults");
-    private void tv_show_Defaults_Click(object sender, EventArgs e) => OpenInfoWindow("#tv-show-defaults");
-    private void pbScanOptions_Click(object sender, EventArgs e) => OpenInfoWindow("#scan-settings");
-    private void pbFilesAndFolders_Click(object sender, EventArgs e) => OpenInfoWindow("#the-files-and-folders-tab");
-    private void subtitles_Click(object sender, EventArgs e) => OpenInfoWindow("#subtitles");
-    private void pbSearchFolders_Click(object sender, EventArgs e) => OpenInfoWindow("#the-search-folders-tab");
-    private void pbFolderDeleting_Click(object sender, EventArgs e) => OpenInfoWindow("#the-folder-deleting-tab");
-    private void pictureBox7_Click(object sender, EventArgs e) => OpenInfoWindow("#the-media-centers-tab");
-    private void torrents_nzb_Click(object sender, EventArgs e) => OpenInfoWindow("#torrents-nzb");
-    private void pbRSSJSONSearch_Click(object sender, EventArgs e) => OpenInfoWindow("#rss-json-search");
-    private void pbuJackett_Click(object sender, EventArgs e) => OpenInfoWindow("#jackett-search");
-    private void pbuExportEpisodes_Click(object sender, EventArgs e) => OpenInfoWindow("#episode-export");
-    private void pbuShowExport_Click(object sender, EventArgs e) => OpenInfoWindow("#library-export");
-    private void pbuUpdates_Click(object sender, EventArgs e) => OpenInfoWindow("#app-updates");
-
-    private static void OpenInfoWindow(string page)
-    {
-        $"https://www.tvrename.com/menu/preferences{page}".OpenUrlInBrowser();
-    }
-
-    #endregion HelpWindows
-
     private void button1_Click(object sender, EventArgs e)
     {
         cntfw = new CustomNameTagsFloatingWindow(sampleProcessedSeason);
