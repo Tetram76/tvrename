@@ -16,7 +16,7 @@ Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/s
 | `tests/TVRename.Tests/` | Tests de l'application (xunit), dont la couverture est mesurée par l'analyse SonarQube Cloud. |
 | `tests/TVRename.Repository.Tests/` | Tests du dépôt : structure du `.speckit/`, table des moments d'`AGENTS.md`. |
 | `scripts/` | Outillage du dépôt : `Get-SpeckitConcepts.ps1` (concepts du `.speckit/` qui régissent les fichiers modifiés d'une branche), lancement et arrêt de la validation fonctionnelle (`Start-Validation.ps1`, `Stop-Validation.ps1`). |
-| `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release, veille mensuelle de l'amont (`upstream-watch.yml`), qui tient dans un ticket de suivi les évolutions de l'amont que l'agent n'a pas encore traitées. |
+| `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release (`dotnet-desktop.yml`), veille mensuelle de l'amont (`upstream-watch.yml`), qui tient dans un ticket de suivi les évolutions de l'amont que l'agent n'a pas encore traitées. |
 | `dotnet-tools.json` | Outils .NET locaux (`dotnet tool restore`), dont l'analyseur de SonarQube Cloud. |
 
 ## Développement local
@@ -31,11 +31,9 @@ dotnet test TVRename.slnx --configuration Release
 Pour lancer l'application depuis les sources sans toucher aux réglages, aux caches ni aux journaux d'une installation existante, et à côté d'elle si elle tourne, la compiler en version de validation : tous ses fichiers vont alors dans `%TEMP%\TVRename` ([Environnement de validation fonctionnelle](.speckit/choix-implementation/environnement-de-validation-fonctionnelle.md)).
 
 ```powershell
-dotnet build TVRename/TVRename.csproj -noAutoResponse -p:ValidationBuild=true --configuration Release
+dotnet build TVRename/TVRename.csproj -p:ValidationBuild=true --configuration Release
 ./TVRename/bin/Release/net10.0-windows/TVRename.exe
 ```
-
-(`-noAutoResponse` écarte `TVRename/msbuild.rsp`, hérité du fork, que MSBuild lit à côté du projet et qui ferait de la compilation la publication de l'installeur ; `dotnet run` le lit aussi, et échoue.)
 
 ## Validation fonctionnelle
 
@@ -55,6 +53,17 @@ Pour l'arrêter et retirer tout ce qu'il a créé (sources, compilation, dossier
 
 ```powershell
 pwsh ./scripts/Stop-Validation.ps1
+```
+
+## Publication d'une version
+
+Une version est publiée quand tous les tickets de son jalon sont fermés : tag `v<version>` annoté et signé sur `main`, puis release GitHub sur ce tag ([Versions et releases](.speckit/gestion-projet/depot/versions-et-releases.md)). La publication de la release déclenche `dotnet-desktop.yml`, qui construit l'installeur, `TVRename-v<version>-Installer.exe`, et le joint à la release.
+
+Pour construire l'installeur sur le poste, avec [NSIS](https://nsis.sourceforge.io) 3 (`makensis`) :
+
+```powershell
+dotnet publish TVRename/TVRename.csproj --configuration Release -p:Version=10.0.0
+makensis /DVERSION=10.0.0 /DTAG=v10.0.0 Installer.nsi
 ```
 
 ## Contribuer

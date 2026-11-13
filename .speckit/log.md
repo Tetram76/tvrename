@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Environnement de validation fonctionnelle** : version de validation compilée sans contournement, le fichier de réponse hérité `TVRename/msbuild.rsp`, qui faisait de toute compilation une publication, étant retiré avec les profils de publication ; chantier #21 barré dans le suivi de la Phase 1 (#29).
+
 * **Documents destinés aux utilisateurs** : `README.md` et politique de confidentialité réécrits pour le fork ; chantier #20 barré dans le suivi de la Phase 1 (#27).
 
 * **Journal de l'application** : concept ajouté à `fonctionnel/` ; le journal reste local, aucun journal ni aucune donnée de diagnostic n'est envoyé à un service distant (exigence de l'utilisateur), l'envoi des erreurs à Papertrail et sa case des Préférences étant retirés (#25).

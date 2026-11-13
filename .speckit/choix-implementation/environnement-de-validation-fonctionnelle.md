@@ -9,7 +9,7 @@ applies_to:
   - 'TVRename/App/SingleInstanceService.cs'
   - 'TVRename/TVRename/PathManager.cs'
   - 'TVRename/NLog.config'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T19:00:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T21:40:00Z }
 ---
 
 # Environnement de validation fonctionnelle
@@ -26,7 +26,7 @@ Ce que l'environnement garantit à l'utilisateur est dans [Validation fonctionne
 - **Dossier des journaux transmis à NLog par son contexte global** (`GlobalDiagnosticsContext`), lu par `NLog.config` avec le dossier habituel pour valeur par défaut : le dossier n'est connu qu'au démarrage, après le chargement de la configuration, et la documentation de NLog recommande ce contexte pour une valeur simple fixée par le code.
   - **Alternative écartée (variable de configuration `${var:…}`)** : la documentation de NLog la déconseille pour une valeur fixée à l'exécution (comportement inattendu au rechargement de la configuration).
 - **Deux scripts PowerShell 7** (`scripts/Start-Validation.ps1`, `scripts/Stop-Validation.ps1`) : l'un compile et lance la version de validation d'une Pull Request (son numéro en paramètre), l'autre l'arrête et retire tout ce que le premier a créé.
-- **Les sources du seul commit validé**, extraites par `git archive` dans `%TEMP%\tvrename-validation`, puis compilées par le SDK .NET du poste, sans le fichier de réponse `TVRename/msbuild.rsp`, que MSBuild lit à côté du projet et qui ferait de la compilation la publication de l'installeur : ni les modifications en cours du clone de l'utilisateur, ni sa branche, ni ses autres fichiers n'entrent dans ce qui est validé, et son clone n'est pas modifié (seul `git fetch` y ajoute le commit de la Pull Request).
+- **Les sources du seul commit validé**, extraites par `git archive` dans `%TEMP%\tvrename-validation`, puis compilées par le SDK .NET du poste : ni les modifications en cours du clone de l'utilisateur, ni sa branche, ni ses autres fichiers n'entrent dans ce qui est validé, et son clone n'est pas modifié (seul `git fetch` y ajoute le commit de la Pull Request).
   - **Alternative écartée (`git worktree`)** : elle laisse dans le clone de l'utilisateur une entrée de worktree et une branche à nettoyer.
   - **Alternative écartée (version compilée par le CI, téléchargée)** : le CI ne publie aucune version compilée ; il faudrait l'y ajouter, avec un artefact de plusieurs centaines de mégaoctets à chaque push, et une authentification de `gh` sur le poste de l'utilisateur.
 - **Dossier de données reparti de zéro à chaque lancement** : la validation porte sur ce que la Pull Request change, pas sur ce qu'une validation précédente a laissé ; `-KeepData` le conserve d'un lancement à l'autre, pour reprendre un cas déjà préparé.

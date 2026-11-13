@@ -25,9 +25,6 @@ Var STARTMENU_FOLDER
 
 !define MUI_ABORTWARNING
 
-!define MUI_FINISHPAGE_LINK "Visit the TV Rename site for the latest news and support"
-!define MUI_FINISHPAGE_LINK_LOCATION "http://www.tvrename.com/"
-
 !define MUI_TEXT_LICENSE_TITLE "End-User License Agreement"
 !define MUI_TEXT_LICENSE_SUBTITLE "Please read the following license agreement carefully"
 !define MUI_LICENSEPAGE_TEXT_TOP "Please read the following license agreement carefully"
