@@ -1,9 +1,18 @@
 # TV & Movie Rename
+
+[![CI](https://github.com/Tetram76/tvrename/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Tetram76/tvrename/actions/workflows/ci.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tetram76_tvrename)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=coverage)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=security_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=coverage)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=coverage)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=reliability_rating)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=security_rating)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=security_rating)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=sqale_rating)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=bugs)](https://sonarcloud.io/project/issues?id=Tetram76_tvrename&types=BUG&resolved=false)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=vulnerabilities)](https://sonarcloud.io/project/issues?id=Tetram76_tvrename&types=VULNERABILITY&resolved=false)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=code_smells)](https://sonarcloud.io/project/issues?id=Tetram76_tvrename&types=CODE_SMELL&resolved=false)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=duplicated_lines_density)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=duplicated_lines_density)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=sqale_index)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=sqale_index)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=ncloc)](https://sonarcloud.io/component_measures?id=Tetram76_tvrename&metric=ncloc)
 
 
 ### Organise your TV and movie files with ease
