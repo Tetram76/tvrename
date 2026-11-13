@@ -2,7 +2,7 @@
 
 ## 2026-11-13
 
-* **Plateformes** : l'application ne vise que Windows et Linux, en natif à terme, le travail actuel portant sur Windows seul (exigence de l'utilisateur, Stack cible) ; retrait du code propre aux autres plateformes ajouté aux notes de découpage de la Phase 2, support natif de Linux à celles de la Phase 4.
+* **Plateformes** : l'application ne vise que Windows et Linux, en natif à terme, le travail actuel portant sur Windows seul (exigence de l'utilisateur, Stack cible) ; retrait du code propre aux autres plateformes ajouté aux notes de découpage de la Phase 2, support natif de Linux à celles de la Phase 4 (#15).
 
 * **Analyse de la qualité du code** : analyse SonarQube Cloud mise en place dans le job du CI, après la construction stricte et les tests, dont elle reprend la couverture ; porte de qualité non bloquante tant que l'état du code ne permet pas de la rendre bloquante, ce qui se fait dès qu'il le permet et au plus tard à la fin de la Phase 2 (exigences de l'utilisateur) ; règle de merge, traitement de l'analyse, Ruleset et notes de la Phase 2 alignés ; retours de l'analyse traités même porte non bloquante ; CodeQL retiré, SonarQube Cloud restant la seule analyse statique (décision de l'utilisateur) (#13).
 
