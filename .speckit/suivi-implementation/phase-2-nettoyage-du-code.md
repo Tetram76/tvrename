@@ -13,7 +13,7 @@ Objectif : un code hérité couvert par des tests qui fixent son comportement, e
 
 | Ticket | Chantier |
 | --- | --- |
-| #6 | Contrôle qualité hebdomadaire (`.github/workflows/quality-audit.yml`) et son ticket de suivi |
+| ~~#6~~ | Contrôle qualité hebdomadaire (`.github/workflows/quality-audit.yml`) et son ticket de suivi |
 
 **Notes pour le découpage** (la phase est découpée une fois la première analyse SonarQube Cloud de `main` disponible, chantier de la Phase 0) :
 
