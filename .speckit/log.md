@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Environnement de validation fonctionnelle** : version de validation compilée sans contournement, le fichier de réponse hérité `TVRename/msbuild.rsp`, qui faisait de toute compilation une publication, étant retiré avec les profils de publication ; chantier #21 barré dans le suivi de la Phase 1 (#29).
+
 * **Périmètre de deux chantiers de la Phase 4** précisé (décisions de l'utilisateur) : le recentrage sur les séries TV (#9) retire les films et leurs collections, et toutes les fonctionnalités, options et données qui ne concernent qu'eux ; le retrait des fonctions RSS (#12) s'étend aux fonctions NZB (intégration de SABnzbd) ; les notes de la Phase 2, le périmètre de l'analyse SonarQube Cloud et les exclusions de couverture du CI suivent (#28).
 
 * **Documents destinés aux utilisateurs** : `README.md` et politique de confidentialité réécrits pour le fork ; chantier #20 barré dans le suivi de la Phase 1 (#27).

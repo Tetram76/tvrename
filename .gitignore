@@ -2,9 +2,7 @@
 /packages
 /TVRename/obj
 /TVRename/bin
-/TVRename/publish
 /TVRename#/obj/Debug
-/TVRename/Properties/PublishProfiles/FolderProfile.pubxml.user
 /TVRename/TVRename.csproj.user
 *.DotSettings.user
 bin/
