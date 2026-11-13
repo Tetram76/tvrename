@@ -11,9 +11,6 @@ trim_trailing_whitespace = true
 [*.{md,yml}]
 indent_size = 2
 
-[*.{sln,DotSettings}]
-indent_style = tab
-
 [*.{csproj,resx,config}]
 indent_size = 2
 insert_final_newline = false

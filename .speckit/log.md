@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Fichiers hérités du fork** retirés du dépôt (configuration de Better Code Hub, réglages personnels d'IDE, configuration d'exécution de CefSharp pour `netcoreapp3.1`, template de PR de l'amont, fichiers de santé communautaire et modèles de tickets qui désignent l'amont) ; chantier #19 barré dans le suivi de la Phase 1 (#23).
+
 * **Phase 1 découpée** en trois chantiers indépendants, rattachés au jalon `v10.0.0` : fichiers hérités du fork sans usage et fichiers de santé communautaire de l'amont (#19), documents destinés aux utilisateurs, soumis à leur validation (#20), construction de l'installeur (#21) ; notes de découpage remplacées par la liste des tickets (#22).
 
 * **Environnement de validation fonctionnelle** : version d'une Pull Request compilée depuis ses seules sources en version de validation (constante `VALIDATION`), qui range tous ses fichiers dans `%TEMP%\TVRename` et tourne à côté d'un TV Rename lancé, lancée par `scripts/Start-Validation.ps1`, arrêtée par `scripts/Stop-Validation.ps1` ; `/userfilepath:` garde son usage ordinaire (décision de l'utilisateur) ; l'application livrée reste inchangée ; chantier #5 barré dans le suivi de la Phase 0 (#18).
