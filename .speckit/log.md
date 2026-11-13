@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Environnement de validation fonctionnelle** : version d'une Pull Request compilée depuis ses seules sources en version de validation (constante `VALIDATION`), qui range tous ses fichiers dans `%TEMP%\TVRename` et tourne à côté d'un TV Rename lancé, lancée par `scripts/Start-Validation.ps1`, arrêtée par `scripts/Stop-Validation.ps1` ; `/userfilepath:` garde son usage ordinaire (décision de l'utilisateur) ; l'application livrée reste inchangée ; chantier #5 barré dans le suivi de la Phase 0 (#18).
+
 * **Tickets de suivi des harnais** : un état, pas un historique (exigences de l'utilisateur) : description en trois parties, objectif, dates (`Dernier contrôle`, `Dernière prise en compte`) et points à corriger, sans décompte ni compte rendu ; traitement dû quand la ligne `Dernière prise en compte` manque ; point traité aussitôt retiré ; relevé des versions, traitement du contrôle qualité et veille de l'amont alignés (#17).
 
 * **Veille de l'amont** : harnais `upstream-watch.yml` mis en place ; ses points sont les évolutions de l'amont que l'agent n'a pas encore traitées, chaque exécution n'ajoutant que celles reçues depuis la précédente (la première fois, depuis `archive/master`) ; ticket fermé quand il ne liste plus rien ; workflow ajouté aux autres workflows du CI ; chantier #4 barré dans le suivi de la Phase 0 (#17).

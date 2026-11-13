@@ -30,6 +30,16 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <!-- Validation build, run beside the TV Rename of the machine (scripts/Start-Validation.ps1,
+       choix-implementation/environnement-de-validation-fonctionnelle.md). -->
+  <PropertyGroup Condition="'$(ValidationBuild)' == 'true'">
+    <DefineConstants>$(DefineConstants);VALIDATION</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="TVRename.Tests" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="..\README.md">
       <Pack>True</Pack>

@@ -27,6 +27,13 @@ public static class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        // Before the first log, which goes to the data folder.
+        SeparateInstance? separateInstance = SeparateInstance();
+        if (!SetupSeparateAppDataFolder(separateInstance))
+        {
+            Environment.Exit(1);
+        }
+
         Logger.Info($"TV Rename {Helpers.DisplayVersion} started with args: {string.Join(" ", args)}");
         Logger.Info($"Copyright (C) {TimeHelpers.LocalNow().Year} TV Rename");
         Logger.Info("This program comes with ABSOLUTELY NO WARRANTY; This is free software, and you are welcome to redistribute it under certain conditions");
@@ -86,16 +93,16 @@ public static class Program
         Mutex? mutex = null;
         try
         {
-            SingleInstanceService singleInstanceService = new(OnArgumentsReceived);
+            using SingleInstanceService singleInstanceService = new(separateInstance, OnArgumentsReceived);
 
             // Check if an application instance is already running
-            mutex = new Mutex(true, "TVRename", out bool newInstance);
+            mutex = new Mutex(true, singleInstanceService.MutexName, out bool newInstance);
 
             if (!singleInstanceService.IsFirstInstance() || !newInstance)
             {
                 // Already running
                 Logger.Warn("An instance is already running, exiting");
-                SingleInstanceService.SendArgumentsToExistingInstance();
+                _ = singleInstanceService.SendArgumentsToExistingInstance();
                 Environment.Exit(1);
             }
 
@@ -129,6 +136,41 @@ public static class Program
         {
             mutex?.Dispose();
             Logger.Info("Application exiting");
+        }
+    }
+
+    /// <summary>
+    /// The instance kept apart from the TV Rename of the machine: the validation build only (VALIDATION, set by
+    /// scripts/Start-Validation.ps1), so that the application users get has no such mode.
+    /// </summary>
+    private static SeparateInstance? SeparateInstance()
+#if VALIDATION
+        => new("validation", PathManager.ValidationAppDataPath);
+#else
+        => null;
+#endif
+
+    /// <summary>
+    /// Moves the data folder of the application to the one of the separate instance, if any.
+    /// </summary>
+    /// <returns>false when the folder cannot be used: the application then stops, rather than writing to the default
+    /// folder that a separate instance leaves untouched.</returns>
+    private static bool SetupSeparateAppDataFolder(SeparateInstance? separateInstance)
+    {
+        if (separateInstance is null)
+        {
+            return true;
+        }
+
+        try
+        {
+            PathManager.SetUserDefinedAppDataPath(separateInstance.Folder);
+            return true;
+        }
+        catch (Exception ex) when (ex is ArgumentException or System.IO.IOException or UnauthorizedAccessException or NotSupportedException)
+        {
+            MessageBox.Show($"Error while setting the data folder {separateInstance.Folder}:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
     }
 

@@ -2,7 +2,7 @@
 type: Plan d'implémentation
 title: 'Phase 0 — Mise en place'
 description: 'Phase 0, mise en place (sans version propre, rejoint v10.0.0) : gouvernance, analyse SonarQube Cloud, tests de l''application, veille de l''amont, environnement de validation.'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T17:49:34Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T19:00:00Z }
 ---
 
 # Phase 0 — Mise en place
@@ -15,4 +15,4 @@ generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T17:49:34Z }
 | ~~#2~~ | Analyse SonarQube Cloud de chaque Pull Request et de `main`, porte de qualité, indicateurs du `README.md` |
 | ~~#3~~ | Projet de tests de l'application (`tests/TVRename.Tests`) et mesure de sa couverture dans le CI |
 | ~~#4~~ | Veille mensuelle de l'amont (`.github/workflows/upstream-watch.yml`) et son ticket de suivi |
-| #5 | Environnement de validation fonctionnelle : version d'une Pull Request compilée et lancée sur le poste de l'utilisateur, avec un dossier de données à part |
+| ~~#5~~ | Environnement de validation fonctionnelle : version d'une Pull Request compilée et lancée sur le poste de l'utilisateur, à côté de l'installation de l'utilisateur, avec son propre dossier de données |
