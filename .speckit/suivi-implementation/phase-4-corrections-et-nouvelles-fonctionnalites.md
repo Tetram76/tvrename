@@ -1,8 +1,8 @@
 ---
 type: Plan d'implémentation
 title: 'Phase 4 — Corrections et nouvelles fonctionnalités'
-description: 'Phase 4, corrections et nouvelles fonctionnalités, après la rétro-documentation complète de l''existant ; premiers chantiers, dans l''ordre : retrait du canal de mise à jour automatique, recentrage sur les séries TV (retrait des films), retrait des fonctions RSS, distinction des séries TV et des animés, moteur de recherche web par catégorie ; notes pour son découpage.'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T17:26:31Z }
+description: 'Phase 4, corrections et nouvelles fonctionnalités, après la rétro-documentation complète de l''existant ; premiers chantiers, dans l''ordre : retrait du canal de mise à jour automatique, recentrage sur les séries TV (retrait des films et des collections), retrait des fonctions RSS et NZB, distinction des séries TV et des animés, moteur de recherche web par catégorie ; notes pour son découpage.'
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T19:00:00Z }
 ---
 
 # Phase 4 — Corrections et nouvelles fonctionnalités
@@ -14,8 +14,8 @@ Ses premiers chantiers sont décidés par l'utilisateur, et menés **dans cet or
 | Ticket | Chantier |
 | --- | --- |
 | #7 | Retrait du canal de mise à jour automatique : l'application ne recherche plus de nouvelle version (elle interroge aujourd'hui les releases de l'amont, `TV-Rename/tvrename`) |
-| #9 | Recentrage sur les séries TV : retrait de tout ce qui touche aux films |
-| #12 | Retrait des fonctions RSS |
+| #9 | Recentrage sur les séries TV : retrait des films et des collections de films, et de toutes les fonctionnalités, options et données qui ne concernent qu'eux |
+| #12 | Retrait des fonctions RSS et NZB : flux RSS (recherche d'épisodes, export des prochains épisodes) et intégration de SABnzbd (suivi de sa file de téléchargement) |
 | #10 | Distinction des séries TV et des animés, source de données de chaque catégorie comprise, à spécifier avec l'utilisateur avant sa réalisation |
 | #11 | Moteur de recherche web par défaut de chaque catégorie (séries TV, animés) |
 
