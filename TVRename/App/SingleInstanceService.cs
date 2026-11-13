@@ -6,39 +6,63 @@
 // Copyright (c) TV Rename. This code is released under GPLv3 https://github.com/TV-Rename/tvrename/blob/master/LICENSE.md
 //
 
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.AccessControl;
+using System.Security.Cryptography;
 using System.Security.Principal;
+using File = System.IO.File;
+using Path = System.IO.Path;
 
 namespace TVRename.App;
 
-internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
+/// <summary>
+/// Keeps a single instance of the application per folder of runtime data, and passes the arguments of the next
+/// instances to it.
+/// </summary>
+/// <remarks>
+/// Without a folder (no /appdatapath:), the single instance is machine-wide, with the names and the port of the
+/// existing application. With a folder, only the instances of that folder form one instance
+/// (fonctionnel/dossiers-de-donnees.md): their names carry a hash of the folder, and the first instance listens on a
+/// port the system assigns, written in the folder for the next ones.
+/// </remarks>
+/// <param name="appDataFolder">The folder of runtime data, or null for the machine-wide instance.</param>
+/// <param name="onArgumentsReceived">Receives the arguments passed by a next instance.</param>
+internal sealed class SingleInstanceService(string? appDataFolder, Action<string[]> onArgumentsReceived) : IDisposable
 {
     private const string LOCAL_HOST = "127.0.0.1";
-    private const int LOCAL_PORT = 19191;
-    private readonly Action<string[]> onArgumentsReceived = onArgumentsReceived;
+    private const int MACHINE_WIDE_PORT = 19191;
+    private const string PORT_FILE_NAME = "instance.port";
     private static readonly NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
-    // ReSharper disable once NotAccessedField.Local
+
+    private readonly string scopeSuffix = appDataFolder is null ? string.Empty : $"-{FolderHash(appDataFolder)}";
     private Semaphore? semaphore;
-    private readonly string semaphoreName = $"Global\\{Environment.MachineName}-TVRename-{Assembly.GetExecutingAssembly().GetName().Version}.SingleInstanceLimiter";
+    private TcpListener? tcpListener;
+
+    /// <summary>
+    /// Name of the mutex that the application holds while it runs.
+    /// </summary>
+    internal string MutexName => $"TVRename{scopeSuffix}";
+
+    private string SemaphoreName => $"Global\\{Environment.MachineName}-TVRename-{Assembly.GetExecutingAssembly().GetName().Version}{scopeSuffix}.SingleInstanceLimiter";
+
+    private string? PortFile => appDataFolder is null ? null : Path.Combine(appDataFolder, PORT_FILE_NAME);
 
     internal bool IsFirstInstance()
     {
         try
         {
-            if (Semaphore.TryOpenExisting(semaphoreName, out semaphore))
+            if (Semaphore.TryOpenExisting(SemaphoreName, out semaphore))
             {
                 return false;
             }
-            else
-            {
-                semaphore = CreateSemaphore();
-                Task.Run(ListenForArguments);
-                return true;
-            }
+
+            semaphore = CreateSemaphore();
+            StartListening();
+            return true;
         }
         catch (IOException ex)
         {
@@ -62,6 +86,12 @@ internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
         }
     }
 
+    public void Dispose()
+    {
+        tcpListener?.Stop();
+        semaphore?.Dispose();
+    }
+
     private Semaphore CreateSemaphore()
     {
         // 1. Create a security descriptor
@@ -80,29 +110,54 @@ internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
         return SemaphoreAcl.Create(
             initialCount: 0,
             maximumCount: 1,
-            name: semaphoreName,
-            createdNew: out bool createdNew,
+            name: SemaphoreName,
+            createdNew: out bool _,
             semaphoreSecurity: semaphoreSecurity);
     }
 
-    public static void SendArgumentsToExistingInstance() => Task.Run(SendArguments);
-
-    private void ListenForArguments()
+    /// <summary>
+    /// Listens before returning, so that the port of a folder is written before a next instance can look for it.
+    /// </summary>
+    private void StartListening()
     {
-        TcpListener tcpListener = new(IPAddress.Parse(LOCAL_HOST), LOCAL_PORT);
+        tcpListener = new TcpListener(IPAddress.Parse(LOCAL_HOST), PortFile is null ? MACHINE_WIDE_PORT : 0);
         try
         {
             tcpListener.Start();
-            while (true)
+            if (PortFile is not null)
             {
-                TcpClient client = tcpListener.AcceptTcpClient();
-                Task.Run(() => ReceivedMessage(client));
+                File.WriteAllText(PortFile, ((IPEndPoint)tcpListener.LocalEndpoint).Port.ToString(CultureInfo.InvariantCulture));
             }
         }
         catch (SocketException ex)
         {
             Log.Error(ex);
             tcpListener.Stop();
+            return;
+        }
+
+        TcpListener listener = tcpListener;
+        Task.Run(() => ListenForArguments(listener));
+    }
+
+    private void ListenForArguments(TcpListener listener)
+    {
+        try
+        {
+            while (true)
+            {
+                TcpClient client = listener.AcceptTcpClient();
+                Task.Run(() => ReceivedMessage(client));
+            }
+        }
+        catch (SocketException ex)
+        {
+            // Also the way out once the listener is stopped.
+            Log.Debug(ex);
+        }
+        catch (ObjectDisposedException ex)
+        {
+            Log.Debug(ex);
         }
     }
 
@@ -110,15 +165,18 @@ internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
     {
         try
         {
-            using NetworkStream networkStream = tcpClient.GetStream();
-            string data = string.Empty;
-            byte[] bytes = new byte[256];
-            int bytesCount;
-            while ((bytesCount = networkStream.Read(bytes, 0, bytes.Length)) != 0)
+            using (tcpClient)
             {
-                data += Encoding.UTF8.GetString(bytes, 0, bytesCount);
+                using NetworkStream networkStream = tcpClient.GetStream();
+                string data = string.Empty;
+                byte[] bytes = new byte[256];
+                int bytesCount;
+                while ((bytesCount = networkStream.Read(bytes, 0, bytes.Length)) != 0)
+                {
+                    data += Encoding.UTF8.GetString(bytes, 0, bytesCount);
+                }
+                onArgumentsReceived(data.Split(' '));
             }
-            onArgumentsReceived(data.Split(' '));
         }
         catch (Exception ex)
         {
@@ -126,11 +184,13 @@ internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
         }
     }
 
-    private static void SendArguments()
+    public Task SendArgumentsToExistingInstance() => Task.Run(SendArguments);
+
+    private void SendArguments()
     {
         try
         {
-            using TcpClient tcpClient = new(LOCAL_HOST, LOCAL_PORT);
+            using TcpClient tcpClient = new(LOCAL_HOST, ExistingInstancePort());
             using NetworkStream networkStream = tcpClient.GetStream();
             string[] commandLineArgs = Environment.GetCommandLineArgs();
             string message = commandLineArgs.Length > 1
@@ -143,5 +203,17 @@ internal class SingleInstanceService(Action<string[]> onArgumentsReceived)
         {
             Log.Error(ex);
         }
+    }
+
+    private int ExistingInstancePort()
+        => PortFile is null
+            ? MACHINE_WIDE_PORT
+            : int.Parse(File.ReadAllText(PortFile), NumberStyles.None, CultureInfo.InvariantCulture);
+
+    // The same folder, whatever its case or trailing separator, gives the same hash: Windows paths ignore case.
+    private static string FolderHash(string folder)
+    {
+        string normalised = Path.GetFullPath(folder).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToUpperInvariant();
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(normalised)))[..16];
     }
 }

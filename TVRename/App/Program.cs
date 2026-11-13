@@ -27,6 +27,12 @@ public static class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        // Before the first log, which goes to the folder of runtime data.
+        if (!SetupAppDataFolder(new CommandLineArgs(args)))
+        {
+            Environment.Exit(1);
+        }
+
         Logger.Info($"TV Rename {Helpers.DisplayVersion} started with args: {string.Join(" ", args)}");
         Logger.Info($"Copyright (C) {TimeHelpers.LocalNow().Year} TV Rename");
         Logger.Info("This program comes with ABSOLUTELY NO WARRANTY; This is free software, and you are welcome to redistribute it under certain conditions");
@@ -86,16 +92,16 @@ public static class Program
         Mutex? mutex = null;
         try
         {
-            SingleInstanceService singleInstanceService = new(OnArgumentsReceived);
+            using SingleInstanceService singleInstanceService = new(PathManager.UserDefinedAppDataPath, OnArgumentsReceived);
 
             // Check if an application instance is already running
-            mutex = new Mutex(true, "TVRename", out bool newInstance);
+            mutex = new Mutex(true, singleInstanceService.MutexName, out bool newInstance);
 
             if (!singleInstanceService.IsFirstInstance() || !newInstance)
             {
                 // Already running
                 Logger.Warn("An instance is already running, exiting");
-                SingleInstanceService.SendArgumentsToExistingInstance();
+                _ = singleInstanceService.SendArgumentsToExistingInstance();
                 Environment.Exit(1);
             }
 
@@ -129,6 +135,35 @@ public static class Program
         {
             mutex?.Dispose();
             Logger.Info("Application exiting");
+        }
+    }
+
+    /// <summary>
+    /// Moves the runtime data to the folder of /appdatapath:, if given.
+    /// </summary>
+    /// <returns>false when the folder cannot be used: the application then stops, rather than writing to the default
+    /// folder that the option is there to leave untouched.</returns>
+    private static bool SetupAppDataFolder(CommandLineArgs commandLineArgs)
+    {
+        string? appDataPath = commandLineArgs.AppDataPath;
+        if (appDataPath is null)
+        {
+            return true;
+        }
+
+        try
+        {
+            PathManager.SetUserDefinedAppDataPath(appDataPath);
+            return true;
+        }
+        catch (Exception ex) when (ex is ArgumentException or System.IO.IOException or UnauthorizedAccessException or NotSupportedException)
+        {
+            if (!commandLineArgs.Unattended && !commandLineArgs.Hide && Environment.UserInteractive)
+            {
+                MessageBox.Show($"Error while setting the folder of /appdatapath:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return false;
         }
     }
 

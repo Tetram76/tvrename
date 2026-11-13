@@ -43,9 +43,13 @@ public class CommandLineArgs(IReadOnlyCollection<string> args)
     public bool Unattended { get; } = args.Contains("/unattended", StringComparer.OrdinalIgnoreCase);
     public bool QuickUpdate { get; } = args.Contains("/quickupdate", StringComparer.OrdinalIgnoreCase);
     public bool Export { get; } = args.Contains("/export", StringComparer.OrdinalIgnoreCase);
-    public string? UserFilePath { get; } = args.Where(a => a.StartsWith("/userfilepath:", StringComparison.OrdinalIgnoreCase)).Select(a => a[(a.IndexOf(':') + 1)..]).FirstOrDefault();
+    public string? UserFilePath { get; } = OptionValue(args, "/userfilepath:");
+    public string? AppDataPath { get; } = OptionValue(args, "/appdatapath:");
 
     private MissingFolderBehavior previousMissingFolderBehavior;
+
+    private static string? OptionValue(IReadOnlyCollection<string> args, string option)
+        => args.Where(a => a.StartsWith(option, StringComparison.OrdinalIgnoreCase)).Select(a => a[option.Length..]).FirstOrDefault();
 
     private static MissingFolderBehavior DecodeMissingFolderType(IReadOnlyCollection<string> args)
     {
@@ -80,6 +84,7 @@ public class CommandLineArgs(IReadOnlyCollection<string> args)
         output.AppendLine("");
         output.AppendLine("/recover will load a dialog box that enables the user to recover a prior TVDB.xml or TVRenameSettings.xml file");
         output.AppendLine("/userfilepath:BLAH  Sets a custom folder path for the settings files.");
+        output.AppendLine("/appdatapath:BLAH  Sets a custom folder path for the logs, the browser cache and the audit files; only instances with the same folder count as one instance.");
         output.AppendLine("/createmissing will Create folders if they are missing.");
         output.AppendLine("/ignoremissing will Ignore missing folders.");
         output.AppendLine("/norenamecheck requests an existing TV Rename session to scan without renaming.");
