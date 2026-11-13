@@ -1,4 +1,4 @@
-# TV & Movie Rename
+# TV Rename
 
 [![CI](https://github.com/Tetram76/tvrename/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Tetram76/tvrename/actions/workflows/ci.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tetram76_tvrename)
@@ -40,8 +40,31 @@ and you want them named like:
 
 and more!
 
-For more details visit https://www.tvrename.com...
+## About this fork
 
-* to ask a question or get help visit the [forums](https://groups.google.com/forum/#!forum/tvrename)
-* to ask for a new feature visit the [list of potential features](https://github.com/TV-Rename/tvrename/issues/new/choose)
-* or raise a bug [here](https://github.com/TV-Rename/tvrename/issues)
+This repository is a maintained fork of [TV Rename](https://github.com/TV-Rename/tvrename), detached from the original project, which has published no stable version since 5.0.8. It keeps the application as it is (a Windows desktop application) and improves it step by step: clean-up, security and dependency updates, then fixes and new features.
+
+The fork's versions are numbered from **10.0.0** onwards, so that none of them shares a number with a version of the original project. The original project's website, forum and issue tracker do not cover this fork.
+
+## Installation
+
+TV Rename runs on 64-bit Windows.
+
+1. Download the installer, `TVRename-<version>-Installer.exe`, attached to the latest release on the [Releases](https://github.com/Tetram76/tvrename/releases) page.
+2. Run it. It replaces an existing installation of TV Rename, from this fork or from the original project, and keeps your settings and library.
+
+## Privacy
+
+TV Rename has no account, shows no advertising and sends no usage statistics, crash reports or logs. It contacts the online data sources and the few other services described in the [privacy policy](privacy-policy.md).
+
+## Help, bugs and feature requests
+
+Use the [issues](https://github.com/Tetram76/tvrename/issues) of this repository.
+
+## Development
+
+Building, testing and contributing to the project are described in [README.dev.md](README.dev.md) (in French).
+
+## Licence
+
+TV Rename is free software, released under the GNU General Public License, version 3 or later: see [Licence.rtf](Licence.rtf).
