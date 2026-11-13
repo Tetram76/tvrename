@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Veille de l'amont** : harnais `upstream-watch.yml` mis en place ; la ligne « Dernier commit analysé » de l'analyse donne le point de départ du relevé suivant, à défaut `archive/master`, et le ticket de suivi est fermé quand il ne liste plus rien ; workflow ajouté aux autres workflows du CI ; chantier #4 barré dans le suivi de la Phase 0 (#17).
+
 * **Plateformes** : l'application ne vise que Windows et Linux, en natif à terme, le travail actuel portant sur Windows seul (exigence de l'utilisateur, Stack cible) ; retrait du code propre aux autres plateformes ajouté aux notes de découpage de la Phase 2, support natif de Linux à celles de la Phase 4 (#15).
 
 * **Organisation du code** : projet des tests de l'application, `tests/TVRename.Tests`, miroir de `TVRename`, dont la couverture alimente l'analyse SonarQube Cloud ; chantier #3 barré dans le suivi de la Phase 0 (#14).
