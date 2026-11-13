@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A push to a pull request makes the run of its previous commit useless: that run is cancelled rather than left to
+# consume the quota of the GitHub API (gestion-projet/depot/integration-continue-ci.md). Each push to main has a group
+# of its own: a shared one would hold a second run pending, and cancel it when a third one arrives.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # One job, on Windows, the only platform where the application (net10.0-windows) builds and its tests run; the tests
+  # of the repository run there too, so that each push runs the tests once (choix-implementation/outillage.md).
+  build-and-test:
+    name: Build & tests
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      # On a pull request, the merge commit (refs/pull/<number>/merge) and its first parent, the head of main it merges
+      # into: their difference is the pull request as it would be merged.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+
+      # A pull request runs only the tests that its changes can fail; a push to main or a run on demand runs them all
+      # (gestion-projet/depot/integration-continue-ci.md). Safe by default: a file that no pattern leaves out is a
+      # source; a moved file counts at both paths (--no-renames). The steps that follow are skipped accordingly, which
+      # leaves the job, hence its required check, in place.
+      - name: Classify the changed files
+        id: changes
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != pull_request ]; then
+            echo "sources=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          cd "$RUNNER_TEMP"
+          git -C "$GITHUB_WORKSPACE" diff --name-only --no-renames HEAD^1 HEAD > changed.txt
+          # Documentation, and tooling that no test runs: the tests of the repository check what they read of it.
+          not_sources='^(\.speckit/|\.claude/|scripts/|\.github/|[^/]+\.md$|\.gitignore$)'
+          { grep -vE "$not_sources" changed.txt || true; grep -xF .github/workflows/ci.yml changed.txt || true; } > sources.txt
+          echo "sources=$([ -s sources.txt ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          for list in changed sources; do
+            echo "::group::$list ($(wc -l < "$list.txt"))"; cat "$list.txt"; echo "::endgroup::"
+          done
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build (Release)
+        if: steps.changes.outputs.sources == 'true'
+        run: dotnet build TVRename.slnx --configuration Release
+
+      - name: Run the tests
+        if: steps.changes.outputs.sources == 'true'
+        run: dotnet test TVRename.slnx --configuration Release --no-build
+
+      # Without a source changed, only the tests that confront the files of the repository with their rules, which
+      # reference nothing of the application: it is not built.
+      - name: Run the tests of the repository
+        if: steps.changes.outputs.sources != 'true'
+        run: dotnet test tests/TVRename.Repository.Tests --configuration Release

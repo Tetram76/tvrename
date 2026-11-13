@@ -4,6 +4,10 @@
 /TVRename/bin
 /TVRename/publish
 /TVRename#/obj/Debug
-/*.md
 /TVRename/Properties/PublishProfiles/FolderProfile.pubxml.user
 /TVRename/TVRename.csproj.user
+bin/
+obj/
+TestResults/
+/.claude/worktrees/
+/.claude/settings.local.json

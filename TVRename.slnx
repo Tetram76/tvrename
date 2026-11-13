@@ -4,6 +4,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/tests/">
+    <Project Path="tests/TVRename.Repository.Tests/TVRename.Repository.Tests.csproj" />
+  </Folder>
   <Project Path="TVRename/TVRename.csproj">
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="Release|x86" Project="x86" />
