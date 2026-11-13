@@ -36,11 +36,6 @@ public class BrowserRequestHandler : RequestHandler
             return false; // don't intercept about:blank
         }
 
-        if (url == UI.QuickStartGuide())
-        {
-            return false; // let the quick-start guide be shown
-        }
-
         if (url.Contains("://www.youtube.com/embed/"))
         {
             return false; // let embedded youtube URL be show
@@ -79,7 +74,9 @@ public class BrowserResourceRequestHandler : ResourceRequestHandler
 {
     protected override CefReturnValue OnBeforeResourceLoad(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback)
     {
-        request.SetReferrer("http://tvrename.com", ReferrerPolicy.NeverClearReferrer);
+        // Pages are loaded from data: URLs, which send no referrer, and embedded YouTube trailers do not play without
+        // one: the application names itself by its own repository, never by the original project's site.
+        request.SetReferrer("https://github.com/Tetram76/tvrename", ReferrerPolicy.NeverClearReferrer);
         return CefReturnValue.Continue; // Let the request continue normally
     }
 }

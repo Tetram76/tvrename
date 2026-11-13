@@ -112,9 +112,7 @@ namespace TVRename.Forms
             label6 = new Label();
             chkShowInTaskbar = new CheckBox();
             cbNotificationIcon = new CheckBox();
-            pbDisplay = new PictureBox();
             tpRSSJSONSearch = new TabPage();
-            pbRSSJSONSearch = new PictureBox();
             label59 = new Label();
             cbSearchJSON = new CheckBox();
             cbSearchRSS = new CheckBox();
@@ -167,9 +165,7 @@ namespace TVRename.Forms
             bnOpenMonFolder = new Button();
             bnAddMonFolder = new Button();
             bnRemoveMonFolder = new Button();
-            pbLibraryFolders = new PictureBox();
             tpTorrentNZB = new TabPage();
-            pbuTorrentNZB = new PictureBox();
             label58 = new Label();
             cbCheckqBitTorrent = new CheckBox();
             cbCheckSABnzbd = new CheckBox();
@@ -223,7 +219,6 @@ namespace TVRename.Forms
             bnOpenSearchFolder = new Button();
             bnRemoveSearchFolder = new Button();
             bnAddSearchFolder = new Button();
-            pbSearchFolders = new PictureBox();
             label23 = new Label();
             tbMediaCenter = new TabPage();
             groupBox16 = new GroupBox();
@@ -252,7 +247,6 @@ namespace TVRename.Forms
             rbFolderSeasonPoster = new RadioButton();
             label64 = new Label();
             bnMCPresets = new Button();
-            pbMediaCenter = new PictureBox();
             tbFolderDeleting = new TabPage();
             cbDeleteMovieFromDisk = new CheckBox();
             groupBox28 = new GroupBox();
@@ -270,9 +264,7 @@ namespace TVRename.Forms
             cbEmptyIgnoreWords = new CheckBox();
             cbEmptyIgnoreExtensions = new CheckBox();
             cbDeleteEmpty = new CheckBox();
-            pbFolderDeleting = new PictureBox();
             tbAutoExport = new TabPage();
-            pbuExportEpisodes = new PictureBox();
             label88 = new Label();
             groupBox10 = new GroupBox();
             bnBrowseWPL = new Button();
@@ -334,11 +326,9 @@ namespace TVRename.Forms
             cbKeepTogether = new CheckBox();
             cbForceLower = new CheckBox();
             cbIgnoreSamples = new CheckBox();
-            pbFilesAndFolders = new PictureBox();
             tbGeneral = new TabPage();
             chkAutoAddAsPartOfQuickRename = new CheckBox();
             label60 = new Label();
-            pbGeneral = new PictureBox();
             txtWTWDays = new TextBox();
             cbMode = new ComboBox();
             label34 = new Label();
@@ -376,7 +366,6 @@ namespace TVRename.Forms
             label10 = new Label();
             cbTVDBLanguages = new ComboBox();
             label33 = new Label();
-            pbSources = new PictureBox();
             tpMovieDefaults = new TabPage();
             label86 = new Label();
             groupBox24 = new GroupBox();
@@ -390,7 +379,6 @@ namespace TVRename.Forms
             cbDefMovieIncludeFuture = new CheckBox();
             cbDefMovieDoMissing = new CheckBox();
             cbDefMovieDoRenaming = new CheckBox();
-            pbMovieDefaults = new PictureBox();
             tpShowDefaults = new TabPage();
             label18 = new Label();
             groupBox19 = new GroupBox();
@@ -416,7 +404,6 @@ namespace TVRename.Forms
             cbDefShowIncludeFuture = new CheckBox();
             cbDefShowDoRenaming = new CheckBox();
             cbDefShowNextAirdate = new CheckBox();
-            pictureBox1 = new PictureBox();
             tpScanSettings = new TabPage();
             chkGroupMissingEpisodesIntoSeasons = new CheckBox();
             groupBox17 = new GroupBox();
@@ -440,14 +427,12 @@ namespace TVRename.Forms
             gbBulkAdd = new GroupBox();
             label36 = new Label();
             label62 = new Label();
-            pbScanOptions = new PictureBox();
             tpSubtitles = new TabPage();
             groupBox29 = new GroupBox();
             label94 = new Label();
             txtSubtitleFolderNames = new TextBox();
             cbCopySubsFolders = new CheckBox();
             label93 = new Label();
-            pictureBox2 = new PictureBox();
             groupBox9 = new GroupBox();
             cbTxtToSub = new CheckBox();
             label46 = new Label();
@@ -464,7 +449,6 @@ namespace TVRename.Forms
             cmbUnattendedDuplicateAction = new ComboBox();
             label76 = new Label();
             cbDetailedRSSJSONLogging = new CheckBox();
-            pbuJackett = new PictureBox();
             label70 = new Label();
             cbSearchJackett = new CheckBox();
             groupBox22 = new GroupBox();
@@ -485,7 +469,6 @@ namespace TVRename.Forms
             tbPreferredRSSTerms = new TextBox();
             tpAutoExportLibrary = new TabPage();
             chkRestrictMissingExportsToFullScans = new CheckBox();
-            pbuShowExport = new PictureBox();
             label89 = new Label();
             groupBox26 = new GroupBox();
             bnBrowseMoviesHTML = new Button();
@@ -516,7 +499,6 @@ namespace TVRename.Forms
             cbMissingCSV = new CheckBox();
             txtMissingXML = new TextBox();
             tbAppUpdate = new TabPage();
-            pbuUpdates = new PictureBox();
             chkUpdateCheckEnabled = new CheckBox();
             label92 = new Label();
             grpUpdateIntervalOption = new GroupBox();
@@ -528,24 +510,19 @@ namespace TVRename.Forms
             cmDefaults.SuspendLayout();
             tpDisplay.SuspendLayout();
             groupBox11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbDisplay).BeginInit();
             tpRSSJSONSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbRSSJSONSearch).BeginInit();
             gbJSON.SuspendLayout();
             gbRSS.SuspendLayout();
             tpLibraryFolders.SuspendLayout();
             groupBox23.SuspendLayout();
             groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbLibraryFolders).BeginInit();
             tpTorrentNZB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuTorrentNZB).BeginInit();
             qBitTorrent.SuspendLayout();
             gbSAB.SuspendLayout();
             gbuTorrent.SuspendLayout();
             tbSearchFolders.SuspendLayout();
             groupBox8.SuspendLayout();
             gbAutoAdd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbSearchFolders).BeginInit();
             tbMediaCenter.SuspendLayout();
             groupBox16.SuspendLayout();
             groupBox13.SuspendLayout();
@@ -553,20 +530,15 @@ namespace TVRename.Forms
             groupBox15.SuspendLayout();
             groupBox12.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbMediaCenter).BeginInit();
             tbFolderDeleting.SuspendLayout();
             groupBox28.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFolderDeleting).BeginInit();
             tbAutoExport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuExportEpisodes).BeginInit();
             groupBox10.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
             tbFilesAndFolders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFilesAndFolders).BeginInit();
             tbGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbGeneral).BeginInit();
             tcTabs.SuspendLayout();
             tpDataSources.SuspendLayout();
             panel4.SuspendLayout();
@@ -574,35 +546,27 @@ namespace TVRename.Forms
             panel2.SuspendLayout();
             gbTMDB.SuspendLayout();
             groupBox20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbSources).BeginInit();
             tpMovieDefaults.SuspendLayout();
             groupBox24.SuspendLayout();
             groupBox25.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbMovieDefaults).BeginInit();
             tpShowDefaults.SuspendLayout();
             groupBox19.SuspendLayout();
             groupBox18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tpScanSettings.SuspendLayout();
             groupBox17.SuspendLayout();
             groupBox1.SuspendLayout();
             gbBulkAdd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbScanOptions).BeginInit();
             tpSubtitles.SuspendLayout();
             groupBox29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             groupBox9.SuspendLayout();
             tpJackett.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuJackett).BeginInit();
             groupBox22.SuspendLayout();
             tpAutoExportLibrary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuShowExport).BeginInit();
             groupBox26.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox27.SuspendLayout();
             groupBox3.SuspendLayout();
             tbAppUpdate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuUpdates).BeginInit();
             grpUpdateIntervalOption.SuspendLayout();
             SuspendLayout();
             // 
@@ -1070,7 +1034,6 @@ namespace TVRename.Forms
             tpDisplay.Controls.Add(label6);
             tpDisplay.Controls.Add(chkShowInTaskbar);
             tpDisplay.Controls.Add(cbNotificationIcon);
-            tpDisplay.Controls.Add(pbDisplay);
             tpDisplay.Location = new Point(149, 4);
             tpDisplay.Margin = new Padding(4, 3, 4, 3);
             tpDisplay.Name = "tpDisplay";
@@ -1414,24 +1377,8 @@ namespace TVRename.Forms
             cbNotificationIcon.UseVisualStyleBackColor = true;
             cbNotificationIcon.CheckedChanged += EnableDisable;
             // 
-            // pbDisplay
-            // 
-            pbDisplay.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbDisplay.Cursor = Cursors.Hand;
-            pbDisplay.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbDisplay.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbDisplay.Location = new Point(428, 7);
-            pbDisplay.Margin = new Padding(4, 3, 4, 3);
-            pbDisplay.Name = "pbDisplay";
-            pbDisplay.Size = new Size(50, 46);
-            pbDisplay.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbDisplay.TabIndex = 39;
-            pbDisplay.TabStop = false;
-            pbDisplay.Click += pbDisplay_Click;
-            // 
             // tpRSSJSONSearch
             // 
-            tpRSSJSONSearch.Controls.Add(pbRSSJSONSearch);
             tpRSSJSONSearch.Controls.Add(label59);
             tpRSSJSONSearch.Controls.Add(cbSearchJSON);
             tpRSSJSONSearch.Controls.Add(cbSearchRSS);
@@ -1445,21 +1392,6 @@ namespace TVRename.Forms
             tpRSSJSONSearch.TabIndex = 12;
             tpRSSJSONSearch.Text = "RSS/JSON Search";
             tpRSSJSONSearch.UseVisualStyleBackColor = true;
-            // 
-            // pbRSSJSONSearch
-            // 
-            pbRSSJSONSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbRSSJSONSearch.Cursor = Cursors.Hand;
-            pbRSSJSONSearch.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbRSSJSONSearch.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbRSSJSONSearch.Location = new Point(418, 7);
-            pbRSSJSONSearch.Margin = new Padding(4, 3, 4, 3);
-            pbRSSJSONSearch.Name = "pbRSSJSONSearch";
-            pbRSSJSONSearch.Size = new Size(50, 46);
-            pbRSSJSONSearch.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbRSSJSONSearch.TabIndex = 38;
-            pbRSSJSONSearch.TabStop = false;
-            pbRSSJSONSearch.Click += pbRSSJSONSearch_Click;
             // 
             // label59
             // 
@@ -1776,7 +1708,6 @@ namespace TVRename.Forms
             tpLibraryFolders.Controls.Add(bnOpenMonFolder);
             tpLibraryFolders.Controls.Add(bnAddMonFolder);
             tpLibraryFolders.Controls.Add(bnRemoveMonFolder);
-            tpLibraryFolders.Controls.Add(pbLibraryFolders);
             tpLibraryFolders.Controls.Add(lstFMMonitorFolders);
             tpLibraryFolders.Location = new Point(149, 4);
             tpLibraryFolders.Margin = new Padding(4, 3, 4, 3);
@@ -2076,24 +2007,8 @@ namespace TVRename.Forms
             bnRemoveMonFolder.UseVisualStyleBackColor = true;
             bnRemoveMonFolder.Click += bnRemoveMonFolder_Click;
             // 
-            // pbLibraryFolders
-            // 
-            pbLibraryFolders.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbLibraryFolders.Cursor = Cursors.Hand;
-            pbLibraryFolders.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbLibraryFolders.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbLibraryFolders.Location = new Point(428, 7);
-            pbLibraryFolders.Margin = new Padding(4, 3, 4, 3);
-            pbLibraryFolders.Name = "pbLibraryFolders";
-            pbLibraryFolders.Size = new Size(50, 46);
-            pbLibraryFolders.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbLibraryFolders.TabIndex = 43;
-            pbLibraryFolders.TabStop = false;
-            pbLibraryFolders.Click += pbLibraryFolders_Click;
-            // 
             // tpTorrentNZB
             // 
-            tpTorrentNZB.Controls.Add(pbuTorrentNZB);
             tpTorrentNZB.Controls.Add(label58);
             tpTorrentNZB.Controls.Add(cbCheckqBitTorrent);
             tpTorrentNZB.Controls.Add(cbCheckSABnzbd);
@@ -2109,21 +2024,6 @@ namespace TVRename.Forms
             tpTorrentNZB.TabIndex = 4;
             tpTorrentNZB.Text = "Torrents / NZB";
             tpTorrentNZB.UseVisualStyleBackColor = true;
-            // 
-            // pbuTorrentNZB
-            // 
-            pbuTorrentNZB.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbuTorrentNZB.Cursor = Cursors.Hand;
-            pbuTorrentNZB.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuTorrentNZB.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuTorrentNZB.Location = new Point(418, 7);
-            pbuTorrentNZB.Margin = new Padding(4, 3, 4, 3);
-            pbuTorrentNZB.Name = "pbuTorrentNZB";
-            pbuTorrentNZB.Size = new Size(50, 46);
-            pbuTorrentNZB.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbuTorrentNZB.TabIndex = 21;
-            pbuTorrentNZB.TabStop = false;
-            pbuTorrentNZB.Click += torrents_nzb_Click;
             // 
             // label58
             // 
@@ -2490,7 +2390,6 @@ namespace TVRename.Forms
             tbSearchFolders.Controls.Add(bnOpenSearchFolder);
             tbSearchFolders.Controls.Add(bnRemoveSearchFolder);
             tbSearchFolders.Controls.Add(bnAddSearchFolder);
-            tbSearchFolders.Controls.Add(pbSearchFolders);
             tbSearchFolders.Controls.Add(lbSearchFolders);
             tbSearchFolders.Controls.Add(label23);
             tbSearchFolders.Location = new Point(149, 4);
@@ -2760,21 +2659,6 @@ namespace TVRename.Forms
             bnAddSearchFolder.UseVisualStyleBackColor = true;
             bnAddSearchFolder.Click += bnAddSearchFolder_Click;
             // 
-            // pbSearchFolders
-            // 
-            pbSearchFolders.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbSearchFolders.Cursor = Cursors.Hand;
-            pbSearchFolders.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbSearchFolders.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbSearchFolders.Location = new Point(418, 7);
-            pbSearchFolders.Margin = new Padding(4, 3, 4, 3);
-            pbSearchFolders.Name = "pbSearchFolders";
-            pbSearchFolders.Size = new Size(50, 46);
-            pbSearchFolders.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbSearchFolders.TabIndex = 37;
-            pbSearchFolders.TabStop = false;
-            pbSearchFolders.Click += pbSearchFolders_Click;
-            // 
             // label23
             // 
             label23.AutoSize = true;
@@ -2794,7 +2678,6 @@ namespace TVRename.Forms
             tbMediaCenter.Controls.Add(groupBox12);
             tbMediaCenter.Controls.Add(label64);
             tbMediaCenter.Controls.Add(bnMCPresets);
-            tbMediaCenter.Controls.Add(pbMediaCenter);
             tbMediaCenter.Location = new Point(149, 4);
             tbMediaCenter.Margin = new Padding(4, 3, 4, 3);
             tbMediaCenter.Name = "tbMediaCenter";
@@ -3116,21 +2999,6 @@ namespace TVRename.Forms
             bnMCPresets.UseVisualStyleBackColor = true;
             bnMCPresets.Click += bnMCPresets_Click;
             // 
-            // pbMediaCenter
-            // 
-            pbMediaCenter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbMediaCenter.Cursor = Cursors.Hand;
-            pbMediaCenter.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbMediaCenter.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbMediaCenter.Location = new Point(418, 7);
-            pbMediaCenter.Margin = new Padding(4, 3, 4, 3);
-            pbMediaCenter.Name = "pbMediaCenter";
-            pbMediaCenter.Size = new Size(50, 46);
-            pbMediaCenter.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbMediaCenter.TabIndex = 27;
-            pbMediaCenter.TabStop = false;
-            pbMediaCenter.Click += pictureBox7_Click;
-            // 
             // tbFolderDeleting
             // 
             tbFolderDeleting.Controls.Add(cbDeleteMovieFromDisk);
@@ -3148,7 +3016,6 @@ namespace TVRename.Forms
             tbFolderDeleting.Controls.Add(cbEmptyIgnoreWords);
             tbFolderDeleting.Controls.Add(cbEmptyIgnoreExtensions);
             tbFolderDeleting.Controls.Add(cbDeleteEmpty);
-            tbFolderDeleting.Controls.Add(pbFolderDeleting);
             tbFolderDeleting.Location = new Point(149, 4);
             tbFolderDeleting.Margin = new Padding(4, 3, 4, 3);
             tbFolderDeleting.Name = "tbFolderDeleting";
@@ -3329,24 +3196,8 @@ namespace TVRename.Forms
             cbDeleteEmpty.Text = "&Delete empty folders after moving files (from Search Folders)";
             cbDeleteEmpty.UseVisualStyleBackColor = true;
             // 
-            // pbFolderDeleting
-            // 
-            pbFolderDeleting.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbFolderDeleting.Cursor = Cursors.Hand;
-            pbFolderDeleting.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbFolderDeleting.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbFolderDeleting.Location = new Point(418, 7);
-            pbFolderDeleting.Margin = new Padding(4, 3, 4, 3);
-            pbFolderDeleting.Name = "pbFolderDeleting";
-            pbFolderDeleting.Size = new Size(50, 46);
-            pbFolderDeleting.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbFolderDeleting.TabIndex = 24;
-            pbFolderDeleting.TabStop = false;
-            pbFolderDeleting.Click += pbFolderDeleting_Click;
-            // 
             // tbAutoExport
             // 
-            tbAutoExport.Controls.Add(pbuExportEpisodes);
             tbAutoExport.Controls.Add(label88);
             tbAutoExport.Controls.Add(groupBox10);
             tbAutoExport.Controls.Add(groupBox5);
@@ -3360,21 +3211,6 @@ namespace TVRename.Forms
             tbAutoExport.TabIndex = 2;
             tbAutoExport.Text = "Episode Export";
             tbAutoExport.UseVisualStyleBackColor = true;
-            // 
-            // pbuExportEpisodes
-            // 
-            pbuExportEpisodes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbuExportEpisodes.Cursor = Cursors.Hand;
-            pbuExportEpisodes.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuExportEpisodes.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuExportEpisodes.Location = new Point(416, 9);
-            pbuExportEpisodes.Margin = new Padding(4, 3, 4, 3);
-            pbuExportEpisodes.Name = "pbuExportEpisodes";
-            pbuExportEpisodes.Size = new Size(50, 46);
-            pbuExportEpisodes.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbuExportEpisodes.TabIndex = 44;
-            pbuExportEpisodes.TabStop = false;
-            pbuExportEpisodes.Click += pbuExportEpisodes_Click;
             // 
             // label88
             // 
@@ -3893,7 +3729,6 @@ namespace TVRename.Forms
             tbFilesAndFolders.Controls.Add(cbKeepTogether);
             tbFilesAndFolders.Controls.Add(cbForceLower);
             tbFilesAndFolders.Controls.Add(cbIgnoreSamples);
-            tbFilesAndFolders.Controls.Add(pbFilesAndFolders);
             tbFilesAndFolders.Location = new Point(149, 4);
             tbFilesAndFolders.Margin = new Padding(4, 3, 4, 3);
             tbFilesAndFolders.Name = "tbFilesAndFolders";
@@ -4114,27 +3949,11 @@ namespace TVRename.Forms
             cbIgnoreSamples.Text = "&Ignore \"sample\" videos, up to";
             cbIgnoreSamples.UseVisualStyleBackColor = true;
             // 
-            // pbFilesAndFolders
-            // 
-            pbFilesAndFolders.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbFilesAndFolders.Cursor = Cursors.Hand;
-            pbFilesAndFolders.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbFilesAndFolders.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbFilesAndFolders.Location = new Point(418, 7);
-            pbFilesAndFolders.Margin = new Padding(4, 3, 4, 3);
-            pbFilesAndFolders.Name = "pbFilesAndFolders";
-            pbFilesAndFolders.Size = new Size(50, 46);
-            pbFilesAndFolders.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbFilesAndFolders.TabIndex = 33;
-            pbFilesAndFolders.TabStop = false;
-            pbFilesAndFolders.Click += pbFilesAndFolders_Click;
-            // 
             // tbGeneral
             // 
             tbGeneral.Controls.Add(cbAutoSaveOnExit);
             tbGeneral.Controls.Add(chkAutoAddAsPartOfQuickRename);
             tbGeneral.Controls.Add(label60);
-            tbGeneral.Controls.Add(pbGeneral);
             tbGeneral.Controls.Add(txtWTWDays);
             tbGeneral.Controls.Add(cbMode);
             tbGeneral.Controls.Add(label34);
@@ -4169,21 +3988,6 @@ namespace TVRename.Forms
             label60.Size = new Size(323, 30);
             label60.TabIndex = 38;
             label60.Text = "General settings to control TV Rename's scan and download\r\nbehaviour";
-            // 
-            // pbGeneral
-            // 
-            pbGeneral.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbGeneral.Cursor = Cursors.Hand;
-            pbGeneral.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbGeneral.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbGeneral.Location = new Point(418, 7);
-            pbGeneral.Margin = new Padding(4, 3, 4, 3);
-            pbGeneral.Name = "pbGeneral";
-            pbGeneral.Size = new Size(50, 46);
-            pbGeneral.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbGeneral.TabIndex = 23;
-            pbGeneral.TabStop = false;
-            pbGeneral.Click += pbGeneral_Click;
             // 
             // txtWTWDays
             // 
@@ -4279,7 +4083,6 @@ namespace TVRename.Forms
             tpDataSources.Controls.Add(groupBox21);
             tpDataSources.Controls.Add(groupBox20);
             tpDataSources.Controls.Add(label33);
-            tpDataSources.Controls.Add(pbSources);
             tpDataSources.Location = new Point(149, 4);
             tpDataSources.Margin = new Padding(4, 3, 4, 3);
             tpDataSources.Name = "tpDataSources";
@@ -4640,27 +4443,11 @@ namespace TVRename.Forms
             label33.Text = "Default TV Show Source:";
             label33.TextAlign = ContentAlignment.TopRight;
             // 
-            // pbSources
-            // 
-            pbSources.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbSources.Cursor = Cursors.Hand;
-            pbSources.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbSources.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbSources.Location = new Point(431, 3);
-            pbSources.Margin = new Padding(4, 3, 4, 3);
-            pbSources.Name = "pbSources";
-            pbSources.Size = new Size(50, 46);
-            pbSources.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbSources.TabIndex = 56;
-            pbSources.TabStop = false;
-            pbSources.Click += pbSources_Click;
-            // 
             // tpMovieDefaults
             // 
             tpMovieDefaults.Controls.Add(label86);
             tpMovieDefaults.Controls.Add(groupBox24);
             tpMovieDefaults.Controls.Add(groupBox25);
-            tpMovieDefaults.Controls.Add(pbMovieDefaults);
             tpMovieDefaults.Location = new Point(149, 4);
             tpMovieDefaults.Margin = new Padding(4, 3, 4, 3);
             tpMovieDefaults.Name = "tpMovieDefaults";
@@ -4810,27 +4597,11 @@ namespace TVRename.Forms
             cbDefMovieDoRenaming.Text = "Do &renaming";
             cbDefMovieDoRenaming.UseVisualStyleBackColor = true;
             // 
-            // pbMovieDefaults
-            // 
-            pbMovieDefaults.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbMovieDefaults.Cursor = Cursors.Hand;
-            pbMovieDefaults.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbMovieDefaults.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbMovieDefaults.Location = new Point(428, 12);
-            pbMovieDefaults.Margin = new Padding(4, 3, 4, 3);
-            pbMovieDefaults.Name = "pbMovieDefaults";
-            pbMovieDefaults.Size = new Size(50, 46);
-            pbMovieDefaults.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbMovieDefaults.TabIndex = 62;
-            pbMovieDefaults.TabStop = false;
-            pbMovieDefaults.Click += pbMovieDefaults_Click;
-            // 
             // tpShowDefaults
             // 
             tpShowDefaults.Controls.Add(label18);
             tpShowDefaults.Controls.Add(groupBox19);
             tpShowDefaults.Controls.Add(groupBox18);
-            tpShowDefaults.Controls.Add(pictureBox1);
             tpShowDefaults.Location = new Point(149, 4);
             tpShowDefaults.Margin = new Padding(4, 3, 4, 3);
             tpShowDefaults.Name = "tpShowDefaults";
@@ -5130,21 +4901,6 @@ namespace TVRename.Forms
             cbDefShowNextAirdate.Text = "Show &next airdate in 'Schedule'";
             cbDefShowNextAirdate.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pictureBox1.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pictureBox1.Location = new Point(428, 7);
-            pictureBox1.Margin = new Padding(4, 3, 4, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 46);
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 58;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += tv_show_Defaults_Click;
-            // 
             // tpScanSettings
             // 
             tpScanSettings.Controls.Add(chkGroupMissingEpisodesIntoSeasons);
@@ -5153,7 +4909,6 @@ namespace TVRename.Forms
             tpScanSettings.Controls.Add(cbScanIncludesBulkAdd);
             tpScanSettings.Controls.Add(gbBulkAdd);
             tpScanSettings.Controls.Add(label62);
-            tpScanSettings.Controls.Add(pbScanOptions);
             tpScanSettings.Location = new Point(149, 4);
             tpScanSettings.Margin = new Padding(4, 3, 4, 3);
             tpScanSettings.Name = "tpScanSettings";
@@ -5443,26 +5198,10 @@ namespace TVRename.Forms
             label62.TabIndex = 40;
             label62.Text = "General settings to control TV Rename's scan and download\r\nbehaviour";
             // 
-            // pbScanOptions
-            // 
-            pbScanOptions.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbScanOptions.Cursor = Cursors.Hand;
-            pbScanOptions.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbScanOptions.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbScanOptions.Location = new Point(428, 3);
-            pbScanOptions.Margin = new Padding(4, 3, 4, 3);
-            pbScanOptions.Name = "pbScanOptions";
-            pbScanOptions.Size = new Size(50, 46);
-            pbScanOptions.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbScanOptions.TabIndex = 39;
-            pbScanOptions.TabStop = false;
-            pbScanOptions.Click += pbScanOptions_Click;
-            // 
             // tpSubtitles
             // 
             tpSubtitles.Controls.Add(groupBox29);
             tpSubtitles.Controls.Add(label93);
-            tpSubtitles.Controls.Add(pictureBox2);
             tpSubtitles.Controls.Add(groupBox9);
             tpSubtitles.Location = new Point(149, 4);
             tpSubtitles.Margin = new Padding(4, 3, 4, 3);
@@ -5528,21 +5267,6 @@ namespace TVRename.Forms
             label93.Size = new Size(322, 30);
             label93.TabIndex = 43;
             label93.Text = "These preferences control how TV Rename finds and retains\r\nsubtitles and subtitle files.";
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pictureBox2.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pictureBox2.Location = new Point(414, 2);
-            pictureBox2.Margin = new Padding(4, 3, 4, 3);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(50, 46);
-            pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox2.TabIndex = 42;
-            pictureBox2.TabStop = false;
-            pictureBox2.Click += subtitles_Click;
             // 
             // groupBox9
             // 
@@ -5613,7 +5337,6 @@ namespace TVRename.Forms
             tpJackett.Controls.Add(cmbUnattendedDuplicateAction);
             tpJackett.Controls.Add(label76);
             tpJackett.Controls.Add(cbDetailedRSSJSONLogging);
-            tpJackett.Controls.Add(pbuJackett);
             tpJackett.Controls.Add(label70);
             tpJackett.Controls.Add(cbSearchJackett);
             tpJackett.Controls.Add(groupBox22);
@@ -5734,21 +5457,6 @@ namespace TVRename.Forms
             cbDetailedRSSJSONLogging.TabIndex = 43;
             cbDetailedRSSJSONLogging.Text = "Detailed logging (useful when setting up RSS/JSON Feeds)";
             cbDetailedRSSJSONLogging.UseVisualStyleBackColor = false;
-            // 
-            // pbuJackett
-            // 
-            pbuJackett.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbuJackett.Cursor = Cursors.Hand;
-            pbuJackett.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuJackett.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuJackett.Location = new Point(418, 14);
-            pbuJackett.Margin = new Padding(4, 3, 4, 3);
-            pbuJackett.Name = "pbuJackett";
-            pbuJackett.Size = new Size(50, 46);
-            pbuJackett.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbuJackett.TabIndex = 42;
-            pbuJackett.TabStop = false;
-            pbuJackett.Click += pbuJackett_Click;
             // 
             // label70
             // 
@@ -5952,7 +5660,6 @@ namespace TVRename.Forms
             // tpAutoExportLibrary
             // 
             tpAutoExportLibrary.Controls.Add(chkRestrictMissingExportsToFullScans);
-            tpAutoExportLibrary.Controls.Add(pbuShowExport);
             tpAutoExportLibrary.Controls.Add(label89);
             tpAutoExportLibrary.Controls.Add(groupBox26);
             tpAutoExportLibrary.Controls.Add(groupBox7);
@@ -5976,21 +5683,6 @@ namespace TVRename.Forms
             chkRestrictMissingExportsToFullScans.TabIndex = 45;
             chkRestrictMissingExportsToFullScans.Text = "Restrict Missing Exports to Full Scans";
             chkRestrictMissingExportsToFullScans.UseVisualStyleBackColor = true;
-            // 
-            // pbuShowExport
-            // 
-            pbuShowExport.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbuShowExport.Cursor = Cursors.Hand;
-            pbuShowExport.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuShowExport.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuShowExport.Location = new Point(418, 18);
-            pbuShowExport.Margin = new Padding(4, 3, 4, 3);
-            pbuShowExport.Name = "pbuShowExport";
-            pbuShowExport.Size = new Size(50, 46);
-            pbuShowExport.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbuShowExport.TabIndex = 44;
-            pbuShowExport.TabStop = false;
-            pbuShowExport.Click += pbuShowExport_Click;
             // 
             // label89
             // 
@@ -6340,7 +6032,6 @@ namespace TVRename.Forms
             // 
             // tbAppUpdate
             // 
-            tbAppUpdate.Controls.Add(pbuUpdates);
             tbAppUpdate.Controls.Add(chkUpdateCheckEnabled);
             tbAppUpdate.Controls.Add(label92);
             tbAppUpdate.Controls.Add(grpUpdateIntervalOption);
@@ -6351,21 +6042,6 @@ namespace TVRename.Forms
             tbAppUpdate.TabIndex = 20;
             tbAppUpdate.Text = "App Updates";
             tbAppUpdate.UseVisualStyleBackColor = true;
-            // 
-            // pbuUpdates
-            // 
-            pbuUpdates.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbuUpdates.Cursor = Cursors.Hand;
-            pbuUpdates.Image = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuUpdates.InitialImage = Properties.Resources.iconfinder_Info_Circle_Symbol_Information_Letter_1396823;
-            pbuUpdates.Location = new Point(416, 16);
-            pbuUpdates.Margin = new Padding(4, 3, 4, 3);
-            pbuUpdates.Name = "pbuUpdates";
-            pbuUpdates.Size = new Size(50, 46);
-            pbuUpdates.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbuUpdates.TabIndex = 46;
-            pbuUpdates.TabStop = false;
-            pbuUpdates.Click += pbuUpdates_Click;
             // 
             // chkUpdateCheckEnabled
             // 
@@ -6491,10 +6167,8 @@ namespace TVRename.Forms
             tpDisplay.PerformLayout();
             groupBox11.ResumeLayout(false);
             groupBox11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbDisplay).EndInit();
             tpRSSJSONSearch.ResumeLayout(false);
             tpRSSJSONSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbRSSJSONSearch).EndInit();
             gbJSON.ResumeLayout(false);
             gbJSON.PerformLayout();
             gbRSS.ResumeLayout(false);
@@ -6505,10 +6179,8 @@ namespace TVRename.Forms
             groupBox23.PerformLayout();
             groupBox6.ResumeLayout(false);
             groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbLibraryFolders).EndInit();
             tpTorrentNZB.ResumeLayout(false);
             tpTorrentNZB.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuTorrentNZB).EndInit();
             qBitTorrent.ResumeLayout(false);
             qBitTorrent.PerformLayout();
             gbSAB.ResumeLayout(false);
@@ -6521,7 +6193,6 @@ namespace TVRename.Forms
             groupBox8.PerformLayout();
             gbAutoAdd.ResumeLayout(false);
             gbAutoAdd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbSearchFolders).EndInit();
             tbMediaCenter.ResumeLayout(false);
             tbMediaCenter.PerformLayout();
             groupBox16.ResumeLayout(false);
@@ -6536,15 +6207,12 @@ namespace TVRename.Forms
             groupBox12.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbMediaCenter).EndInit();
             tbFolderDeleting.ResumeLayout(false);
             tbFolderDeleting.PerformLayout();
             groupBox28.ResumeLayout(false);
             groupBox28.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFolderDeleting).EndInit();
             tbAutoExport.ResumeLayout(false);
             tbAutoExport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuExportEpisodes).EndInit();
             groupBox10.ResumeLayout(false);
             groupBox10.PerformLayout();
             groupBox5.ResumeLayout(false);
@@ -6555,10 +6223,8 @@ namespace TVRename.Forms
             groupBox2.PerformLayout();
             tbFilesAndFolders.ResumeLayout(false);
             tbFilesAndFolders.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFilesAndFolders).EndInit();
             tbGeneral.ResumeLayout(false);
             tbGeneral.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbGeneral).EndInit();
             tcTabs.ResumeLayout(false);
             tpDataSources.ResumeLayout(false);
             tpDataSources.PerformLayout();
@@ -6572,21 +6238,18 @@ namespace TVRename.Forms
             gbTMDB.PerformLayout();
             groupBox20.ResumeLayout(false);
             groupBox20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbSources).EndInit();
             tpMovieDefaults.ResumeLayout(false);
             tpMovieDefaults.PerformLayout();
             groupBox24.ResumeLayout(false);
             groupBox24.PerformLayout();
             groupBox25.ResumeLayout(false);
             groupBox25.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbMovieDefaults).EndInit();
             tpShowDefaults.ResumeLayout(false);
             tpShowDefaults.PerformLayout();
             groupBox19.ResumeLayout(false);
             groupBox19.PerformLayout();
             groupBox18.ResumeLayout(false);
             groupBox18.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tpScanSettings.ResumeLayout(false);
             tpScanSettings.PerformLayout();
             groupBox17.ResumeLayout(false);
@@ -6595,22 +6258,18 @@ namespace TVRename.Forms
             groupBox1.PerformLayout();
             gbBulkAdd.ResumeLayout(false);
             gbBulkAdd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbScanOptions).EndInit();
             tpSubtitles.ResumeLayout(false);
             tpSubtitles.PerformLayout();
             groupBox29.ResumeLayout(false);
             groupBox29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             groupBox9.ResumeLayout(false);
             groupBox9.PerformLayout();
             tpJackett.ResumeLayout(false);
             tpJackett.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuJackett).EndInit();
             groupBox22.ResumeLayout(false);
             groupBox22.PerformLayout();
             tpAutoExportLibrary.ResumeLayout(false);
             tpAutoExportLibrary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuShowExport).EndInit();
             groupBox26.ResumeLayout(false);
             groupBox26.PerformLayout();
             groupBox7.ResumeLayout(false);
@@ -6621,7 +6280,6 @@ namespace TVRename.Forms
             groupBox3.PerformLayout();
             tbAppUpdate.ResumeLayout(false);
             tbAppUpdate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbuUpdates).EndInit();
             grpUpdateIntervalOption.ResumeLayout(false);
             grpUpdateIntervalOption.PerformLayout();
             ResumeLayout(false);
@@ -6820,17 +6478,8 @@ namespace TVRename.Forms
         private System.Windows.Forms.TextBox tbMovieTerms;
         private System.Windows.Forms.CheckBox cbLeaveOriginals;
         private System.Windows.Forms.CheckBox cbSearchLocally;
-        private System.Windows.Forms.PictureBox pbuTorrentNZB;
-        private System.Windows.Forms.PictureBox pbGeneral;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.PictureBox pbDisplay;
-        private System.Windows.Forms.PictureBox pbRSSJSONSearch;
-        private System.Windows.Forms.PictureBox pbLibraryFolders;
-        private System.Windows.Forms.PictureBox pbSearchFolders;
         private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.PictureBox pbMediaCenter;
-        private System.Windows.Forms.PictureBox pbFolderDeleting;
-        private System.Windows.Forms.PictureBox pbFilesAndFolders;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.Label label67;
@@ -6869,7 +6518,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.CheckBox cbRSSCloudflareProtection;
         private System.Windows.Forms.TabPage tpShowDefaults;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox19;
         private System.Windows.Forms.RadioButton rbDefShowUseSubFolders;
         private System.Windows.Forms.RadioButton rbDefShowUseBase;
@@ -6917,7 +6565,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.PictureBox pbSources;
         private System.Windows.Forms.TabPage tpScanSettings;
         private System.Windows.Forms.GroupBox groupBox17;
         private System.Windows.Forms.CheckBox chkIgnoreAllSpecials;
@@ -6948,7 +6595,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.CheckBox cbIgnoreRecycleBin;
         private System.Windows.Forms.CheckBox cbIgnoreNoVideoFolders;
         private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.PictureBox pbScanOptions;
         private System.Windows.Forms.CheckBox cbDefShowEpNameMatching;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.CheckBox cbDefShowAirdateMatching;
@@ -6958,7 +6604,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.ComboBox cmbUnattendedDuplicateAction;
         private System.Windows.Forms.Label label76;
         private System.Windows.Forms.CheckBox cbDetailedRSSJSONLogging;
-        private System.Windows.Forms.PictureBox pbuJackett;
         private System.Windows.Forms.Label label70;
         private System.Windows.Forms.CheckBox cbSearchJackett;
         private System.Windows.Forms.GroupBox groupBox22;
@@ -7004,7 +6649,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.Button bnRemoveMovieMonFolder;
         private System.Windows.Forms.ListBox lstMovieMonitorFolders;
         private System.Windows.Forms.CheckBox cbNFOMovies;
-        private System.Windows.Forms.PictureBox pbuExportEpisodes;
         private System.Windows.Forms.Label label88;
         private System.Windows.Forms.Label label86;
         private System.Windows.Forms.GroupBox groupBox24;
@@ -7014,10 +6658,8 @@ namespace TVRename.Forms
         private System.Windows.Forms.GroupBox groupBox25;
         private System.Windows.Forms.CheckBox cbDefMovieDoMissing;
         private System.Windows.Forms.CheckBox cbDefMovieDoRenaming;
-        private System.Windows.Forms.PictureBox pbMovieDefaults;
         private System.Windows.Forms.CheckBox chkIncludeMoviesQuickRecent;
         private System.Windows.Forms.TabPage tpAutoExportLibrary;
-        private System.Windows.Forms.PictureBox pbuShowExport;
         private System.Windows.Forms.Label label89;
         private System.Windows.Forms.GroupBox groupBox26;
         private System.Windows.Forms.Button bnBrowseMoviesHTML;
@@ -7070,7 +6712,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.CheckBox cbMovieHigherQuality;
         private System.Windows.Forms.Label label91;
         private System.Windows.Forms.ComboBox cbTVDBVersion;
-        private System.Windows.Forms.PictureBox pbuUpdates;
         private System.Windows.Forms.Label label92;
         private System.Windows.Forms.CheckBox cbDefShowAlternateOrder;
         private System.Windows.Forms.CheckBox cbDeleteMovieFromDisk;
@@ -7084,7 +6725,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.TextBox txtSubtitleFolderNames;
         private System.Windows.Forms.CheckBox cbCopySubsFolders;
         private System.Windows.Forms.Label label93;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.CheckBox cbTxtToSub;
         private System.Windows.Forms.Label label46;

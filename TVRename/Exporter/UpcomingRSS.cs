@@ -37,7 +37,6 @@ internal class UpcomingRSS(TVDoc i) : UpcomingExporter(i)
             writer.WriteAttributeToXml("version", "2.0");
             writer.WriteStartElement("channel");
             writer.WriteElement("title", "Upcoming Shows");
-            writer.WriteElement("title", "http://tvrename.com");
             writer.WriteElement("description", "Upcoming shows, exported by TVRename");
 
             foreach (ProcessedEpisode ei in elist)

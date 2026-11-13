@@ -119,21 +119,13 @@ namespace TVRename.Forms
             yTSMoviePreviewToolStripMenuItem = new ToolStripMenuItem();
             yTSMovieRecommendationsToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
-            quickstartGuideToolStripMenuItem = new ToolStripMenuItem();
-            visitWebsiteToolStripMenuItem = new ToolStripMenuItem();
-            visitSupportForumToolStripMenuItem = new ToolStripMenuItem();
             bugReportToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator7 = new ToolStripSeparator();
-            requestANewFeatureToolStripMenuItem = new ToolStripMenuItem();
-            buyMeADrinkToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator6 = new ToolStripSeparator();
             browserTestToolStripMenuItem = new ToolStripMenuItem();
             checkForNewVersionToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator8 = new ToolStripSeparator();
             logToolStripMenuItem = new ToolStripMenuItem();
             thanksToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator23 = new ToolStripSeparator();
-            aboutToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator22 = new ToolStripSeparator();
             webTestToolStripMenuItem = new ToolStripMenuItem();
             downloadInstallerToolStripMenuItem = new ToolStripMenuItem();
@@ -733,33 +725,10 @@ namespace TVRename.Forms
             // 
             // helpToolStripMenuItem
             // 
-            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { quickstartGuideToolStripMenuItem, visitWebsiteToolStripMenuItem, visitSupportForumToolStripMenuItem, bugReportToolStripMenuItem, toolStripSeparator7, requestANewFeatureToolStripMenuItem, buyMeADrinkToolStripMenuItem, toolStripSeparator6, browserTestToolStripMenuItem, checkForNewVersionToolStripMenuItem, toolStripSeparator8, logToolStripMenuItem, thanksToolStripMenuItem, toolStripSeparator23, aboutToolStripMenuItem });
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bugReportToolStripMenuItem, toolStripSeparator6, browserTestToolStripMenuItem, checkForNewVersionToolStripMenuItem, toolStripSeparator8, logToolStripMenuItem, thanksToolStripMenuItem });
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             helpToolStripMenuItem.Size = new Size(44, 20);
             helpToolStripMenuItem.Text = "&Help";
-            // 
-            // quickstartGuideToolStripMenuItem
-            // 
-            quickstartGuideToolStripMenuItem.Image = (Image)resources.GetObject("quickstartGuideToolStripMenuItem.Image");
-            quickstartGuideToolStripMenuItem.Name = "quickstartGuideToolStripMenuItem";
-            quickstartGuideToolStripMenuItem.Size = new Size(196, 22);
-            quickstartGuideToolStripMenuItem.Text = "&Quickstart Guide";
-            quickstartGuideToolStripMenuItem.Click += quickstartGuideToolStripMenuItem_Click;
-            // 
-            // visitWebsiteToolStripMenuItem
-            // 
-            visitWebsiteToolStripMenuItem.Image = (Image)resources.GetObject("visitWebsiteToolStripMenuItem.Image");
-            visitWebsiteToolStripMenuItem.Name = "visitWebsiteToolStripMenuItem";
-            visitWebsiteToolStripMenuItem.Size = new Size(196, 22);
-            visitWebsiteToolStripMenuItem.Text = "&Visit Website";
-            visitWebsiteToolStripMenuItem.Click += visitWebsiteToolStripMenuItem_Click;
-            // 
-            // visitSupportForumToolStripMenuItem
-            // 
-            visitSupportForumToolStripMenuItem.Name = "visitSupportForumToolStripMenuItem";
-            visitSupportForumToolStripMenuItem.Size = new Size(196, 22);
-            visitSupportForumToolStripMenuItem.Text = "Visit Support Forum";
-            visitSupportForumToolStripMenuItem.Click += visitSupportForumToolStripMenuItem_Click;
             // 
             // bugReportToolStripMenuItem
             // 
@@ -767,25 +736,6 @@ namespace TVRename.Forms
             bugReportToolStripMenuItem.Size = new Size(196, 22);
             bugReportToolStripMenuItem.Text = "Bug &Report";
             bugReportToolStripMenuItem.Click += bugReportToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator7
-            // 
-            toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new Size(193, 6);
-            // 
-            // requestANewFeatureToolStripMenuItem
-            // 
-            requestANewFeatureToolStripMenuItem.Name = "requestANewFeatureToolStripMenuItem";
-            requestANewFeatureToolStripMenuItem.Size = new Size(196, 22);
-            requestANewFeatureToolStripMenuItem.Text = "Request A New Feature";
-            requestANewFeatureToolStripMenuItem.Click += requestANewFeatureToolStripMenuItem_Click;
-            // 
-            // buyMeADrinkToolStripMenuItem
-            // 
-            buyMeADrinkToolStripMenuItem.Name = "buyMeADrinkToolStripMenuItem";
-            buyMeADrinkToolStripMenuItem.Size = new Size(196, 22);
-            buyMeADrinkToolStripMenuItem.Text = "&Buy Me A Drink";
-            buyMeADrinkToolStripMenuItem.Click += buyMeADrinkToolStripMenuItem_Click;
             // 
             // toolStripSeparator6
             // 
@@ -824,18 +774,6 @@ namespace TVRename.Forms
             thanksToolStripMenuItem.Size = new Size(196, 22);
             thanksToolStripMenuItem.Text = "Thanks";
             thanksToolStripMenuItem.Click += ThanksToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator23
-            // 
-            toolStripSeparator23.Name = "toolStripSeparator23";
-            toolStripSeparator23.Size = new Size(193, 6);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(196, 22);
-            aboutToolStripMenuItem.Text = "About";
-            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // toolStripSeparator22
             // 
@@ -2451,7 +2389,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem visitWebsiteToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tbWTW;
         private System.Windows.Forms.ColumnHeader columnHeader5;
@@ -2476,7 +2413,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.Timer refreshWTWTimer;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ColumnHeader columnHeader36;
-        private System.Windows.Forms.ToolStripMenuItem buyMeADrinkToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip showRightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -2502,7 +2438,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
         private System.Windows.Forms.TabPage tbMyShows;
         private System.Windows.Forms.TreeView MyShowTree;
-        private System.Windows.Forms.ToolStripMenuItem quickstartGuideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filenameTemplateEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchEnginesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filenameProcessorsToolStripMenuItem;
@@ -2517,7 +2452,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.TabPage tpInformation;
         private System.Windows.Forms.TabPage tpImages;
         private System.Windows.Forms.TextBox filterTextBox;
-        private System.Windows.Forms.ToolStripMenuItem visitSupportForumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem betaToolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showSummaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForNewVersionToolStripMenuItem;
@@ -2528,12 +2462,10 @@ namespace TVRename.Forms
         private Button btnUpdateAvailable;
         private ToolStripMenuItem viewToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator5;
-        private ToolStripSeparator toolStripSeparator7;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripSeparator toolStripSeparator8;
         private ToolStripMenuItem logToolStripMenuItem;
         private ToolStripMenuItem episodeFileQualitySummaryLogToolStripMenuItem;
-        private ToolStripMenuItem aboutToolStripMenuItem;
         private ColumnHeader columnHeader1;
         private ToolStripMenuItem quickRenameToolStripMenuItem;
         private ToolStripMenuItem accuracyCheckLogToolStripMenuItem;
@@ -2661,8 +2593,6 @@ namespace TVRename.Forms
         private Panel panel1;
         private TableLayoutPanel tableLayoutPanel4;
         private ToolStripMenuItem tVDBUPdateCheckerLogToolStripMenuItem;
-        private ToolStripMenuItem requestANewFeatureToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator23;
         private ToolStripSeparator toolStripSeparator24;
         private ToolStripMenuItem yTSMoviePreviewToolStripMenuItem;
         private ToolStripMenuItem yTSMovieRecommendationsToolStripMenuItem;

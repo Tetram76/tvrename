@@ -4,7 +4,7 @@ title: 'Reprise depuis l''amont'
 description: 'Reprise ponctuelle d''une fonctionnalité du dépôt d''origine (TV-Rename/tvrename) par un chantier : décision, analyse de l''ajout dans l''amont, intégration en tenant compte des personnalisations du fork, trace ; veille mensuelle de l''amont (harnais upstream-watch) ; à lire pour tout chantier de reprise ou quand l''analyse de la veille est due.'
 applies_to:
   - '.github/workflows/upstream-watch.yml'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T18:40:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:09:21Z }
 ---
 
 # Reprise depuis l'amont
@@ -20,4 +20,3 @@ Le fork est **détaché** ([Application existante](../../contraintes-techniques/
   - **Analyse** : au moment que fixe [Veille de l'amont à la reprise du travail](veille-de-l-amont-a-la-reprise-du-travail.md), l'agent analyse chaque évolution relevée : ce qu'elle apporte, si elle est **majeure** pour le fork (changement d'API d'une source de données, correctif de sécurité ou d'un défaut que le fork partage, fonctionnalité notable), et ce que coûterait sa reprise au regard des personnalisations du fork. Une évolution sans objet pour le fork est traitée par son analyse, et retirée du ticket.
   - **Proposition** : chaque reprise proposée est soumise à l'utilisateur, un point à la fois ([Prise de décision](../gouvernance/prise-de-decision.md)) ; une reprise qu'il retient devient un ticket, chantier de reprise (ci-dessus), qui porte l'étiquette `upstream-watch` ([Issues](../revue-tickets/issues.md#tickets-de-suivi-des-harnais)). Son évolution est traitée par ce ticket, ou par la décision de l'utilisateur de ne pas la reprendre, et retirée ; elle reste relevée tant qu'elle attend cette décision. Une reprise dont dépend le fonctionnement de l'application (ex. une source de données qui ne répond plus sans elle) est signalée comme telle, en tête.
   - **Alternative écartée (surveillance par les notifications de GitHub, *watch* du dépôt de l'amont)** : elles arrivent une à une à l'utilisateur, sans point de départ ni trace de ce qui a été analysé et conclu.
-- **Licence** : l'amont et le fork sont sous la même licence ([Licences](../../contraintes-techniques/licences.md)) ; une reprise n'appelle aucune autre précaution que le crédit ci-dessus.

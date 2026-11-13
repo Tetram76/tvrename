@@ -48,7 +48,6 @@ namespace TVRename
             label9 = new Label();
             cbDoRenaming = new CheckBox();
             cbDoMissingCheck = new CheckBox();
-            pbAdvanced = new PictureBox();
             tabPage3 = new TabPage();
             label14 = new Label();
             lbSourceAliases = new ListBox();
@@ -58,7 +57,6 @@ namespace TVRename
             bnRemoveAlias = new Button();
             bnAddAlias = new Button();
             tbShowAlias = new TextBox();
-            pbAliases = new PictureBox();
             lbShowAlias = new ListBox();
             tabPage5 = new TabPage();
             label2 = new Label();
@@ -86,7 +84,6 @@ namespace TVRename
             rdoFolderCustom = new RadioButton();
             rdoFolderLibraryDefault = new RadioButton();
             label3 = new Label();
-            pbFolders = new PictureBox();
             tabPage1 = new TabPage();
             cbRegion = new ComboBox();
             chkCustomRegion = new CheckBox();
@@ -95,7 +92,6 @@ namespace TVRename
             rdoTVDB = new RadioButton();
             rdoDefault = new RadioButton();
             label60 = new Label();
-            pbBasics = new PictureBox();
             cbLanguage = new ComboBox();
             chkCustomLanguage = new CheckBox();
             pnlCF = new Panel();
@@ -113,20 +109,14 @@ namespace TVRename
             lbAvailableTags = new Label();
             label19 = new Label();
             cbUseCustomNamingFormat = new CheckBox();
-            pictureBox1 = new PictureBox();
             tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbAdvanced).BeginInit();
             tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbAliases).BeginInit();
             tabPage5.SuspendLayout();
             groupBox1.SuspendLayout();
             gbAutoFolders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFolders).BeginInit();
             tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbBasics).BeginInit();
             Folders.SuspendLayout();
             tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // bnCancel
@@ -162,7 +152,6 @@ namespace TVRename
             tabPage2.Controls.Add(label9);
             tabPage2.Controls.Add(cbDoRenaming);
             tabPage2.Controls.Add(cbDoMissingCheck);
-            tabPage2.Controls.Add(pbAdvanced);
             tabPage2.Location = new Point(4, 24);
             tabPage2.Margin = new Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
@@ -228,21 +217,6 @@ namespace TVRename
             cbDoMissingCheck.UseVisualStyleBackColor = true;
             cbDoMissingCheck.CheckedChanged += cbDoMissingCheck_CheckedChanged;
             // 
-            // pbAdvanced
-            // 
-            pbAdvanced.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbAdvanced.Cursor = Cursors.Hand;
-            pbAdvanced.Image = (Image)resources.GetObject("pbAdvanced.Image");
-            pbAdvanced.InitialImage = (Image)resources.GetObject("pbAdvanced.InitialImage");
-            pbAdvanced.Location = new Point(456, 7);
-            pbAdvanced.Margin = new Padding(4, 3, 4, 3);
-            pbAdvanced.Name = "pbAdvanced";
-            pbAdvanced.Size = new Size(50, 46);
-            pbAdvanced.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbAdvanced.TabIndex = 41;
-            pbAdvanced.TabStop = false;
-            pbAdvanced.Click += pbAdvanced_Click;
-            // 
             // tabPage3
             // 
             tabPage3.Controls.Add(label14);
@@ -253,7 +227,6 @@ namespace TVRename
             tabPage3.Controls.Add(bnRemoveAlias);
             tabPage3.Controls.Add(bnAddAlias);
             tabPage3.Controls.Add(tbShowAlias);
-            tabPage3.Controls.Add(pbAliases);
             tabPage3.Controls.Add(lbShowAlias);
             tabPage3.Location = new Point(4, 24);
             tabPage3.Margin = new Padding(4, 3, 4, 3);
@@ -356,21 +329,6 @@ namespace TVRename
             tbShowAlias.TextChanged += tbShowAlias_TextChanged;
             tbShowAlias.KeyDown += tbShowAlias_KeyDown;
             // 
-            // pbAliases
-            // 
-            pbAliases.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbAliases.Cursor = Cursors.Hand;
-            pbAliases.Image = (Image)resources.GetObject("pbAliases.Image");
-            pbAliases.InitialImage = (Image)resources.GetObject("pbAliases.InitialImage");
-            pbAliases.Location = new Point(456, 7);
-            pbAliases.Margin = new Padding(4, 3, 4, 3);
-            pbAliases.Name = "pbAliases";
-            pbAliases.Size = new Size(50, 46);
-            pbAliases.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbAliases.TabIndex = 43;
-            pbAliases.TabStop = false;
-            pbAliases.Click += pbAliases_Click;
-            // 
             // lbShowAlias
             // 
             lbShowAlias.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -393,7 +351,6 @@ namespace TVRename
             tabPage5.Controls.Add(label12);
             tabPage5.Controls.Add(chkAutoFolders);
             tabPage5.Controls.Add(gbAutoFolders);
-            tabPage5.Controls.Add(pbFolders);
             tabPage5.Location = new Point(4, 24);
             tabPage5.Margin = new Padding(4, 3, 4, 3);
             tabPage5.Name = "tabPage5";
@@ -704,21 +661,6 @@ namespace TVRename
             label3.Text = "Base &Folder";
             label3.TextAlign = ContentAlignment.TopRight;
             // 
-            // pbFolders
-            // 
-            pbFolders.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbFolders.Cursor = Cursors.Hand;
-            pbFolders.Image = (Image)resources.GetObject("pbFolders.Image");
-            pbFolders.InitialImage = (Image)resources.GetObject("pbFolders.InitialImage");
-            pbFolders.Location = new Point(463, 7);
-            pbFolders.Margin = new Padding(4, 3, 4, 3);
-            pbFolders.Name = "pbFolders";
-            pbFolders.Size = new Size(50, 46);
-            pbFolders.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbFolders.TabIndex = 47;
-            pbFolders.TabStop = false;
-            pbFolders.Click += pbFolders_Click;
-            // 
             // tabPage1
             // 
             tabPage1.Controls.Add(cbRegion);
@@ -728,7 +670,6 @@ namespace TVRename
             tabPage1.Controls.Add(rdoTVDB);
             tabPage1.Controls.Add(rdoDefault);
             tabPage1.Controls.Add(label60);
-            tabPage1.Controls.Add(pbBasics);
             tabPage1.Controls.Add(cbLanguage);
             tabPage1.Controls.Add(chkCustomLanguage);
             tabPage1.Controls.Add(pnlCF);
@@ -833,21 +774,6 @@ namespace TVRename
             label60.TabIndex = 40;
             label60.Text = "Use these settings to control the link to the show and what the show is called";
             // 
-            // pbBasics
-            // 
-            pbBasics.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pbBasics.Cursor = Cursors.Hand;
-            pbBasics.Image = (Image)resources.GetObject("pbBasics.Image");
-            pbBasics.InitialImage = (Image)resources.GetObject("pbBasics.InitialImage");
-            pbBasics.Location = new Point(468, 7);
-            pbBasics.Margin = new Padding(4, 3, 4, 3);
-            pbBasics.Name = "pbBasics";
-            pbBasics.Size = new Size(50, 46);
-            pbBasics.SizeMode = PictureBoxSizeMode.CenterImage;
-            pbBasics.TabIndex = 39;
-            pbBasics.TabStop = false;
-            pbBasics.Click += pbBasics_Click;
-            // 
             // cbLanguage
             // 
             cbLanguage.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
@@ -931,7 +857,6 @@ namespace TVRename
             tabPage6.Controls.Add(lbAvailableTags);
             tabPage6.Controls.Add(label19);
             tabPage6.Controls.Add(cbUseCustomNamingFormat);
-            tabPage6.Controls.Add(pictureBox1);
             tabPage6.Location = new Point(4, 24);
             tabPage6.Margin = new Padding(4, 3, 4, 3);
             tabPage6.Name = "tabPage6";
@@ -1043,21 +968,6 @@ namespace TVRename
             cbUseCustomNamingFormat.UseVisualStyleBackColor = true;
             cbUseCustomNamingFormat.CheckedChanged += cbUseCustomNamingFormat_CheckedChanged;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-            pictureBox1.Location = new Point(458, 7);
-            pictureBox1.Margin = new Padding(4, 3, 4, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 46);
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 53;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pbCustomFN_Click;
-            // 
             // AddEditMovie
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1079,24 +989,19 @@ namespace TVRename
             Text = "Add/Edit Movie";
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbAdvanced).EndInit();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbAliases).EndInit();
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             gbAutoFolders.ResumeLayout(false);
             gbAutoFolders.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbFolders).EndInit();
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pbBasics).EndInit();
             Folders.ResumeLayout(false);
             tabPage6.ResumeLayout(false);
             tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
 
         }
@@ -1109,7 +1014,6 @@ namespace TVRename
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox cbDoRenaming;
         private System.Windows.Forms.CheckBox cbDoMissingCheck;
-        private System.Windows.Forms.PictureBox pbAdvanced;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ListBox lbSourceAliases;
@@ -1119,7 +1023,6 @@ namespace TVRename
         private System.Windows.Forms.Button bnRemoveAlias;
         private System.Windows.Forms.Button bnAddAlias;
         private System.Windows.Forms.TextBox tbShowAlias;
-        private System.Windows.Forms.PictureBox pbAliases;
         private System.Windows.Forms.ListBox lbShowAlias;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Label label12;
@@ -1131,13 +1034,11 @@ namespace TVRename
         private System.Windows.Forms.RadioButton rdoFolderCustom;
         private System.Windows.Forms.RadioButton rdoFolderLibraryDefault;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pbFolders;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RadioButton rdoTVDB;
         private System.Windows.Forms.RadioButton rdoDefault;
         private System.Windows.Forms.Label label60;
-        private System.Windows.Forms.PictureBox pbBasics;
         private System.Windows.Forms.ComboBox cbLanguage;
         private System.Windows.Forms.CheckBox chkCustomLanguage;
         private System.Windows.Forms.Panel pnlCF;
@@ -1171,7 +1072,6 @@ namespace TVRename
         private System.Windows.Forms.Label lbAvailableTags;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.CheckBox cbUseCustomNamingFormat;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox cbDirectory;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbFolderType;

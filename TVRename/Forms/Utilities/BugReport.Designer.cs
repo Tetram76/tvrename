@@ -47,7 +47,6 @@ namespace TVRename
             this.bnClose = new System.Windows.Forms.Button();
             this.cbFolderScan = new System.Windows.Forms.CheckBox();
             this.bnCopy = new System.Windows.Forms.Button();
-            this.linkForum = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             //
             // label7
@@ -146,25 +145,12 @@ namespace TVRename
             this.bnCopy.UseVisualStyleBackColor = true;
             this.bnCopy.Click += new System.EventHandler(this.bnCopy_Click);
             //
-            // linkForum
-            //
-            this.linkForum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkForum.AutoSize = true;
-            this.linkForum.Location = new System.Drawing.Point(12, 558);
-            this.linkForum.Name = "linkForum";
-            this.linkForum.Size = new System.Drawing.Size(135, 13);
-            this.linkForum.TabIndex = 21;
-            this.linkForum.TabStop = true;
-            this.linkForum.Text = "TV Rename Google Groups";
-            this.linkForum.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkForum_LinkClicked);
-            //
             // BugReport
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bnClose;
             this.ClientSize = new System.Drawing.Size(924, 622);
-            this.Controls.Add(this.linkForum);
             this.Controls.Add(this.bnCopy);
             this.Controls.Add(this.bnClose);
             this.Controls.Add(this.bnCreate);
@@ -201,6 +187,5 @@ namespace TVRename
         private System.Windows.Forms.Button bnClose;
         private System.Windows.Forms.CheckBox cbFolderScan;
         private System.Windows.Forms.Button bnCopy;
-        private System.Windows.Forms.LinkLabel linkForum;
     }
 }
