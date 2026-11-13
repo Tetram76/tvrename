@@ -43,11 +43,14 @@ jobs:
           url="https://github.com/$UPSTREAM"
 
           # The tracking issue is the one with both labels, whatever its state: upstream-watch also groups the chantiers
-          # of the harness (gestion-projet/revue-tickets/issues.md).
+          # of the harness (gestion-projet/revue-tickets/issues.md). A command substitution, so that a failed lookup
+          # stops the run (set -e) instead of reading as no issue, which would start over from archive/master in a
+          # second issue.
           issue='' state='' body=''
-          read -r issue state < <(gh issue list --label upstream-watch --label harness --state all --limit 1 \
-            --json number,state -q '.[] | "\(.number) \(.state)"') || true
-          if [ -n "$issue" ]; then
+          found=$(gh issue list --label upstream-watch --label harness --state all --limit 1 \
+            --json number,state -q '.[] | "\(.number) \(.state)"')
+          if [ -n "$found" ]; then
+            read -r issue state <<< "$found"
             body=$(gh issue view "$issue" --json body -q .body | tr -d '\r')
           fi
 
