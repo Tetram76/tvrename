@@ -6,6 +6,7 @@
 /TVRename#/obj/Debug
 /TVRename/Properties/PublishProfiles/FolderProfile.pubxml.user
 /TVRename/TVRename.csproj.user
+*.DotSettings.user
 bin/
 obj/
 TestResults/

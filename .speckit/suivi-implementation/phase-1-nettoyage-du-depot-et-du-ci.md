@@ -13,6 +13,6 @@ Objectif : un dépôt et un CI débarrassés de ce que le fork a hérité sans u
 
 | Ticket | Chantier |
 | --- | --- |
-| #19 | Fichiers hérités du fork sans usage et fichiers de santé communautaire de l'amont |
+| ~~#19~~ | Fichiers hérités du fork sans usage et fichiers de santé communautaire de l'amont |
 | #20 | Documents destinés aux utilisateurs : `README.md` et politique de confidentialité |
 | #21 | Construction de l'installeur : workflow de publication et configuration de publication hérités |
