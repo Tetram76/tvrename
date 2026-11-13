@@ -46,7 +46,6 @@ namespace TVRename.Forms.Utilities
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.lblCopyright = new System.Windows.Forms.Label();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.btnLicence = new System.Windows.Forms.Button();
@@ -122,15 +121,6 @@ namespace TVRename.Forms.Utilities
             this.label5.TabIndex = 7;
             this.label5.Text = "Github.com to check for the latest release";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 497);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(264, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "papertrailapp.com to send anonymous crash statistics";
-            // 
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
@@ -186,7 +176,6 @@ namespace TVRename.Forms.Utilities
             this.Controls.Add(this.btnLicence);
             this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.lblCopyright);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -215,7 +204,6 @@ namespace TVRename.Forms.Utilities
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Button btnLicence;

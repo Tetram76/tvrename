@@ -366,7 +366,6 @@ public partial class Preferences : Form
         s.RetainLanguageSpecificSubtitles = chkRetainLanguageSpecificSubtitles.Checked;
         s.ForceBulkAddToUseSettingsOnly = chkForceBulkAddToUseSettingsOnly.Checked;
         s.CopyFutureDatedEpsFromSearchFolders = cbCopyFutureDatedEps.Checked;
-        s.ShareLogs = chkShareCriticalLogs.Checked;
         s.PostpendThe = chkPostpendThe.Checked;
         s.UseFullPathNameToMatchLibraryFolders = chkUseLibraryFullPathWhenMatchingShows.Checked;
         s.UseFullPathNameToMatchSearchFolders = chkUseSearchFullPathWhenMatchingShows.Checked;
@@ -965,7 +964,6 @@ public partial class Preferences : Form
         cbFileNameCaseSensitiveMatch.Checked = s.FileNameCaseSensitiveMatch;
         cbCopySubsFolders.Checked = s.CopySubsFolders;
         cbCopyFutureDatedEps.Checked = s.CopyFutureDatedEpsFromSearchFolders;
-        chkShareCriticalLogs.Checked = s.ShareLogs;
         chkPostpendThe.Checked = s.PostpendThe;
         chkUseLibraryFullPathWhenMatchingShows.Checked = s.UseFullPathNameToMatchLibraryFolders;
         chkUseSearchFullPathWhenMatchingShows.Checked = s.UseFullPathNameToMatchSearchFolders;

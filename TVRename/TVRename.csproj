@@ -66,7 +66,6 @@
     <PackageReference Include="MscVersion" Version="1.0.0.9" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="NLog.OutputDebugString" Version="6.2.2" />
-    <PackageReference Include="NLog.Targets.Syslog" Version="7.0.0" />
     <PackageReference Include="NLog.Windows.Forms" Version="6.1.4" />
     <PackageReference Include="NodaTime" Version="3.3.6" />
     <PackageReference Include="ObjectListView.Repack.NET6Plus" Version="2.9.5" />

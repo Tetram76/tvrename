@@ -8,10 +8,6 @@
 
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
-using NLog.Config;
-using NLog.Layouts;
-using NLog.Targets.Syslog;
-using NLog.Targets.Syslog.Settings;
 using System.Collections.ObjectModel;
 using TVRename.Forms;
 
@@ -68,10 +64,7 @@ internal class ApplicationBase : WindowsFormsApplicationBase
         Task.Run(async () => { doc = await LoadSettingsAsync(parameters); }).Wait();
 
 
-        if (TVSettings.Instance.mode == TVSettings.BetaMode.BetaToo || TVSettings.Instance.ShareLogs)
-        {
-            SetupLogging();
-        }
+        LogStartup();
 
         RegisterForSystemEvents();
 
@@ -235,105 +228,11 @@ internal class ApplicationBase : WindowsFormsApplicationBase
         }
     }
 
-    private void SetupLogging()
+    private void LogStartup()
     {
-        LogManager.Setup().SetupExtensions(e => e.RegisterAssembly("NLog.Targets.Syslog"));
-        //ConfigurationItemFactory.Default.RegisterItemsFromAssembly(Assembly.Load("Timber.io.NLog"));
-
-        SetupPapertrailLogging();
-        //SetupSemaTextLogging();
-
-        logger.Fatal($"TV Rename {Helpers.DisplayVersion} logging started on {Environment.OSVersion}, {(Environment.Is64BitOperatingSystem ? "64 Bit OS" : string.Empty)}, {(Environment.Is64BitProcess ? "64 Bit Process" : "")} {Environment.Version} {(Environment.UserInteractive ? "Interactive" : "")} with args: '{string.Join(" ", CommandLineArgs)}' {TimeHelpers.TimeDebugMessage}");
+        logger.Info($"TV Rename {Helpers.DisplayVersion} logging started on {Environment.OSVersion}, {(Environment.Is64BitOperatingSystem ? "64 Bit OS" : string.Empty)}, {(Environment.Is64BitProcess ? "64 Bit Process" : "")} {Environment.Version} {(Environment.UserInteractive ? "Interactive" : "")} with args: '{string.Join(" ", CommandLineArgs)}' {TimeHelpers.TimeDebugMessage}");
         logger.Info($"Copyright (C) {TimeHelpers.LocalNow().Year} TV Rename");
         logger.Info("This program comes with ABSOLUTELY NO WARRANTY; This is free software, and you are welcome to redistribute it under certain conditions");
-    }
-
-    // ReSharper disable once UnusedMember.Local
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
-    private static void SetupSemaTextLogging()
-    {
-        try
-        {
-            LoggingConfiguration config = LogManager.Configuration ?? new LoggingConfiguration();
-            using SyslogTarget semaText = new()
-            {
-                MessageCreation =
-                {
-                    Rfc5424 =
-                    {
-                        AppName = "0dcb3012-fa85-47c5-b6ca-cfd33609ac33"
-                    }
-                },
-                MessageSend =
-                {
-                    Protocol = ProtocolType.Tcp,
-                    Tcp = {Server = "logsene-syslog-receiver.sematext.com", Port = 514}
-                }
-            };
-
-            config.AddTarget("sema", semaText);
-            JsonLayout jsonLayout = new()
-            {
-                Attributes =
-                {
-                    new JsonAttribute("exceptionType", "${exception:format=Type}"),
-                    new JsonAttribute("exceptionDetails", "${exception:format=toString,Data}"),
-                    new JsonAttribute("details", "${message}"),
-                    new JsonAttribute("exceptionMessage", "${exception:format=Message}"),
-                    new JsonAttribute("level", "${level:uppercase=true}"),
-                    new JsonAttribute("appVersion",Helpers.DisplayVersion),
-                    new JsonAttribute("innerException", new JsonLayout
-                        {
-                            Attributes =
-                            {
-                                new JsonAttribute("type", "${exception:format=:innerFormat=Type:MaxInnerExceptionLevel=1:InnerExceptionSeparator=}"),
-                                new JsonAttribute("innerMessage", "${exception:format=:innerFormat=Message:MaxInnerExceptionLevel=1:InnerExceptionSeparator=}")
-                            }
-                        },
-                        //don't escape layout
-                        false)
-                }
-            };
-            semaText.Layout = jsonLayout;
-
-            LoggingRule semaRule = new("*", LogLevel.Warn, semaText);
-            config.LoggingRules.Add(semaRule);
-            LogManager.Configuration = config;
-        }
-        catch
-        {
-            logger.Error("Failed to setup logging with sema");
-        }
-    }
-
-    private static void SetupPapertrailLogging()
-    {
-        try
-        {
-            LoggingConfiguration config = LogManager.Configuration ?? new();
-            SyslogTarget papertrail = new()
-            {
-                MessageCreation = { Facility = Facility.Local7 },
-                MessageSend =
-                {
-                    Protocol = ProtocolType.Tcp,
-                    Tcp = {Server = "logs7.papertrailapp.com", Port = 13236, Tls = {Enabled = true}}
-                }
-            };
-
-            config.AddTarget("papertrail", papertrail);
-
-            papertrail.Layout = "| " + Helpers.DisplayVersion +
-                                " |${level:uppercase=true}| ${message} ${exception:format=toString,Data}";
-
-            LoggingRule rule = new("*", LogLevel.Error, papertrail);
-            config.LoggingRules.Add(rule);
-            LogManager.Configuration = config;
-        }
-        catch
-        {
-            logger.Error("Failed to setup logging with papertrail");
-        }
     }
 
     public void ProcessReceivedArgs(string[] args)

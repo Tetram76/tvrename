@@ -337,7 +337,6 @@ namespace TVRename.Forms
             pbFilesAndFolders = new PictureBox();
             tbGeneral = new TabPage();
             chkAutoAddAsPartOfQuickRename = new CheckBox();
-            chkShareCriticalLogs = new CheckBox();
             label60 = new Label();
             pbGeneral = new PictureBox();
             txtWTWDays = new TextBox();
@@ -913,7 +912,7 @@ namespace TVRename.Forms
             // cbAutoSaveOnExit
             // 
             cbAutoSaveOnExit.AutoSize = true;
-            cbAutoSaveOnExit.Location = new Point(15, 173);
+            cbAutoSaveOnExit.Location = new Point(15, 147);
             cbAutoSaveOnExit.Margin = new Padding(4, 3, 4, 3);
             cbAutoSaveOnExit.Name = "cbAutoSaveOnExit";
             cbAutoSaveOnExit.Size = new Size(116, 19);
@@ -4134,7 +4133,6 @@ namespace TVRename.Forms
             // 
             tbGeneral.Controls.Add(cbAutoSaveOnExit);
             tbGeneral.Controls.Add(chkAutoAddAsPartOfQuickRename);
-            tbGeneral.Controls.Add(chkShareCriticalLogs);
             tbGeneral.Controls.Add(label60);
             tbGeneral.Controls.Add(pbGeneral);
             tbGeneral.Controls.Add(txtWTWDays);
@@ -4153,24 +4151,13 @@ namespace TVRename.Forms
             // chkAutoAddAsPartOfQuickRename
             // 
             chkAutoAddAsPartOfQuickRename.AutoSize = true;
-            chkAutoAddAsPartOfQuickRename.Location = new Point(15, 147);
+            chkAutoAddAsPartOfQuickRename.Location = new Point(15, 120);
             chkAutoAddAsPartOfQuickRename.Margin = new Padding(4, 3, 4, 3);
             chkAutoAddAsPartOfQuickRename.Name = "chkAutoAddAsPartOfQuickRename";
             chkAutoAddAsPartOfQuickRename.Size = new Size(211, 19);
             chkAutoAddAsPartOfQuickRename.TabIndex = 43;
             chkAutoAddAsPartOfQuickRename.Text = "Auto-Add as part of Quick Rename";
             chkAutoAddAsPartOfQuickRename.UseVisualStyleBackColor = true;
-            // 
-            // chkShareCriticalLogs
-            // 
-            chkShareCriticalLogs.AutoSize = true;
-            chkShareCriticalLogs.Location = new Point(15, 120);
-            chkShareCriticalLogs.Margin = new Padding(4, 3, 4, 3);
-            chkShareCriticalLogs.Name = "chkShareCriticalLogs";
-            chkShareCriticalLogs.Size = new Size(231, 19);
-            chkShareCriticalLogs.TabIndex = 42;
-            chkShareCriticalLogs.Text = "Share critical errors to help defeat bugs";
-            chkShareCriticalLogs.UseVisualStyleBackColor = true;
             // 
             // label60
             // 
@@ -6872,7 +6859,6 @@ namespace TVRename.Forms
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.CheckBox cbCopyFutureDatedEps;
-        private System.Windows.Forms.CheckBox chkShareCriticalLogs;
         private System.Windows.Forms.CheckBox chkPostpendThe;
         private System.Windows.Forms.CheckBox chkBasicShowDetails;
         private System.Windows.Forms.CheckBox chkUseSearchFullPathWhenMatchingShows;
