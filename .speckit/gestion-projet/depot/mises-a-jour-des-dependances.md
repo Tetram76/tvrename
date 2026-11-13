@@ -7,7 +7,7 @@ generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T12:00:00Z }
 
 # Mises à jour des dépendances
 
-Les montées de version relèvent de l'agent (point technique, [Prise de décision](../gouvernance/prise-de-decision.md)) : il les détecte et les traite sans attendre de demande de l'utilisateur. L'outillage décrit ici (épinglage, relevé, contrôle de sécurité quotidien) est mis en place par la Phase 2, sécurité et montées de version ([`suivi-implementation/`](../../suivi-implementation/index.md)) ; jusque-là, ses règles valent pour toute montée faite en chemin, et ce qu'elles supposent d'outillage est sans objet.
+Les montées de version relèvent de l'agent (point technique, [Prise de décision](../gouvernance/prise-de-decision.md)) : il les détecte et les traite sans attendre de demande de l'utilisateur. L'outillage décrit ici (épinglage, relevé, contrôle de sécurité quotidien) est mis en place par la Phase 3, sécurité et montées de version ([`suivi-implementation/`](../../suivi-implementation/index.md)) ; jusque-là, ses règles valent pour toute montée faite en chemin, et ce qu'elles supposent d'outillage est sans objet.
 
 - **Toutes les technologies surveillées** : chaque version que le dépôt utilise est **épinglée** à sa valeur exacte, pour qu'aucune ne change sans une modification du dépôt, donc sans montée de version visible :
   - packages NuGet, centralisés dans `Directory.Packages.props`, et outils .NET locaux (`dotnet-tools.json`) ;

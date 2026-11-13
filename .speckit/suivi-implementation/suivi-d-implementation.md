@@ -18,8 +18,9 @@ Chaque phase, ou partie de phase, qui change l'application est livrée par une v
 Les phases se suivent dans l'ordre que fixe l'utilisateur :
 
 1. **Phase 0 — Mise en place** : gouvernance, CI, analyse de la qualité, moyens de test et de validation.
-2. **Phase 1 — Nettoyage du code** : couverture de tests et porte de qualité de SonarQube Cloud.
-3. **Phase 2 — Sécurité et montées de version** : correctifs de sécurité, puis montées de version.
-4. **Phase 3 — Corrections et nouvelles fonctionnalités**.
+2. **Phase 1 — Nettoyage du dépôt et du CI** : fichiers et workflows hérités du fork.
+3. **Phase 2 — Nettoyage du code** : couverture de tests et porte de qualité de SonarQube Cloud.
+4. **Phase 3 — Sécurité et montées de version** : correctifs de sécurité, puis montées de version.
+5. **Phase 4 — Corrections et nouvelles fonctionnalités**.
 
-La **rétro-documentation** de l'existant (`fonctionnel/`, [`modele-metier/`](../modele-metier/index.md)) n'est pas une phase : elle est menée au fur et à mesure, par les chantiers des phases 1 et 2 qui en ont besoin (un chantier de couverture documente d'abord le comportement que ses tests fixent), puis **complétée et finalisée avant la Phase 3**, dont elle est la condition de démarrage.
+La **rétro-documentation** de l'existant (`fonctionnel/`, [`modele-metier/`](../modele-metier/index.md)) n'est pas une phase : elle est menée au fur et à mesure, par les chantiers des phases 2 et 3 qui en ont besoin (un chantier de couverture documente d'abord le comportement que ses tests fixent), puis **complétée et finalisée avant la Phase 4**, dont elle est la condition de démarrage.

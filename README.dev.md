@@ -6,7 +6,7 @@ Ce document s'adresse à qui maintient le projet ; pour découvrir, installer ou
 
 Ce dépôt est un fork détaché de [TV-Rename/tvrename](https://github.com/TV-Rename/tvrename), maintenu et amélioré par étapes, sans réécriture. Le projet est mené en **développement piloté par la spécification** : le dossier [`.speckit/`](.speckit/index.md) est la source de vérité du projet (gouvernance, contraintes, choix techniques, fonctionnalités, plan), et [`AGENTS.md`](AGENTS.md) son point d'entrée pour les agents IA.
 
-Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/suivi-implementation/index.md) : mise en place, nettoyage du code, sécurité et montées de version, puis corrections et nouvelles fonctionnalités.
+Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/suivi-implementation/index.md) : mise en place, nettoyage du dépôt et du CI, nettoyage du code, sécurité et montées de version, puis corrections et nouvelles fonctionnalités.
 
 ## Organisation du code
 
