@@ -1,4 +1,9 @@
 # TV & Movie Rename
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Tetram76_tvrename)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=coverage)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=security_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tetram76_tvrename&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=Tetram76_tvrename)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ad1fea1cdca5468fb3d6c237db26eb23)](https://www.codacy.com/gh/TV-Rename/tvrename/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TV-Rename/tvrename&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/tv-rename/tvrename/badge)](https://www.codefactor.io/repository/github/tv-rename/tvrename) [![CodeQL](https://github.com/TV-Rename/tvrename/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/TV-Rename/tvrename/actions/workflows/codeql.yml) 
 [![Build & Deploy TV Rename](https://github.com/TV-Rename/tvrename/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/TV-Rename/tvrename/actions/workflows/dotnet-desktop.yml)
