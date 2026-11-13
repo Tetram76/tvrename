@@ -23,16 +23,24 @@ public static class PathManager
     private const string STATISTICS_FILE_NAME = "Statistics.xml";
     private const string STATE_FILE_NAME = "State.xml";
 
-    // Read by NLog.config, whose log files follow the runtime data of the application.
+    // Read by NLog.config, whose log files follow the data folder of the application.
     private const string APP_DATA_FOLDER_LOG_ITEM = "AppDataFolder";
 
     private static string? UserDefinedBasePath;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     /// <summary>
-    /// The folder of the runtime data (logs, browser cache, audit) set by /appdatapath:, if any.
+    /// The folder that replaces %APPDATA%\TVRename for all the files of the application, if any.
     /// </summary>
     public static string? UserDefinedAppDataPath { get; private set; }
+
+    /// <summary>
+    /// The data folder of a validation instance (/validation): %APPDATA%\TVRename moved to the temporary folder.
+    /// </summary>
+    public static string ValidationAppDataPath => System.IO.Path.Combine(System.IO.Path.GetTempPath(), "TVRename");
+
+    private static string AppDataFolder
+        => UserDefinedAppDataPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TVRename");
 
     public static FileInfo[] GetPossibleSettingsHistory() => GetPatternFiles(SETTINGS_FILE_NAME);
     public static FileInfo[] GetPossibleTvdbHistory() => GetPatternFiles(TVDB_FILE_NAME);
@@ -96,8 +104,9 @@ public static class PathManager
     }
 
     /// <summary>
-    /// Moves the runtime data (logs, browser cache, audit) to <paramref name="path"/>, created if missing. Set before
-    /// the first log, so that no log goes to the default folder.
+    /// Moves all the files of the application (settings and caches, unless /userfilepath: moves them elsewhere, logs,
+    /// browser cache, audit) from %APPDATA%\TVRename to <paramref name="path"/>, created if missing. Set before the
+    /// first log, so that no log goes to the default folder.
     /// </summary>
     /// <exception cref="ArgumentException"><paramref name="path"/> is empty or is not a valid path.</exception>
     /// <exception cref="System.IO.IOException">The folder cannot be created.</exception>
@@ -117,17 +126,14 @@ public static class PathManager
     {
         string path = UserDefinedBasePath.HasValue()
             ? UserDefinedBasePath
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TVRename",
-                "TVRename", "2.1");
+            : Path.Combine(AppDataFolder, "TVRename", "2.1");
         Directory.CreateDirectory(path);
         return new FileInfo(System.IO.Path.Combine(path, file));
     }
 
     private static string TvRenameFolder(string folderName)
     {
-        string path = Path.Combine(
-            UserDefinedAppDataPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TVRename"),
-            folderName);
+        string path = Path.Combine(AppDataFolder, folderName);
 
         try
         {

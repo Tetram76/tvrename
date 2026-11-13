@@ -3,13 +3,12 @@ using TVRename.App;
 namespace TVRename.Tests.App;
 
 /// <summary>
-/// Pins the single instance per folder of runtime data (fonctionnel/dossiers-de-donnees.md): instances started with
-/// the same /appdatapath: folder form one instance, those of other folders run beside them and never receive their
-/// arguments.
+/// Pins the separate instance (fonctionnel/dossiers-de-donnees.md): instances of the same name form one instance,
+/// those of other names run beside them and never receive their arguments.
 /// </summary>
 /// <remarks>
-/// Only instances with a folder of their own are exercised: the machine-wide instance would meet a TV Rename running
-/// on the machine of whoever runs the tests.
+/// Each test names its instances on its own, so that neither a validation instance nor the TV Rename running on the
+/// machine of whoever runs the tests meets them.
 /// </remarks>
 public sealed class SingleInstanceServiceTests : IDisposable
 {
@@ -31,59 +30,54 @@ public sealed class SingleInstanceServiceTests : IDisposable
     }
 
     [Fact]
-    public void MutexName_WithoutFolder_IsTheMachineWideOne()
+    public void MutexName_OfTheMachineWideInstance_IsTheOneOfTheExistingApplication()
         => Assert.Equal("TVRename", Create(null).MutexName);
 
     [Fact]
-    public void MutexName_DependsOnTheFolderOnly()
-    {
-        string folder = NewFolder();
+    public void MutexName_OfASeparateInstance_CarriesItsName()
+        => Assert.Equal("TVRename-validation", Create(new SeparateInstance("validation", NewFolder())).MutexName);
 
-        Assert.Equal(Create(folder).MutexName, Create(folder + Path.DirectorySeparatorChar).MutexName);
-        Assert.Equal(Create(folder).MutexName, Create(folder.ToUpperInvariant()).MutexName);
-        Assert.NotEqual(Create(folder).MutexName, Create(NewFolder()).MutexName);
-        Assert.NotEqual("TVRename", Create(folder).MutexName);
+    [Fact]
+    public void IsFirstInstance_IsFalse_ForASecondInstanceOfTheSameName()
+    {
+        SeparateInstance instance = NewInstance();
+
+        Assert.True(Create(instance).IsFirstInstance());
+        Assert.False(Create(instance).IsFirstInstance());
     }
 
     [Fact]
-    public void IsFirstInstance_IsFalse_ForASecondInstanceOfTheSameFolder()
+    public void IsFirstInstance_IsTrue_ForInstancesOfDifferentNames()
     {
-        string folder = NewFolder();
-
-        Assert.True(Create(folder).IsFirstInstance());
-        Assert.False(Create(folder).IsFirstInstance());
+        Assert.True(Create(NewInstance()).IsFirstInstance());
+        Assert.True(Create(NewInstance()).IsFirstInstance());
     }
 
     [Fact]
-    public void IsFirstInstance_IsTrue_ForInstancesOfDifferentFolders()
+    public async Task SendArgumentsToExistingInstance_ReachesTheInstanceOfTheSameNameOnly()
     {
-        Assert.True(Create(NewFolder()).IsFirstInstance());
-        Assert.True(Create(NewFolder()).IsFirstInstance());
-    }
-
-    [Fact]
-    public async Task SendArgumentsToExistingInstance_ReachesTheInstanceOfTheSameFolderOnly()
-    {
-        string folder = NewFolder();
-        TaskCompletionSource<string[]> sameFolder = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        TaskCompletionSource<string[]> otherFolder = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        Assert.True(Create(NewFolder(), args => otherFolder.TrySetResult(args)).IsFirstInstance());
-        Assert.True(Create(folder, args => sameFolder.TrySetResult(args)).IsFirstInstance());
-        SingleInstanceService second = Create(folder);
+        SeparateInstance instance = NewInstance();
+        TaskCompletionSource<string[]> sameName = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource<string[]> otherName = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        Assert.True(Create(NewInstance(), args => otherName.TrySetResult(args)).IsFirstInstance());
+        Assert.True(Create(instance, args => sameName.TrySetResult(args)).IsFirstInstance());
+        SingleInstanceService second = Create(instance);
         Assert.False(second.IsFirstInstance());
 
         await second.SendArgumentsToExistingInstance();
 
-        Assert.NotEmpty(await sameFolder.Task.WaitAsync(ArgumentsTimeout));
-        Assert.False(otherFolder.Task.IsCompleted);
+        Assert.NotEmpty(await sameName.Task.WaitAsync(ArgumentsTimeout));
+        Assert.False(otherName.Task.IsCompleted);
     }
 
-    private SingleInstanceService Create(string? folder, Action<string[]>? onArgumentsReceived = null)
+    private SingleInstanceService Create(SeparateInstance? instance, Action<string[]>? onArgumentsReceived = null)
     {
-        SingleInstanceService service = new(folder, onArgumentsReceived ?? (_ => { }));
+        SingleInstanceService service = new(instance, onArgumentsReceived ?? (_ => { }));
         services.Add(service);
         return service;
     }
+
+    private SeparateInstance NewInstance() => new($"tests-{Guid.NewGuid():N}", NewFolder());
 
     private string NewFolder()
     {

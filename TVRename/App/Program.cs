@@ -28,7 +28,8 @@ public static class Program
     private static void Main(string[] args)
     {
         // Before the first log, which goes to the folder of runtime data.
-        if (!SetupAppDataFolder(new CommandLineArgs(args)))
+        CommandLineArgs startupArgs = new(args);
+        if (!SetupValidationAppDataFolder(startupArgs))
         {
             Environment.Exit(1);
         }
@@ -92,7 +93,9 @@ public static class Program
         Mutex? mutex = null;
         try
         {
-            using SingleInstanceService singleInstanceService = new(PathManager.UserDefinedAppDataPath, OnArgumentsReceived);
+            using SingleInstanceService singleInstanceService = new(
+                startupArgs.Validation ? new SeparateInstance("validation", PathManager.ValidationAppDataPath) : null,
+                OnArgumentsReceived);
 
             // Check if an application instance is already running
             mutex = new Mutex(true, singleInstanceService.MutexName, out bool newInstance);
@@ -139,28 +142,27 @@ public static class Program
     }
 
     /// <summary>
-    /// Moves the runtime data to the folder of /appdatapath:, if given.
+    /// Moves the data folder of a validation instance (/validation) to the temporary folder.
     /// </summary>
     /// <returns>false when the folder cannot be used: the application then stops, rather than writing to the default
-    /// folder that the option is there to leave untouched.</returns>
-    private static bool SetupAppDataFolder(CommandLineArgs commandLineArgs)
+    /// folder that a validation instance leaves untouched.</returns>
+    private static bool SetupValidationAppDataFolder(CommandLineArgs commandLineArgs)
     {
-        string? appDataPath = commandLineArgs.AppDataPath;
-        if (appDataPath is null)
+        if (!commandLineArgs.Validation)
         {
             return true;
         }
 
         try
         {
-            PathManager.SetUserDefinedAppDataPath(appDataPath);
+            PathManager.SetUserDefinedAppDataPath(PathManager.ValidationAppDataPath);
             return true;
         }
         catch (Exception ex) when (ex is ArgumentException or System.IO.IOException or UnauthorizedAccessException or NotSupportedException)
         {
             if (!commandLineArgs.Unattended && !commandLineArgs.Hide && Environment.UserInteractive)
             {
-                MessageBox.Show($"Error while setting the folder of /appdatapath:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error while setting the folder of the validation instance:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return false;

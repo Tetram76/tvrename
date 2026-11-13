@@ -5,8 +5,8 @@ using NLog.Targets;
 namespace TVRename.Tests.TVRename;
 
 /// <summary>
-/// Pins where the runtime data of the application go once /appdatapath: has moved them
-/// (fonctionnel/dossiers-de-donnees.md): logs, cache and log of the embedded browser, audit of TheTVDB.
+/// Pins where the files of the application go once their folder is moved, as /validation moves it
+/// (fonctionnel/dossiers-de-donnees.md): settings and caches, logs, cache and log of the embedded browser, audit.
 /// </summary>
 /// <remarks>
 /// <see cref="PathManager"/> holds the folder for the whole process, as the application sets it once at start-up: no
@@ -27,8 +27,16 @@ public sealed class PathManagerTests : IDisposable
     }
 
     [Fact]
+    public void ValidationAppDataPath_IsInTheTemporaryFolder()
+        => Assert.Equal(Path.Combine(Path.GetTempPath(), "TVRename"), PathManager.ValidationAppDataPath);
+
+    [Fact]
     public void SetUserDefinedAppDataPath_CreatesTheFolder()
         => Assert.True(Directory.Exists(appDataFolder));
+
+    [Fact]
+    public void SettingsFile_IsInTheFolder()
+        => Assert.Equal(Path.Combine(appDataFolder, "TVRename", "2.1", "TVRenameSettings.xml"), PathManager.TVDocSettingsFile.FullName);
 
     [Fact]
     public void CefCachePath_IsInTheFolder()

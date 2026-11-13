@@ -6,11 +6,11 @@
 .DESCRIPTION
     Validation environment of choix-implementation/environnement-de-validation-fonctionnelle.md: stops the processes
     started from the validation version (the application and the processes of its embedded browser), never another
-    TV Rename, then removes its sources, its build and its folders of data.
+    TV Rename, then removes its sources, its build and the data folder of the validation instance (%TEMP%\TVRename).
 #>
 [CmdletBinding()]
 param(
-    # Keeps the folders of data, for the next start with -KeepData.
+    # Keeps the data folder, for the next start with -KeepData.
     [switch] $KeepData
 )
 
@@ -19,6 +19,8 @@ $ErrorActionPreference = 'Stop'
 
 $validation = Join-Path ([IO.Path]::GetTempPath()) 'tvrename-validation'
 $application = Join-Path $validation 'application'
+# Set by the application itself for /validation (PathManager.ValidationAppDataPath).
+$dataFolder = Join-Path ([IO.Path]::GetTempPath()) 'TVRename'
 
 # Found by the folder they run from, which tells them from the TV Rename of the machine.
 $processes = @(Get-Process | Where-Object { $_.Path -and $_.Path.StartsWith("$application\", [StringComparison]::OrdinalIgnoreCase) })
@@ -36,10 +38,8 @@ foreach ($process in $processes) {
     $process.Dispose()
 }
 
-if (Test-Path $validation) {
-    $kept = if ($KeepData) { @('userfiles', 'appdata') } else { @() }
-    Get-ChildItem $validation | Where-Object Name -NotIn $kept | Remove-Item -Recurse -Force
-    if (-not $KeepData) {
-        Remove-Item $validation -Recurse -Force
+foreach ($folder in @($validation) + @(if (-not $KeepData) { $dataFolder })) {
+    if (Test-Path $folder) {
+        Remove-Item $folder -Recurse -Force
     }
 }

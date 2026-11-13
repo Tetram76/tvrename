@@ -1,31 +1,30 @@
 namespace TVRename.Tests.App;
 
 /// <summary>
-/// Pins the reading of the options that move the folders of the application (fonctionnel/dossiers-de-donnees.md).
+/// Pins the reading of the option of the validation instance (fonctionnel/dossiers-de-donnees.md).
 /// </summary>
 public class CommandLineArgsTests
 {
     [Theory]
-    [InlineData("/appdatapath:C:\\Validation\\appdata", "C:\\Validation\\appdata")]
-    [InlineData("/AppDataPath:C:\\Validation\\appdata", "C:\\Validation\\appdata")]
-    [InlineData("/appdatapath:relative", "relative")]
-    public void AppDataPath_IsTheFolderGivenByTheOption(string option, string expected)
-        => Assert.Equal(expected, new CommandLineArgs([option]).AppDataPath);
+    [InlineData("/validation")]
+    [InlineData("/Validation")]
+    public void Validation_IsSetByTheOption(string option)
+        => Assert.True(new CommandLineArgs([option]).Validation);
 
     [Fact]
-    public void AppDataPath_IsNullWithoutTheOption()
-        => Assert.Null(new CommandLineArgs(["/userfilepath:C:\\Validation\\data"]).AppDataPath);
+    public void Validation_IsNotSetWithoutTheOption()
+        => Assert.False(new CommandLineArgs(["/userfilepath:C:\\Validation\\data"]).Validation);
 
     [Fact]
-    public void AppDataPath_AndUserFilePath_AreReadIndependently()
+    public void Validation_LeavesUserFilePathToItsOwnOption()
     {
-        CommandLineArgs args = new(["/userfilepath:C:\\Validation\\data", "/appdatapath:C:\\Validation\\appdata"]);
+        CommandLineArgs args = new(["/userfilepath:C:\\Validation\\data", "/validation"]);
 
         Assert.Equal("C:\\Validation\\data", args.UserFilePath);
-        Assert.Equal("C:\\Validation\\appdata", args.AppDataPath);
+        Assert.True(args.Validation);
     }
 
     [Fact]
     public void Helptext_DescribesTheOption()
-        => Assert.Contains("/appdatapath:", CommandLineArgs.Helptext(), StringComparison.Ordinal);
+        => Assert.Contains("/validation", CommandLineArgs.Helptext(), StringComparison.Ordinal);
 }

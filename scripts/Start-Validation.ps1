@@ -5,12 +5,12 @@
 
 .DESCRIPTION
     Validation environment of choix-implementation/environnement-de-validation-fonctionnelle.md: the application,
-    built from the sources of the commit alone, started with folders of data of its own (/userfilepath: and
-    /appdatapath:), beside a TV Rename already running, whose settings, caches and logs it never reads nor writes.
-    Each start begins from empty folders, so that nothing is left from one validation to the next. A validation
-    version still running is stopped first. Stopped by Stop-Validation.ps1.
+    built from the sources of the commit alone, started as a validation instance (/validation), whose data folder is
+    %TEMP%\TVRename: it runs beside a TV Rename already started, and never reads nor writes its files. Each start
+    begins from an empty data folder, so that nothing is left from one validation to the next. A validation version
+    still running is stopped first. Stopped by Stop-Validation.ps1.
 
-    Requires git and the .NET SDK of the application (global.json, or the target framework of TVRename.csproj).
+    Requires git and the .NET SDK of the application.
 
 .EXAMPLE
     ./scripts/Start-Validation.ps1 -PullRequest 18
@@ -29,7 +29,7 @@ param(
     [Parameter(ParameterSetName = 'Ref')]
     [string] $Ref = 'HEAD',
 
-    # Keeps the folders of data of the previous validation, rather than starting from empty ones.
+    # Keeps the data folder of the previous validation, rather than starting from an empty one.
     [switch] $KeepData
 )
 
@@ -41,11 +41,9 @@ $repository = Split-Path $PSScriptRoot -Parent
 $validation = Join-Path ([IO.Path]::GetTempPath()) 'tvrename-validation'
 $sources = Join-Path $validation 'sources'
 $application = Join-Path $validation 'application'
-$userFiles = Join-Path $validation 'userfiles'
-$appData = Join-Path $validation 'appdata'
 
 # The validation version holds its files: it is stopped before they are replaced.
-& (Join-Path $PSScriptRoot 'Stop-Validation.ps1') -KeepData
+& (Join-Path $PSScriptRoot 'Stop-Validation.ps1') -KeepData:$KeepData
 
 if ($PullRequest) {
     git -C $repository fetch --quiet origin "pull/$PullRequest/head"
@@ -55,11 +53,6 @@ $commit = git -C $repository rev-parse --verify "$Ref^{commit}"
 
 # The sources of that commit alone, away from the working copy: its uncommitted changes, its branch and its other
 # files play no part in what is validated.
-foreach ($folder in @($sources, $application) + @(if (-not $KeepData) { $userFiles, $appData })) {
-    if (Test-Path $folder) {
-        Remove-Item $folder -Recurse -Force
-    }
-}
 New-Item -ItemType Directory $sources | Out-Null
 $archive = Join-Path $validation 'sources.tar'
 git -C $repository archive --format=tar --output $archive $commit
@@ -70,15 +63,13 @@ Remove-Item $archive
 # the build into the publication of the installer.
 dotnet build (Join-Path $sources 'TVRename/TVRename.csproj') -noAutoResponse --configuration Release --output $application --nologo --verbosity quiet
 
-Start-Process -FilePath (Join-Path $application 'TVRename.exe') -WorkingDirectory $application `
-    -ArgumentList "`"/userfilepath:$userFiles`"", "`"/appdatapath:$appData`""
+Start-Process -FilePath (Join-Path $application 'TVRename.exe') -WorkingDirectory $application -ArgumentList '/validation'
 
 Write-Host ''
 # The pull request validated, if any: the commit alone does not tell which one is on screen.
 if ($PullRequest) {
-    Write-Host "Pull request:         #$PullRequest"
+    Write-Host "Pull request:      #$PullRequest"
 }
-Write-Host "Version validated:    $commit"
-Write-Host "Settings and caches:  $userFiles"
-Write-Host "Logs, browser cache:  $appData"
+Write-Host "Version validated: $commit"
+Write-Host "Data folder:       $(Join-Path ([IO.Path]::GetTempPath()) 'TVRename')"
 Write-Host 'Stop: ./scripts/Stop-Validation.ps1'

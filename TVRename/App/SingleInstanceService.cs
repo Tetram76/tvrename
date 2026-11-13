@@ -12,7 +12,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.AccessControl;
-using System.Security.Cryptography;
 using System.Security.Principal;
 using File = System.IO.File;
 using Path = System.IO.Path;
@@ -20,25 +19,30 @@ using Path = System.IO.Path;
 namespace TVRename.App;
 
 /// <summary>
-/// Keeps a single instance of the application per folder of runtime data, and passes the arguments of the next
-/// instances to it.
+/// An instance kept apart from the machine-wide one: the validation instance (/validation).
+/// </summary>
+/// <param name="Name">Name of the instance, which its mutex and semaphore carry.</param>
+/// <param name="Folder">Folder of its runtime data, where it writes the port it listens on.</param>
+internal sealed record SeparateInstance(string Name, string Folder);
+
+/// <summary>
+/// Keeps a single instance of the application, and passes the arguments of the next instances to it.
 /// </summary>
 /// <remarks>
-/// Without a folder (no /appdatapath:), the single instance is machine-wide, with the names and the port of the
-/// existing application. With a folder, only the instances of that folder form one instance
-/// (fonctionnel/dossiers-de-donnees.md): their names carry a hash of the folder, and the first instance listens on a
-/// port the system assigns, written in the folder for the next ones.
+/// The machine-wide instance keeps the names and the port of the existing application. A separate instance forms a
+/// single instance with the instances of the same name only (fonctionnel/dossiers-de-donnees.md): its names carry its
+/// name, and it listens on a port the system assigns, written in its folder for the next ones.
 /// </remarks>
-/// <param name="appDataFolder">The folder of runtime data, or null for the machine-wide instance.</param>
+/// <param name="separateInstance">The separate instance, or null for the machine-wide instance.</param>
 /// <param name="onArgumentsReceived">Receives the arguments passed by a next instance.</param>
-internal sealed class SingleInstanceService(string? appDataFolder, Action<string[]> onArgumentsReceived) : IDisposable
+internal sealed class SingleInstanceService(SeparateInstance? separateInstance, Action<string[]> onArgumentsReceived) : IDisposable
 {
     private const string LOCAL_HOST = "127.0.0.1";
     private const int MACHINE_WIDE_PORT = 19191;
     private const string PORT_FILE_NAME = "instance.port";
     private static readonly NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
 
-    private readonly string scopeSuffix = appDataFolder is null ? string.Empty : $"-{FolderHash(appDataFolder)}";
+    private readonly string scopeSuffix = separateInstance is null ? string.Empty : $"-{separateInstance.Name}";
     private Semaphore? semaphore;
     private TcpListener? tcpListener;
 
@@ -49,7 +53,7 @@ internal sealed class SingleInstanceService(string? appDataFolder, Action<string
 
     private string SemaphoreName => $"Global\\{Environment.MachineName}-TVRename-{Assembly.GetExecutingAssembly().GetName().Version}{scopeSuffix}.SingleInstanceLimiter";
 
-    private string? PortFile => appDataFolder is null ? null : Path.Combine(appDataFolder, PORT_FILE_NAME);
+    private string? PortFile => separateInstance is null ? null : Path.Combine(separateInstance.Folder, PORT_FILE_NAME);
 
     internal bool IsFirstInstance()
     {
@@ -209,11 +213,4 @@ internal sealed class SingleInstanceService(string? appDataFolder, Action<string
         => PortFile is null
             ? MACHINE_WIDE_PORT
             : int.Parse(File.ReadAllText(PortFile), NumberStyles.None, CultureInfo.InvariantCulture);
-
-    // The same folder, whatever its case or trailing separator, gives the same hash: Windows paths ignore case.
-    private static string FolderHash(string folder)
-    {
-        string normalised = Path.GetFullPath(folder).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToUpperInvariant();
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(normalised)))[..16];
-    }
 }
