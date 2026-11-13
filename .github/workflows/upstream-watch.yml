@@ -1,0 +1,141 @@
+name: Upstream watch
+
+# Monthly watch of the upstream repository, which the detached fork no longer follows
+# (gestion-projet/depot/reprise-depuis-l-amont.md): the evolutions of its default branch, each merged pull request with
+# its commits and each commit outside a pull request, kept in the tracking issue of the harness. Its releases are not
+# watched: they only ship commits that the evolutions already hold. The issue is a state, not a history
+# (gestion-projet/revue-tickets/issues.md): its points are the evolutions the agent has not handled yet, and the agent
+# removes each one it handles (gestion-projet/depot/veille-de-l-amont-a-la-reprise-du-travail.md). Each run therefore
+# adds to the points still listed only the evolutions received since the previous run, whose head it keeps in the
+# marker of the list, and rewrites the body. The run only fails, hence only notifies the user who created the workflow,
+# when it adds an evolution. It never writes to the repository, only to its issues.
+on:
+  schedule:
+    - cron: "23 5 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: Watch the upstream
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      UPSTREAM: TV-Rename/tvrename
+    steps:
+      - name: List the evolutions of the upstream
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+          cd "$RUNNER_TEMP"
+          url="https://github.com/$UPSTREAM"
+
+          # The tracking issue is the one with both labels, whatever its state: upstream-watch also groups the chantiers
+          # of the harness (gestion-projet/revue-tickets/issues.md). A command substitution, so that a failed lookup
+          # stops the run (set -e) instead of reading as no issue, which would start over from archive/master in a
+          # second issue.
+          issue='' state='' body=''
+          found=$(gh issue list --label upstream-watch --label harness --state all --limit 1 \
+            --json number,state -q '.[] | "\(.number) \(.state)"')
+          if [ -n "$found" ]; then
+            read -r issue state <<< "$found"
+            body=$(gh issue view "$issue" --json body -q .body | tr -d '\r')
+          fi
+
+          # The points still listed are the evolutions the agent has not handled: kept as they are. The previous run read
+          # the upstream up to the head its marker holds; the first one starts from the commit the fork detached from,
+          # which archive/master keeps.
+          sed -n '/^<!-- list head=[0-9a-f]\{40\} -->$/,/^<!-- end -->$/{/^<!--/d;p}' <<< "$body" > known.txt
+          base=$(grep -oP '^<!-- list head=\K[0-9a-f]{40}(?= -->$)' <<< "$body" || true)
+          if [ -z "$base" ]; then
+            base=$(gh api "repos/$GH_REPO/branches/archive/master" --jq .commit.sha)
+          fi
+          branch=$(gh api "repos/$UPSTREAM" --jq .default_branch)
+          head=$(gh api "repos/$UPSTREAM/commits/$branch" --jq .sha)
+          echo "From $base to $head ($branch)."
+
+          # A starting point that is no longer an ancestor of the branch (history rewritten upstream) would list
+          # commits that are not evolutions: the agent sets the head of the marker to a commit of the branch.
+          status=$(gh api "repos/$UPSTREAM/compare/$base...$head" --jq .status)
+          if [ "$status" != identical ] && [ "$status" != ahead ]; then
+            echo "::error::$base is not an ancestor of $UPSTREAM@$branch ($status): set the head of the list marker."
+            exit 1
+          fi
+
+          # The commits, oldest first: hash, author, first line of the message.
+          gh api --paginate "repos/$UPSTREAM/compare/$base...$head?per_page=100" \
+            --jq '.commits[] | [.sha, (.author.login // .commit.author.name), (.commit.message | split("\n")[0])] | @tsv' \
+            > commits.tsv
+
+          # An evolution is a merged pull request, whatever its merge method, or a commit outside any. GitHub keeps for
+          # each commit of the default branch the merged pull request that introduced it, rebased commits included,
+          # whose hashes differ from those of the pull request's own commits: asked once per commit, it groups them.
+          # A pull request is one point, at its first commit in the list, linked through its merge commit.
+          # Upstream text goes into code spans, where GitHub neither notifies a mention nor links a reference to an
+          # issue, which would name an issue of this repository or add the issue to the timeline of an upstream one;
+          # pull requests are not linked by their URL, for the same reason. An evolution the points still listed already
+          # hold (a marker set back by hand) is not added twice.
+          code() { printf '`%s`' "${1//\`/\'}"; }
+          commit() { printf '[`%s`](%s/commit/%s)' "${1:0:7}" "$url" "$1"; }
+          : > listed.txt
+          while IFS=$'\t' read -r hash author title; do
+            pull=$(gh api "repos/$UPSTREAM/commits/$hash/pulls" --jq "[.[] | select(.merged_at != null and \
+              .base.ref == \"$branch\")][0] // empty | [.number, .merge_commit_sha, .user.login, .title] | @tsv")
+            if [ -n "$pull" ]; then
+              IFS=$'\t' read -r number hash author title <<< "$pull"
+              grep -qxF "#$number" listed.txt && continue
+              echo "#$number" >> listed.txt
+              grep -qF "$hash" known.txt && continue
+              echo "- PR n° $number, $(commit "$hash") : $(code "$title") ($(code "$author"))"
+            else
+              grep -qF "$hash" known.txt && continue
+              echo "- $(commit "$hash") : $(code "$title") ($(code "$author"))"
+            fi
+          done < commits.tsv > new.txt
+
+          # The three parts of a tracking issue, and nothing else (gestion-projet/revue-tickets/issues.md).
+          {
+            echo "Évolutions de l'amont, $(code "$UPSTREAM"), que la veille mensuelle ($(code .github/workflows/upstream-watch.yml)) relève sur sa branche $(code "$branch") pour que l'agent juge s'il faut en reprendre une dans le fork ($(code gestion-projet/depot/reprise-depuis-l-amont.md)). Chaque évolution est retirée dès qu'elle est traitée ($(code gestion-projet/depot/veille-de-l-amont-a-la-reprise-du-travail.md))."
+            echo
+            echo "Dernier contrôle : $(date -u +%F)"
+            echo
+            echo "<!-- list head=$head -->"
+            cat known.txt new.txt
+            echo "<!-- end -->"
+          } > body.md
+          cat body.md
+
+          # Open while it lists an evolution; without any, there is nothing to follow, hence no issue to create.
+          if [ -z "$issue" ]; then
+            if [ ! -s new.txt ]; then
+              exit 0
+            fi
+            # Only the initial title: the user may change it, the issue being found by its labels alone.
+            issue=$(basename "$(gh issue create --title "Harnais veille de l'amont : Évolutions de l'amont" \
+              --label upstream-watch --label harness --type Task --body-file body.md)")
+            state=OPEN
+          else
+            gh issue edit "$issue" --body-file body.md
+          fi
+          if [ -s known.txt ] || [ -s new.txt ]; then
+            [ "$state" = OPEN ] || gh issue reopen "$issue"
+          elif [ "$state" = OPEN ]; then
+            gh issue close "$issue" --reason completed
+          fi
+
+          if [ -s new.txt ]; then
+            echo "::error::The upstream received $(wc -l < new.txt) evolution(s) since the previous run: see issue #$issue."
+            exit 1
+          fi
