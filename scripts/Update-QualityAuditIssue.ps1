@@ -159,22 +159,25 @@ $tracking = @(gh issue list --label quality-audit --label harness --state all --
 if ($LASTEXITCODE) { throw 'The lookup of the tracking issue failed.' }
 $issue = $tracking ? $tracking[0] : $null
 
+# The entries of one line of a section, as Format-Section writes it: a failed condition, or a file with its entries
+# grouped by source ("`sonar` `rule`, `rule` ; `style` `rule`").
+function Read-LineEntry([string] $section, [string] $line) {
+    if ($line -match '^- `gate` `(?<metric>[^`]+)`$') { return ConvertTo-Entry $section gate $Matches.metric }
+    if ($line -notmatch '^- `(?<file>[^`]+)` : (?<groups>.+)$') { return }
+    $file = $Matches.file
+    foreach ($group in [regex]::Matches($Matches.groups, '`(?<source>\w+)` (?<rules>`[^`]+`(?:, `[^`]+`)*)')) {
+        foreach ($rule in [regex]::Matches($group.Groups['rules'].Value, '`([^`]+)`')) {
+            ConvertTo-Entry $section $group.Groups['source'].Value $rule.Groups[1].Value $file
+        }
+    }
+}
+
 # The previous list, entry by entry, with its section. The first run, without any section, sets the reference.
 function Read-Entry([string] $body) {
     $section = $null
     foreach ($line in $body -split '\r?\n') {
-        if ($line -match '^### (?<name>.+)$') { $section = $Matches.name; continue }
-        if (-not $section) { continue }
-        if ($line -match '^- `gate` `(?<metric>[^`]+)`$') { ConvertTo-Entry $section gate $Matches.metric; continue }
-        if ($line -match '^- `(?<file>[^`]+)` : (?<groups>.+)$') {
-            $file = $Matches.file
-            foreach ($group in $Matches.groups -split ' ; ') {
-                if ($group -match '^`(?<source>\w+)` (?<rules>.+)$') {
-                    $groupSource = $Matches.source
-                    foreach ($rule in [regex]::Matches($Matches.rules, '`([^`]+)`')) { ConvertTo-Entry $section $groupSource $rule.Groups[1].Value $file }
-                }
-            }
-        }
+        if ($line -match '^### (?<name>.+)$') { $section = $Matches.name }
+        elseif ($section) { Read-LineEntry $section $line }
     }
 }
 
