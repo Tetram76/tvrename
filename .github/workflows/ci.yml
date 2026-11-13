@@ -110,6 +110,8 @@ jobs:
           $arguments = @(
             '/k:Tetram76_tvrename', '/o:tetram76', '/d:sonar.host.url=https://sonarcloud.io'
             "/d:sonar.token=$env:SONAR_TOKEN"
+            # The images of the application are items of its project, which the scanner indexes; no code, read as text.
+            '/d:sonar.exclusions=**/*.png,**/*.bmp,**/*.jpg,**/*.ico'
             "/d:sonar.coverage.exclusions=$coverageExclusions"
           )
           if (git tag --merged HEAD) { $arguments += "/v:$(git describe --tags --abbrev=0)" }
