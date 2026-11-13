@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Phase 1 découpée** en trois chantiers indépendants, rattachés au jalon `v10.0.0` : fichiers hérités du fork sans usage et fichiers de santé communautaire de l'amont (#19), documents destinés aux utilisateurs, soumis à leur validation (#20), construction de l'installeur (#21) ; notes de découpage remplacées par la liste des tickets (#22).
+
 * **Environnement de validation fonctionnelle** : version d'une Pull Request compilée depuis ses seules sources en version de validation (constante `VALIDATION`), qui range tous ses fichiers dans `%TEMP%\TVRename` et tourne à côté d'un TV Rename lancé, lancée par `scripts/Start-Validation.ps1`, arrêtée par `scripts/Stop-Validation.ps1` ; `/userfilepath:` garde son usage ordinaire (décision de l'utilisateur) ; l'application livrée reste inchangée ; chantier #5 barré dans le suivi de la Phase 0 (#18).
 
 * **Tickets de suivi des harnais** : un état, pas un historique (exigences de l'utilisateur) : description en trois parties, objectif, dates (`Dernier contrôle`, `Dernière prise en compte`) et points à corriger, sans décompte ni compte rendu ; traitement dû quand la ligne `Dernière prise en compte` manque ; point traité aussitôt retiré ; relevé des versions, traitement du contrôle qualité et veille de l'amont alignés (#17).
