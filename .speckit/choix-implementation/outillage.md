@@ -5,7 +5,7 @@ description: 'Outillage .NET : xunit, CI sur exécuteur Windows, tests du dépô
 applies_to:
   - '.github/workflows/ci.yml'
   - 'tests/**'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:15:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:45:00Z }
 ---
 
 # Outillage de développement
@@ -23,5 +23,6 @@ generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:15:00Z }
     - **Alternative écartée (fichiers que touche la couverture mesurée)** : un fichier exercé en passant par le test d'une autre classe y entrerait, avec tous ses mutants non couverts, qui ne désignent aucun test manquant de cette classe.
   - **Règles de style : la construction de la solution**, analyse du style activée (`EnforceCodeStyleInBuild`) et règles listées passées en avertissement dans une `.editorconfig` complétée sur la copie de l'exécuteur, jamais dans le dépôt ; `IDE0005` exige le fichier de documentation, que la construction génère.
   - **SonarQube Cloud : son API Web**, avec le secret `SONAR_TOKEN` du dépôt : problèmes ouverts, points sensibles à revoir et porte de qualité de `main`.
-  - **Tenue du ticket : un script PowerShell** (`scripts/Update-QualityAuditIssue.ps1`), qui réunit les relevés et réécrit le ticket, et qu'on exécute aussi sur le poste sans rien écrire (sans `-Update`).
+  - **Tenue du ticket : un script PowerShell** (`scripts/Update-QualityAuditIssue.ps1`), qui réunit les relevés et réécrit le ticket, et qu'on exécute aussi sur le poste sans rien écrire (sans `-Update`). Ses tests (`TVRename.Repository.Tests`, xunit) l'exécutent tel quel avec des doublures de `gh` et de l'API de SonarQube Cloud, des fonctions PowerShell qui prennent le pas sur la commande de même nom : sans réseau, ils fixent la répartition par urgence, la relecture du ticket précédent et la notification.
+    - **Alternative écartée (Pester)** : un second outil de test, et une seconde exécution des tests par push, pour un seul script.
     - **Alternative écartée (script dans le workflow, comme pour la veille de l'amont)** : la répartition par urgence et la relecture du ticket précédent sont une logique qu'il faut pouvoir exécuter et vérifier hors de l'exécuteur.

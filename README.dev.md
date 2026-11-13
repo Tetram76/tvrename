@@ -14,14 +14,14 @@ Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/s
 | --- | --- |
 | `TVRename/` | L'application (Windows Forms, `net10.0-windows`). |
 | `tests/TVRename.Tests/` | Tests de l'application (xunit), dont la couverture est mesurée par l'analyse SonarQube Cloud. |
-| `tests/TVRename.Repository.Tests/` | Tests du dépôt : structure du `.speckit/`, table des moments d'`AGENTS.md`. |
+| `tests/TVRename.Repository.Tests/` | Tests du dépôt : structure du `.speckit/`, table des moments d'`AGENTS.md`, scripts de l'outillage. |
 | `scripts/` | Outillage du dépôt : `Get-SpeckitConcepts.ps1` (concepts du `.speckit/` qui régissent les fichiers modifiés d'une branche), lancement et arrêt de la validation fonctionnelle (`Start-Validation.ps1`, `Stop-Validation.ps1`), tenue du ticket de suivi du contrôle qualité hebdomadaire (`Update-QualityAuditIssue.ps1`). |
 | `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release (`dotnet-desktop.yml`), veille mensuelle de l'amont (`upstream-watch.yml`), qui tient dans un ticket de suivi les évolutions de l'amont que l'agent n'a pas encore traitées, contrôle qualité hebdomadaire de `main` (`quality-audit.yml`), qui tient dans un ticket de suivi la dette qualité du code (SonarQube Cloud, règles de style, tests de mutation). |
 | `dotnet-tools.json` | Outils .NET locaux (`dotnet tool restore`) : l'analyseur de SonarQube Cloud et Stryker.NET, des tests de mutation. |
 
 ## Développement local
 
-Prérequis : Windows, SDK .NET 10.
+Prérequis : Windows, SDK .NET 10, [PowerShell 7.3](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) ou plus récent (`pwsh`), qu'exécutent les tests des scripts de l'outillage.
 
 ```powershell
 dotnet build TVRename.slnx --configuration Release

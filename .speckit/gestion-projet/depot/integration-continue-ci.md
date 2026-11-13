@@ -5,7 +5,7 @@ description: 'Workflows CI, tests selon ce que modifie la Pull Request, aucun ch
 tags: [socle]
 applies_to:
   - '.github/workflows/**'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:15:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:45:00Z }
 ---
 
 # Intégration continue (CI)
@@ -14,7 +14,7 @@ generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:15:00Z }
 - Le contenu du pipeline (étapes, outillage de build et de test) est un choix d'implémentation : cf. [Outillage de développement](../../choix-implementation/outillage.md).
 - **Une seule exécution des tests par push**, quels que soient les workflows et les jobs qu'il déclenche.
 - **Tests selon ce que modifie la Pull Request** : sur une Pull Request, le CI n'exécute que les tests que ses modifications peuvent faire échouer. Un push sur `main`, comme une exécution à la demande, les exécute tous : c'est le filet de sécurité de ce qui a été fusionné, et la couverture des indicateurs du `README.md` ([Analyse de la qualité du code](analyse-de-la-qualite-du-code.md)).
-  - **Sources** : tout fichier hors de la documentation et de l'outillage que les tests n'exécutent pas, c'est-à-dire hors de `.speckit/`, `.claude/`, `scripts/`, des workflows autres que `ci.yml`, des fichiers Markdown de la racine et de `.gitignore`. Une Pull Request qui ne modifie aucune source n'exécute que les **tests du dépôt** (`TVRename.Repository.Tests`), qui confrontent ses fichiers à leurs règles (structure du `.speckit/`, table des moments d'`AGENTS.md`), sans compiler l'application.
+  - **Sources** : tout fichier hors de la documentation et de l'outillage que seuls les tests du dépôt vérifient, c'est-à-dire hors de `.speckit/`, `.claude/`, `scripts/`, des workflows autres que `ci.yml`, des fichiers Markdown de la racine et de `.gitignore`. Une Pull Request qui ne modifie aucune source n'exécute que les **tests du dépôt** (`TVRename.Repository.Tests`), qui confrontent ses fichiers à leurs règles (structure du `.speckit/`, table des moments d'`AGENTS.md`, scripts de l'outillage), sans compiler l'application.
   - **Sûr par défaut** : un fichier qu'aucune de ces règles n'écarte compte comme source ; un fichier déplacé compte à son ancien chemin comme au nouveau.
   - **Checks requis** : le workflow et chacun de ses jobs s'exécutent toujours, seules des étapes sont omises : la liste des jobs, donc le Ruleset, n'en dépend pas.
     - **Alternative écartée (filtre `paths` du déclencheur, ou job sauté par une condition)** : un workflow qui ne se déclenche pas laisse ses checks requis en attente, ce qui bloque la fusion (documentation GitHub, *Troubleshooting required status checks*) ; un job sauté passe pour réussi, mais celui des tests a toujours à exécuter les tests du dépôt.

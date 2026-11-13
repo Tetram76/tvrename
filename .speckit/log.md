@@ -2,7 +2,7 @@
 
 ## 2026-11-13
 
-* **Contrôle qualité hebdomadaire** : harnais `quality-audit.yml` mis en place (SonarQube Cloud, règles de style .NET, tests de mutation par Stryker.NET sur la classe que reflète chaque classe de tests), ticket de suivi tenu par `scripts/Update-QualityAuditIssue.ps1` ; une entrée de mutant est son mutateur et son fichier, le rapport joint à chaque exécution détaillant chaque mutant ; outillage du contrôle documenté ; workflow ajouté aux autres workflows du CI ; chantier #6 barré dans le suivi de la Phase 2 (#31).
+* **Contrôle qualité hebdomadaire** : harnais `quality-audit.yml` mis en place (SonarQube Cloud, règles de style .NET, tests de mutation par Stryker.NET sur la classe que reflète chaque classe de tests), ticket de suivi tenu par `scripts/Update-QualityAuditIssue.ps1`, que ses tests exécutent avec des doublures de GitHub et de SonarQube Cloud ; les tests du dépôt exercent les scripts de l'outillage ; une entrée de mutant est son mutateur et son fichier, le rapport joint à chaque exécution détaillant chaque mutant ; outillage du contrôle documenté ; workflow ajouté aux autres workflows du CI ; chantier #6 barré dans le suivi de la Phase 2 (#31).
 
 * **Environnement de validation fonctionnelle** : version de validation compilée sans contournement, le fichier de réponse hérité `TVRename/msbuild.rsp`, qui faisait de toute compilation une publication, étant retiré avec les profils de publication ; chantier #21 barré dans le suivi de la Phase 1 (#29).
 
