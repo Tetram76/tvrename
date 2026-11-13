@@ -13,6 +13,7 @@ Le plan d'implémentation est dans [`.speckit/suivi-implementation/`](.speckit/s
 | Dossier | Contenu |
 | --- | --- |
 | `TVRename/` | L'application (Windows Forms, `net10.0-windows`). |
+| `tests/TVRename.Tests/` | Tests de l'application (xunit), dont la couverture est mesurée par l'analyse SonarQube Cloud. |
 | `tests/TVRename.Repository.Tests/` | Tests du dépôt : structure du `.speckit/`, table des moments d'`AGENTS.md`. |
 | `scripts/` | Outillage du dépôt (ex. `Get-SpeckitConcepts.ps1`, concepts du `.speckit/` qui régissent les fichiers modifiés d'une branche). |
 | `.github/workflows/` | CI de non-régression et analyse SonarQube Cloud (`ci.yml`), construction de l'installeur à la publication d'une release. |
