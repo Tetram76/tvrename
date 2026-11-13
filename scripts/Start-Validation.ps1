@@ -5,7 +5,7 @@
 
 .DESCRIPTION
     Validation environment of choix-implementation/environnement-de-validation-fonctionnelle.md: the application,
-    built from the sources of the commit alone, started as a validation instance (/validation), whose data folder is
+    built from the sources of the commit alone as a validation build (VALIDATION), whose data folder is
     %TEMP%\TVRename: it runs beside a TV Rename already started, and never reads nor writes its files. Each start
     begins from an empty data folder, so that nothing is left from one validation to the next. A validation version
     still running is stopped first. Stopped by Stop-Validation.ps1.
@@ -60,10 +60,10 @@ tar -xf $archive -C $sources
 Remove-Item $archive
 
 # Built like the CI builds it: without TVRename/msbuild.rsp, which MSBuild reads next to the project and which turns
-# the build into the publication of the installer.
-dotnet build (Join-Path $sources 'TVRename/TVRename.csproj') -noAutoResponse --configuration Release --output $application --nologo --verbosity quiet
+# the build into the publication of the installer. ValidationBuild sets VALIDATION (TVRename.csproj).
+dotnet build (Join-Path $sources 'TVRename/TVRename.csproj') -noAutoResponse -p:ValidationBuild=true --configuration Release --output $application --nologo --verbosity quiet
 
-Start-Process -FilePath (Join-Path $application 'TVRename.exe') -WorkingDirectory $application -ArgumentList '/validation'
+Start-Process -FilePath (Join-Path $application 'TVRename.exe') -WorkingDirectory $application
 
 Write-Host ''
 # The pull request validated, if any: the commit alone does not tell which one is on screen.

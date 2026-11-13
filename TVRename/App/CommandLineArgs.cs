@@ -44,7 +44,6 @@ public class CommandLineArgs(IReadOnlyCollection<string> args)
     public bool QuickUpdate { get; } = args.Contains("/quickupdate", StringComparer.OrdinalIgnoreCase);
     public bool Export { get; } = args.Contains("/export", StringComparer.OrdinalIgnoreCase);
     public string? UserFilePath { get; } = args.Where(a => a.StartsWith("/userfilepath:", StringComparison.OrdinalIgnoreCase)).Select(a => a[(a.IndexOf(':') + 1)..]).FirstOrDefault();
-    public bool Validation { get; } = args.Contains("/validation", StringComparer.OrdinalIgnoreCase);
 
     private MissingFolderBehavior previousMissingFolderBehavior;
 
@@ -81,7 +80,6 @@ public class CommandLineArgs(IReadOnlyCollection<string> args)
         output.AppendLine("");
         output.AppendLine("/recover will load a dialog box that enables the user to recover a prior TVDB.xml or TVRenameSettings.xml file");
         output.AppendLine("/userfilepath:BLAH  Sets a custom folder path for the settings files.");
-        output.AppendLine("/validation runs a validation instance: its settings, caches and logs go to the temporary folder, and it runs beside a TV Rename already started.");
         output.AppendLine("/createmissing will Create folders if they are missing.");
         output.AppendLine("/ignoremissing will Ignore missing folders.");
         output.AppendLine("/norenamecheck requests an existing TV Rename session to scan without renaming.");

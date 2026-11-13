@@ -19,7 +19,7 @@ using Path = System.IO.Path;
 namespace TVRename.App;
 
 /// <summary>
-/// An instance kept apart from the machine-wide one: the validation instance (/validation).
+/// An instance kept apart from the machine-wide one: the one of the validation build (VALIDATION).
 /// </summary>
 /// <param name="Name">Name of the instance, which its mutex and semaphore carry.</param>
 /// <param name="Folder">Folder of its runtime data, where it writes the port it listens on.</param>
@@ -30,8 +30,9 @@ internal sealed record SeparateInstance(string Name, string Folder);
 /// </summary>
 /// <remarks>
 /// The machine-wide instance keeps the names and the port of the existing application. A separate instance forms a
-/// single instance with the instances of the same name only (fonctionnel/dossiers-de-donnees.md): its names carry its
-/// name, and it listens on a port the system assigns, written in its folder for the next ones.
+/// single instance with the instances of the same name only
+/// (choix-implementation/environnement-de-validation-fonctionnelle.md): its names carry its name, and it listens on a
+/// port the system assigns, written in its folder for the next ones.
 /// </remarks>
 /// <param name="separateInstance">The separate instance, or null for the machine-wide instance.</param>
 /// <param name="onArgumentsReceived">Receives the arguments passed by a next instance.</param>

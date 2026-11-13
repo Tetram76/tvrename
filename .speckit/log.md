@@ -2,7 +2,7 @@
 
 ## 2026-11-13
 
-* **Environnement de validation fonctionnelle** : version d'une Pull Request compilée depuis ses seules sources et lancée par `scripts/Start-Validation.ps1`, arrêtée par `scripts/Stop-Validation.ps1` ; nouveau concept Dossiers de données : `/userfilepath:` garde son usage, la nouvelle option `/appdatapath:` déplace journaux, cache du navigateur intégré et audit, et limite la mono-instance aux instances du même dossier, pour que la validation tourne à côté d'un TV Rename lancé (décisions de l'utilisateur) ; seul changement de l'application de la Phase 0 ; chantier #5 barré dans le suivi de la Phase 0 (#18).
+* **Environnement de validation fonctionnelle** : version d'une Pull Request compilée depuis ses seules sources en version de validation (constante `VALIDATION`), qui range tous ses fichiers dans `%TEMP%\TVRename` et tourne à côté d'un TV Rename lancé, lancée par `scripts/Start-Validation.ps1`, arrêtée par `scripts/Stop-Validation.ps1` ; `/userfilepath:` garde son usage ordinaire (décision de l'utilisateur) ; l'application livrée reste inchangée ; chantier #5 barré dans le suivi de la Phase 0 (#18).
 
 * **Tickets de suivi des harnais** : un état, pas un historique (exigences de l'utilisateur) : description en trois parties, objectif, dates (`Dernier contrôle`, `Dernière prise en compte`) et points à corriger, sans décompte ni compte rendu ; traitement dû quand la ligne `Dernière prise en compte` manque ; point traité aussitôt retiré ; relevé des versions, traitement du contrôle qualité et veille de l'amont alignés (#17).
 

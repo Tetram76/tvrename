@@ -27,9 +27,9 @@ public static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        // Before the first log, which goes to the folder of runtime data.
-        CommandLineArgs startupArgs = new(args);
-        if (!SetupValidationAppDataFolder(startupArgs))
+        // Before the first log, which goes to the data folder.
+        SeparateInstance? separateInstance = SeparateInstance();
+        if (separateInstance is not null && !SetupSeparateAppDataFolder(separateInstance))
         {
             Environment.Exit(1);
         }
@@ -93,9 +93,7 @@ public static class Program
         Mutex? mutex = null;
         try
         {
-            using SingleInstanceService singleInstanceService = new(
-                startupArgs.Validation ? new SeparateInstance("validation", PathManager.ValidationAppDataPath) : null,
-                OnArgumentsReceived);
+            using SingleInstanceService singleInstanceService = new(separateInstance, OnArgumentsReceived);
 
             // Check if an application instance is already running
             mutex = new Mutex(true, singleInstanceService.MutexName, out bool newInstance);
@@ -142,29 +140,31 @@ public static class Program
     }
 
     /// <summary>
-    /// Moves the data folder of a validation instance (/validation) to the temporary folder.
+    /// The instance kept apart from the TV Rename of the machine: the validation build only (VALIDATION, set by
+    /// scripts/Start-Validation.ps1), so that the application users get has no such mode.
+    /// </summary>
+    private static SeparateInstance? SeparateInstance()
+#if VALIDATION
+        => new("validation", PathManager.ValidationAppDataPath);
+#else
+        => null;
+#endif
+
+    /// <summary>
+    /// Moves the data folder of the application to the one of the separate instance.
     /// </summary>
     /// <returns>false when the folder cannot be used: the application then stops, rather than writing to the default
-    /// folder that a validation instance leaves untouched.</returns>
-    private static bool SetupValidationAppDataFolder(CommandLineArgs commandLineArgs)
+    /// folder that a separate instance leaves untouched.</returns>
+    private static bool SetupSeparateAppDataFolder(SeparateInstance separateInstance)
     {
-        if (!commandLineArgs.Validation)
-        {
-            return true;
-        }
-
         try
         {
-            PathManager.SetUserDefinedAppDataPath(PathManager.ValidationAppDataPath);
+            PathManager.SetUserDefinedAppDataPath(separateInstance.Folder);
             return true;
         }
         catch (Exception ex) when (ex is ArgumentException or System.IO.IOException or UnauthorizedAccessException or NotSupportedException)
         {
-            if (!commandLineArgs.Unattended && !commandLineArgs.Hide && Environment.UserInteractive)
-            {
-                MessageBox.Show($"Error while setting the folder of the validation instance:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+            MessageBox.Show($"Error while setting the data folder {separateInstance.Folder}:{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
     }

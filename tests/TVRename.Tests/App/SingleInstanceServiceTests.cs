@@ -3,8 +3,8 @@ using TVRename.App;
 namespace TVRename.Tests.App;
 
 /// <summary>
-/// Pins the separate instance (fonctionnel/dossiers-de-donnees.md): instances of the same name form one instance,
-/// those of other names run beside them and never receive their arguments.
+/// Pins the separate instance (choix-implementation/environnement-de-validation-fonctionnelle.md): instances of the
+/// same name form one instance, those of other names run beside them and never receive their arguments.
 /// </summary>
 /// <remarks>
 /// Each test names its instances on its own, so that neither a validation instance nor the TV Rename running on the

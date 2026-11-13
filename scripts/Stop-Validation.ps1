@@ -19,7 +19,7 @@ $ErrorActionPreference = 'Stop'
 
 $validation = Join-Path ([IO.Path]::GetTempPath()) 'tvrename-validation'
 $application = Join-Path $validation 'application'
-# Set by the application itself for /validation (PathManager.ValidationAppDataPath).
+# Set by the validation build itself (PathManager.ValidationAppDataPath).
 $dataFolder = Join-Path ([IO.Path]::GetTempPath()) 'TVRename'
 
 # Found by the folder they run from, which tells them from the TV Rename of the machine.

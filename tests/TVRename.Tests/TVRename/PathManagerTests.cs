@@ -5,8 +5,9 @@ using NLog.Targets;
 namespace TVRename.Tests.TVRename;
 
 /// <summary>
-/// Pins where the files of the application go once their folder is moved, as /validation moves it
-/// (fonctionnel/dossiers-de-donnees.md): settings and caches, logs, cache and log of the embedded browser, audit.
+/// Pins where the files of the application go once their folder is moved, as the validation build moves it
+/// (choix-implementation/environnement-de-validation-fonctionnelle.md): settings and caches, logs, cache and log of
+/// the embedded browser, audit.
 /// </summary>
 /// <remarks>
 /// <see cref="PathManager"/> holds the folder for the whole process, as the application sets it once at start-up: no

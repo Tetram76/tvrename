@@ -28,11 +28,14 @@ dotnet build TVRename.slnx --configuration Release
 dotnet test TVRename.slnx --configuration Release
 ```
 
-Pour lancer l'application depuis les sources sans toucher aux réglages, aux caches ni aux journaux d'une installation existante, et à côté d'elle si elle tourne, lui donner ses propres dossiers de données ([Dossiers de données](.speckit/fonctionnel/dossiers-de-donnees.md)) : `/userfilepath:` pour les réglages et les caches de la bibliothèque, `/appdatapath:` pour les journaux, le cache du navigateur intégré et l'audit.
+Pour lancer l'application depuis les sources sans toucher aux réglages, aux caches ni aux journaux d'une installation existante, et à côté d'elle si elle tourne, la compiler en version de validation : tous ses fichiers vont alors dans `%TEMP%\TVRename` ([Environnement de validation fonctionnelle](.speckit/choix-implementation/environnement-de-validation-fonctionnelle.md)).
 
 ```powershell
-dotnet run --project TVRename -- /userfilepath:$env:TEMP\tvrename-dev\userfiles /appdatapath:$env:TEMP\tvrename-dev\appdata
+dotnet build TVRename/TVRename.csproj -noAutoResponse -p:ValidationBuild=true --configuration Release
+./TVRename/bin/Release/net10.0-windows/TVRename.exe
 ```
+
+(`-noAutoResponse` écarte `TVRename/msbuild.rsp`, hérité du fork, que MSBuild lit à côté du projet et qui ferait de la compilation la publication de l'installeur ; `dotnet run` le lit aussi, et échoue.)
 
 ## Validation fonctionnelle
 
@@ -46,9 +49,9 @@ Depuis la racine du dépôt, avec le numéro de la Pull Request :
 pwsh ./scripts/Start-Validation.ps1 -PullRequest 18
 ```
 
-Le script récupère le commit de tête de la Pull Request, en compile les seules sources dans `%TEMP%\tvrename-validation`, sans rien changer au clone hormis ce `git fetch`, puis lance l'application avec ses propres dossiers de données, vides à chaque lancement (`-KeepData` garde ceux de la validation précédente). Elle tourne à côté d'un TV Rename déjà lancé, dont elle ne lit ni n'écrit aucun fichier. Relancer le script arrête d'abord la version précédente.
+Le script récupère le commit de tête de la Pull Request, en compile les seules sources en version de validation dans `%TEMP%\tvrename-validation`, sans rien changer au clone hormis ce `git fetch`, puis la lance. Elle range tous ses fichiers dans `%TEMP%\TVRename`, vidé à chaque lancement (`-KeepData` garde celui de la validation précédente), et tourne à côté d'un TV Rename déjà lancé, dont elle ne lit ni n'écrit aucun fichier. Relancer le script arrête d'abord la version précédente.
 
-Pour l'arrêter et retirer tout ce qu'il a créé (sources, compilation, dossiers de données) :
+Pour l'arrêter et retirer tout ce qu'il a créé (sources, compilation, dossier de données) :
 
 ```powershell
 pwsh ./scripts/Stop-Validation.ps1
