@@ -1,0 +1,152 @@
+name: Upstream watch
+
+# Monthly watch of the upstream repository, which the detached fork no longer follows
+# (gestion-projet/depot/reprise-depuis-l-amont.md): what its default branch received since the last commit the agent
+# analysed, merged pull requests and commits, listed in the tracking issue of the harness, whose body each run
+# rewrites. Its releases are not watched: they only ship commits that this list already holds. The agent analyses the
+# list when it resumes work (gestion-projet/depot/veille-de-l-amont-a-la-reprise-du-travail.md) and adds to the body an
+# "Analyse du <date>" section, whose "Dernier commit analysé" line holds the full hash of the last commit it analysed:
+# the next run starts from it, and removes the section by rewriting the body. The run only fails, hence only notifies
+# the user who created the workflow, when an evolution shows up that the previous run did not list. It never writes
+# to the repository, only to its issues.
+on:
+  schedule:
+    - cron: "23 5 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: Watch the upstream
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      UPSTREAM: TV-Rename/tvrename
+    steps:
+      - name: List the evolutions of the upstream
+        shell: bash
+        run: |
+          set -euo pipefail
+          export LC_ALL=C
+          cd "$RUNNER_TEMP"
+          url="https://github.com/$UPSTREAM"
+
+          # The tracking issue is the one with both labels, whatever its state: upstream-watch also groups the chantiers
+          # of the harness (gestion-projet/revue-tickets/issues.md).
+          issue='' state='' body=''
+          read -r issue state < <(gh issue list --label upstream-watch --label harness --state all --limit 1 \
+            --json number,state -q '.[] | "\(.number) \(.state)"') || true
+          if [ -n "$issue" ]; then
+            body=$(gh issue view "$issue" --json body -q .body | tr -d '\r')
+          fi
+
+          # Starting point: the last commit the agent analysed, else that of the previous run, else the commit the fork
+          # detached from, which archive/master keeps.
+          analysed=$(sed -n '/^## Analyse du /,$p' <<< "$body" | grep -oP 'Dernier commit analysé.*?\K\b[0-9a-f]{40}\b' \
+            | head -n 1 || true)
+          marker=$(grep -oP '^<!-- upstream-watch base=\K[0-9a-f]{40} head=[0-9a-f]{40}' <<< "$body" || true)
+          previous_base=${marker%% *}
+          previous_head=${marker##*=}
+          base=${analysed:-$previous_base}
+          if [ -z "$base" ]; then
+            base=$(gh api "repos/$GH_REPO/branches/archive/master" --jq .commit.sha)
+          fi
+          branch=$(gh api "repos/$UPSTREAM" --jq .default_branch)
+          head=$(gh api "repos/$UPSTREAM/commits/$branch" --jq .sha)
+          echo "From $base to $head ($branch); previous run up to ${previous_head:-none}."
+
+          # A starting point that is no longer an ancestor of the branch (history rewritten upstream) would list
+          # commits that are not evolutions: the agent picks a new one.
+          status=$(gh api "repos/$UPSTREAM/compare/$base...$head" --jq .status)
+          if [ "$status" != identical ] && [ "$status" != ahead ]; then
+            echo "::error::$base is not an ancestor of $UPSTREAM@$branch ($status): set the last commit analysed."
+            exit 1
+          fi
+
+          # The commits, oldest first: hash, author, first line of the message.
+          gh api --paginate "repos/$UPSTREAM/compare/$base...$head?per_page=100" \
+            --jq '.commits[] | [.sha, (.author.login // .commit.author.name), (.commit.message | split("\n")[0])] | @tsv' \
+            > commits.tsv
+          cut -f 1 commits.tsv > hashes.txt
+
+          # The pull requests merged since the starting point whose merge commit is one of these commits, whatever the
+          # merge method; their own commits are listed with them, not on their own.
+          : > pulls.tsv
+          : > pulled.txt
+          if [ -s commits.tsv ]; then
+            since=$(gh api "repos/$UPSTREAM/commits/$base" --jq .commit.committer.date)
+            gh api --paginate -X GET search/issues -f per_page=100 \
+              -f q="repo:$UPSTREAM is:pr is:merged base:$branch merged:>=$since" --jq '.items[].number' \
+              | sort -n > candidates.txt
+            while read -r number; do
+              pull=$(gh api "repos/$UPSTREAM/pulls/$number" --jq '[.merge_commit_sha, .user.login, .title] | @tsv')
+              merge_commit=${pull%%$'\t'*}
+              grep -qxF "$merge_commit" hashes.txt || continue
+              printf '%s\t%s\n' "$number" "$pull" >> pulls.tsv
+              echo "$merge_commit" >> pulled.txt
+              gh api --paginate "repos/$UPSTREAM/pulls/$number/commits?per_page=100" --jq '.[].sha' >> pulled.txt
+            done < candidates.txt
+          fi
+          # By file name: NR == FNR would read commits.tsv as the list of pulled commits when pulled.txt is empty.
+          awk -F '\t' 'FILENAME == ARGV[1] { pulled[$1]; next } !($1 in pulled)' pulled.txt commits.tsv > alone.tsv
+          count=$(( $(wc -l < pulls.tsv) + $(wc -l < alone.tsv) ))
+
+          # Upstream text goes into code spans, where GitHub neither notifies a mention nor links a reference to an
+          # issue, which would name an issue of this repository or add the issue to the timeline of an upstream one.
+          # Pull requests are linked through their merge commit, for the same reason.
+          code() { printf '`%s`' "${1//\`/\'}"; }
+          commit() { printf '[`%s`](%s/commit/%s)' "${1:0:7}" "$url" "$1"; }
+          {
+            echo "Évolutions de l'amont, $(code "$UPSTREAM"), relevées chaque mois par la veille de l'amont ($(code .github/workflows/upstream-watch.yml), $(code gestion-projet/depot/reprise-depuis-l-amont.md)) depuis le dernier commit analysé. L'agent les analyse à la reprise du travail ($(code gestion-projet/depot/veille-de-l-amont-a-la-reprise-du-travail.md)), dans une section « Analyse du $(code '<date>') » ajoutée à cette description, dont la ligne « Dernier commit analysé » donne l'empreinte complète du dernier commit analysé : le relevé suivant part de lui."
+            echo
+            echo "Dernier relevé : $(date -u +%F), de $(commit "$base") à $(commit "$head") (branche $(code "$branch")), $count évolution(s)."
+            if [ -s pulls.tsv ]; then
+              printf '\n## Pull Requests fusionnées\n\n'
+              while IFS=$'\t' read -r number hash author title; do
+                echo "- PR n° $number, $(commit "$hash") : $(code "$title") ($(code "$author"))"
+              done < pulls.tsv
+            fi
+            if [ -s alone.tsv ]; then
+              printf '\n## Commits hors Pull Request\n\n'
+              while IFS=$'\t' read -r hash author title; do
+                echo "- $(commit "$hash") : $(code "$title") ($(code "$author"))"
+              done < alone.tsv
+            fi
+            echo
+            echo "<!-- upstream-watch base=$base head=$head -->"
+          } > body.md
+          cat body.md
+
+          # Open while it lists an evolution; without any, there is nothing to follow, hence no issue to create.
+          if [ -z "$issue" ]; then
+            if [ "$count" -eq 0 ]; then
+              exit 0
+            fi
+            # Only the initial title: the user may change it, the issue being found by its labels alone.
+            issue=$(basename "$(gh issue create --title "Harnais veille de l'amont : Évolutions de l'amont" \
+              --label upstream-watch --label harness --type Task --body-file body.md)")
+            state=OPEN
+          else
+            gh issue edit "$issue" --body-file body.md
+          fi
+          if [ "$count" -gt 0 ] && [ "$state" != OPEN ]; then
+            gh issue reopen "$issue"
+          elif [ "$count" -eq 0 ] && [ "$state" = OPEN ]; then
+            gh issue close "$issue" --reason completed
+          fi
+
+          if [ "$count" -gt 0 ] && [ "$head" != "$previous_head" ]; then
+            echo "::error::The upstream moved since the previous run: see issue #$issue."
+            exit 1
+          fi
