@@ -66,7 +66,9 @@ git -C $repository archive --format=tar --output $archive $commit
 tar -xf $archive -C $sources
 Remove-Item $archive
 
-dotnet build (Join-Path $sources 'TVRename/TVRename.csproj') --configuration Release --output $application --nologo --verbosity quiet
+# Built like the CI builds it: without TVRename/msbuild.rsp, which MSBuild reads next to the project and which turns
+# the build into the publication of the installer.
+dotnet build (Join-Path $sources 'TVRename/TVRename.csproj') -noAutoResponse --configuration Release --output $application --nologo --verbosity quiet
 
 Start-Process -FilePath (Join-Path $application 'TVRename.exe') -WorkingDirectory $application `
     -ArgumentList "`"/userfilepath:$userFiles`"", "`"/appdatapath:$appData`""
