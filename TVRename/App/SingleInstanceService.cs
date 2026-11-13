@@ -22,7 +22,7 @@ namespace TVRename.App;
 /// An instance kept apart from the machine-wide one: the one of the validation build (VALIDATION).
 /// </summary>
 /// <param name="Name">Name of the instance, which its mutex and semaphore carry.</param>
-/// <param name="Folder">Folder of its runtime data, where it writes the port it listens on.</param>
+/// <param name="Folder">Its data folder, where it writes the port it listens on.</param>
 internal sealed record SeparateInstance(string Name, string Folder);
 
 /// <summary>
@@ -121,7 +121,8 @@ internal sealed class SingleInstanceService(SeparateInstance? separateInstance, 
     }
 
     /// <summary>
-    /// Listens before returning, so that the port of a folder is written before a next instance can look for it.
+    /// Listens before returning, so that the port of a separate instance is written before a next instance can look
+    /// for it.
     /// </summary>
     private void StartListening()
     {

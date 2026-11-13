@@ -35,7 +35,7 @@ public static class PathManager
     public static string? UserDefinedAppDataPath { get; private set; }
 
     /// <summary>
-    /// The data folder of a validation instance (/validation): %APPDATA%\TVRename moved to the temporary folder.
+    /// The data folder of the validation build (VALIDATION): %APPDATA%\TVRename moved to the temporary folder.
     /// </summary>
     public static string ValidationAppDataPath => System.IO.Path.Combine(System.IO.Path.GetTempPath(), "TVRename");
 
