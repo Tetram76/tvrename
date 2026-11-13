@@ -375,7 +375,6 @@ public sealed class TVSettings
     public bool UseFullPathNameToMatchLibraryFolders = false;
 
     public bool PostpendThe = false;
-    public bool ShareLogs = true;
     public bool CopyFutureDatedEpsFromSearchFolders = false;
     public bool ForceBulkAddToUseSettingsOnly = false;
     public bool RetainLanguageSpecificSubtitles = true;
@@ -668,7 +667,6 @@ public sealed class TVSettings
         new XElement("SearchJSONSeedersToken", SearchJSONSeedersToken),
         new XElement("PriorityReplaceTerms", PriorityReplaceTerms),
         new XElement("CopyFutureDatedEpsFromSearchFolders", CopyFutureDatedEpsFromSearchFolders),
-        new XElement("ShareLogs", ShareLogs),
         new XElement("PostpendThe", PostpendThe),
         new XElement("IgnoreAllSpecials", IgnoreAllSpecials),
         new XElement("UseFullPathNameToMatchLibraryFolders", UseFullPathNameToMatchLibraryFolders),
@@ -1495,7 +1493,6 @@ public sealed class TVSettings
         keepTogetherExtensionsString = xmlSettings.ExtractString("KeepTogetherExtensions", keepTogetherExtensionsStringDEFAULT);
         ExportWTWRSS = xmlSettings.ExtractBool("ExportWTWRSS", false);
         CopyFutureDatedEpsFromSearchFolders = xmlSettings.ExtractBool("CopyFutureDatedEpsFromSearchFolders", false);
-        ShareLogs = xmlSettings.ExtractBool("ShareLogs", true);
         PostpendThe = xmlSettings.ExtractBool("PostpendThe", false);
         IgnoreAllSpecials = xmlSettings.ExtractBool("IgnoreAllSpecials", false);
         UseFullPathNameToMatchLibraryFolders = xmlSettings.ExtractBool("UseFullPathNameToMatchLibraryFolders", false);
