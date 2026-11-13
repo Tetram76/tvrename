@@ -9,7 +9,7 @@ applies_to:
   - 'TVRename/App/SingleInstanceService.cs'
   - 'TVRename/TVRename/PathManager.cs'
   - 'TVRename/NLog.config'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T21:40:00Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T21:16:31Z }
 ---
 
 # Environnement de validation fonctionnelle
