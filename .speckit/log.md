@@ -2,6 +2,8 @@
 
 ## 2026-11-13
 
+* **Périmètre de deux chantiers de la Phase 4** précisé (décisions de l'utilisateur) : le recentrage sur les séries TV (#9) retire les films et leurs collections, et toutes les fonctionnalités, options et données qui ne concernent qu'eux ; le retrait des fonctions RSS (#12) s'étend aux fonctions NZB (intégration de SABnzbd) ; les notes de la Phase 2, le périmètre de l'analyse SonarQube Cloud et les exclusions de couverture du CI suivent (#28).
+
 * **Journal de l'application** : concept ajouté à `fonctionnel/` ; le journal reste local, aucun journal ni aucune donnée de diagnostic n'est envoyé à un service distant (exigence de l'utilisateur), l'envoi des erreurs à Papertrail et sa case des Préférences étant retirés (#25).
 
 * **Fichiers hérités du fork** retirés du dépôt (configuration de Better Code Hub, réglages personnels d'IDE, configuration d'exécution de CefSharp pour `netcoreapp3.1`, template de PR de l'amont, fichiers de santé communautaire et modèles de tickets qui désignent l'amont) ; chantier #19 barré dans le suivi de la Phase 1 (#23).
