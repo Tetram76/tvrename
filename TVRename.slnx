@@ -6,6 +6,7 @@
   </Configurations>
   <Folder Name="/tests/">
     <Project Path="tests/TVRename.Repository.Tests/TVRename.Repository.Tests.csproj" />
+    <Project Path="tests/TVRename.Tests/TVRename.Tests.csproj" />
   </Folder>
   <Project Path="TVRename/TVRename.csproj">
     <Platform Solution="*|x64" Project="x64" />
