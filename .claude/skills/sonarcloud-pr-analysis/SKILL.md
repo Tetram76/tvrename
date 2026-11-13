@@ -21,7 +21,7 @@ are PowerShell (`Invoke-RestMethod`): neither Python nor `jq` is installed.
 
 ## 1. Wait for the analysis of the head commit
 
-The `SonarQube Cloud analysis` job of the CI analyzes every push, draft PRs included.
+The analysis steps of the `Build & tests` job of the CI analyze every push, draft PRs included.
 
 ```powershell
 $base = 'https://sonarcloud.io/api'; $p = 'Tetram76_tvrename'; $pr = '<PR>'
@@ -32,13 +32,16 @@ $analysis = (Invoke-RestMethod "$base/project_pull_requests/list?project=$p").pu
 ```
 
 The analysis is the head's only when `IsHead` is true. Otherwise check the run
-(the `SonarQube Cloud analysis` job of `gh run list --workflow ci.yml --branch <branch> -L 1`): still
-running → wait for it in the background (never a foreground sleep); failed or
-absent → no quality gate, so the PR cannot be merged (the Ruleset requires the
-`SonarCloud Code Analysis` check): find the cause of a failed run and fix it;
-an outage of the service or a fork PR (no `SONAR_TOKEN`) is reported to the
-user, the merge waiting. A failed query is never read as « no analysis »:
-retry it.
+(the analysis steps of the `Build & tests` job of `gh run list --workflow ci.yml --branch <branch> -L 1`,
+which carry on after a failure): still running → wait for it in the background
+(never a foreground sleep); failed or absent → no quality gate: find the cause
+of a failed run and fix it; an outage of the service or a fork PR (no
+`SONAR_TOKEN`) is reported to the user. Until the gate is made blocking (as
+soon as the state of the code allows it, at the latest at the end of Phase 2),
+neither the gate nor its absence blocks the merge; once it is, the PR cannot be
+merged without it (the Ruleset then requires the `SonarCloud Code Analysis`
+check), the merge waiting (`gestion-projet/depot/analyse-de-la-qualite-du-code.md`).
+A failed query is never read as « no analysis »: retry it.
 
 ## 2. Read the findings
 
@@ -61,13 +64,15 @@ commit per finding), defer (ticket or plan note) or reject with its reason.
 Push fixes while the PR is a draft; on a ready PR, fold them into the next push
 of a Codex fix when one is coming.
 
-The quality gate must pass before marking the PR ready and before merging:
-deferred and rejected findings stop counting once marked (step 5); a coverage
+Until the quality gate is made blocking, a failed gate is explained (its failed
+conditions and their cause) in the PR comment of step 4, the PR going on. Once
+it is blocking, the gate must pass before marking the PR
+ready and before merging: deferred and rejected findings stop counting once marked (step 5); a coverage
 shortfall is fixed by the missing tests, or, for a file the .NET tests cannot
 cover, by a coverage exclusion justified in `gestion-projet/depot/analyse-de-la-qualite-du-code.md`. Once findings are
 marked, check that the `SonarCloud Code Analysis` check of the head commit
 shows the gate passed (`gh pr checks <PR>`); if it still shows the earlier
-verdict, re-run the analysis job (`gh run rerun <run-id>`), which publishes a
+verdict, re-run the `Build & tests` job (`gh run rerun <run-id>`), which publishes a
 fresh one without a new commit.
 
 ## 4. Trace deferred and rejected findings
