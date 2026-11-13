@@ -2,7 +2,10 @@
 type: Gouvernance
 title: 'Contrôle qualité hebdomadaire'
 description: 'Contrôle hebdomadaire du code global de main (SonarQube Cloud, règles de style, tests de mutation), rien de bloquant, ticket de suivi de la dette qualité par urgence (critique, prioritaire, au fil de l''eau), traitement borné à une Pull Request par semaine ; à lire quand le traitement est dû ou pour modifier le contrôle.'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T18:40:00Z }
+applies_to:
+  - '.github/workflows/quality-audit.yml'
+  - 'scripts/Update-QualityAuditIssue.ps1'
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:15:00Z }
 ---
 
 # Contrôle qualité hebdomadaire
@@ -31,7 +34,8 @@ Chaque semaine, et à la demande, sur `main` :
 Le contrôle tient la liste de ses entrées dans le ticket de suivi du harnais qualité (étiquettes `quality-audit` et `harness`, par lesquelles il le retrouve, type `Task`, posé à sa création, [Issues](../revue-tickets/issues.md#tickets-de-suivi-des-harnais)), dont il réécrit la description à chaque exécution, ouvert tant que la liste n'est pas vide.
 
 - **Seulement les points à corriger** (exigence de l'utilisateur) : le ticket ne liste que ce qui se corrige, jamais la conséquence d'un point, ni sa cause. Une condition en échec de la porte de qualité et la note qu'elle juge ne sont que les conséquences des problèmes qui les font échouer, listés à leur place ; une note autre que A, de même, ne vient que de problèmes déjà listés. Seule une condition en échec qu'aucun problème ne désigne (ex. couverture ou duplication du nouveau code) est elle-même le point à corriger, et figure comme entrée (`gate`).
-- **Entrée** : sa source (`sonar`, `hotspot`, `gate`, `style`, `mutant`), la règle, la condition ou le mutateur, et le fichier, ou pour un mutant le code muté et son remplacement ; jamais la ligne, qui bouge à chaque modification voisine : une entrée reste la même d'une semaine à l'autre.
+- **Entrée** : sa source (`sonar`, `hotspot`, `gate`, `style`, `mutant`), la règle, la condition ou le mutateur, et le fichier ; jamais la ligne, qui bouge à chaque modification voisine : une entrée reste la même d'une semaine à l'autre. Le rapport des tests de mutation, joint à chaque exécution, détaille chaque mutant (code muté et remplacement).
+  - **Alternative écartée (une entrée par mutant, avec son code muté et son remplacement)** : mesuré sur le dépôt, les seuls mutants des quatre premières classes testées portent la description du ticket à près de 59 000 caractères, contre les 65 536 qu'accepte GitHub ; elle déborderait dès que la couverture s'étend.
 - **Seule une exécution sur `main` tient le ticket** : une exécution lancée sur une autre branche, pour essayer une modification du contrôle, ne laisse ses relevés que dans son journal, sans mêler au ticket l'état d'une branche non fusionnée.
 - **Notification** (exigences de l'utilisateur) : le contrôle échoue lorsqu'il trouve une entrée critique, ou une entrée prioritaire absente de la liste, et seulement alors ; une entrée au fil de l'eau ne le fait jamais échouer, même nouvelle. GitHub notifie alors l'échec à l'utilisateur qui a créé le workflow : à chaque exécution pour la dette critique, tant qu'elle reste critique, même déjà connue ; une fois pour une entrée prioritaire nouvelle, et non chaque semaine tant qu'elle reste.
 - **Dette par urgence** (exigences de l'utilisateur) : tout ce que relève le contrôle est de la dette ; la description la répartit en trois niveaux d'urgence, où chaque entrée ne figure qu'une fois :

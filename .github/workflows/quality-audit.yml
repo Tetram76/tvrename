@@ -1,0 +1,168 @@
+name: Quality audit
+
+# Weekly audit of the whole code of main (gestion-projet/depot/controle-qualite-hebdomadaire.md), which the checks of a
+# pull request do not see: the quality gate of SonarQube Cloud only judges the new code, and the coverage does not tell
+# what the tests verify. It reports the open issues, the security hotspots to review and the failed conditions of the
+# quality gate of main in SonarQube Cloud, the .NET style rules listed below, and the surviving or uncovered mutants of
+# the code that the tests cover, into the tracking issue of the harness. Nothing blocks: it is no required check, writes
+# nothing to the repository, and only fails to notify the user who created the workflow, when it finds a critical entry
+# or a new priority one. Only a run on main keeps the issue; a run on another branch only logs its findings.
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit the quality of the code
+    # The application targets net10.0-windows: its build and its tests only run on Windows.
+    runs-on: windows-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      # The style rules (category Style) that do not express a preference of form, the first word of each line: those of
+      # a defect, code without effect, redundant or misleading, and those of a more recent syntax of the language, not
+      # used where it says the same thing more directly (contraintes-techniques/exploitation-des-technologies-retenues.md).
+      # The rules of preference (var, braces, expression bodies, namespace form, target-typed new...) are left out: the
+      # repository holds no style configuration, nothing is imposed on the code.
+      STYLE_RULES: |
+        IDE0001 Simplify name
+        IDE0002 Simplify member access
+        IDE0004 Remove unnecessary cast
+        IDE0005 Remove unnecessary import
+        IDE0032 Use auto property
+        IDE0035 Remove unreachable code
+        IDE0043 Invalid format string
+        IDE0051 Remove unused private member
+        IDE0052 Remove unread private member
+        IDE0059 Remove unnecessary value assignment
+        IDE0060 Remove unused parameter
+        IDE0064 Make struct fields writable
+        IDE0071 Simplify interpolation
+        IDE0075 Simplify conditional expression
+        IDE0076 Remove invalid global SuppressMessageAttribute
+        IDE0077 Avoid legacy format target in global SuppressMessageAttribute
+        IDE0079 Remove unnecessary suppression
+        IDE0080 Remove unnecessary suppression operator
+        IDE0082 Convert typeof to nameof
+        IDE0100 Remove unnecessary equality operator
+        IDE0110 Remove unnecessary discard
+        IDE0120 Simplify LINQ expression
+        IDE0121 Simplify LINQ type check and cast
+        IDE0200 Remove unnecessary lambda expression
+        IDE0240 Nullable directive is redundant
+        IDE0241 Nullable directive is unnecessary
+        IDE0280 Use nameof
+        IDE0370 Remove unnecessary suppression
+        IDE0380 Remove unnecessary unsafe modifier
+        IDE0390 Make method synchronous
+        IDE0391 Make method synchronous
+        IDE0018 Inline variable declaration
+        IDE0019 Use pattern matching to avoid as followed by a null check
+        IDE0020 Use pattern matching to avoid is check followed by a cast (with variable)
+        IDE0028 Use collection initializers
+        IDE0029 Null check can be simplified
+        IDE0030 Null check can be simplified
+        IDE0031 Use null propagation
+        IDE0034 Simplify default expression
+        IDE0038 Use pattern matching to avoid is check followed by a cast (without variable)
+        IDE0041 Use is null check
+        IDE0054 Use compound assignment
+        IDE0056 Use index operator
+        IDE0057 Use range operator
+        IDE0066 Use switch expression
+        IDE0070 Use System.HashCode.Combine
+        IDE0074 Use coalesce compound assignment
+        IDE0078 Use pattern matching
+        IDE0083 Use pattern matching (not operator)
+        IDE0150 Prefer null check over type check
+        IDE0170 Simplify property pattern
+        IDE0180 Use tuple to swap values
+        IDE0230 Use UTF-8 string literal
+        IDE0260 Use pattern matching
+        IDE0270 Null check can be simplified
+        IDE0290 Use primary constructor
+        IDE0300 Use collection expression for array
+        IDE0301 Use collection expression for empty
+        IDE0302 Use collection expression for stackalloc
+        IDE0303 Use collection expression for Create()
+        IDE0304 Use collection expression for builder
+        IDE0305 Use collection expression for fluent
+        IDE0306 Use collection expression for new
+        IDE0330 Prefer System.Threading.Lock
+        IDE0340 Use unbound generic type
+        IDE0350 Use implicitly typed lambda
+        IDE0360 Simplify property accessor
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore the .NET tools
+        run: dotnet tool restore
+
+      # The code that the tests cover: the class that each test class mirrors (choix-implementation/organisation-du-code.md),
+      # which extends with the coverage; the classes of the Windows Forms interface are left out. A mutant that survives,
+      # or that no test covers, is a test that is missing. No threshold: the score never fails the run.
+      - name: Run the mutation tests
+        id: mutation
+        run: |
+          $mutate = foreach ($test in git ls-files 'tests/TVRename.Tests/*Tests.cs') {
+            $class = 'TVRename/' + ($test -replace '^tests/TVRename\.Tests/', '' -replace 'Tests\.cs$', '.cs')
+            if ((Test-Path $class) -and $class -notmatch '^TVRename/(Forms|Custom Controls)/|\.Designer\.cs$') {
+              '--mutate'; $class.Substring('TVRename/'.Length)
+            }
+          }
+          if (-not $mutate) { exit 0 }
+          Push-Location tests/TVRename.Tests
+          dotnet tool run dotnet-stryker --project TVRename.csproj --configuration Release @mutate `
+            --concurrency ([Environment]::ProcessorCount) --reporter json --reporter html --reporter progress `
+            --output "$env:RUNNER_TEMP/stryker"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          "report=$env:RUNNER_TEMP/stryker/reports/mutation-report.json" >> $env:GITHUB_OUTPUT
+
+      # The report details each mutant, which the tracking issue only lists by mutator and file.
+      - name: Keep the report of the mutation tests
+        if: steps.mutation.outputs.report
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          path: ${{ runner.temp }}/stryker/reports/mutation-report.html
+          archive: false
+
+      # The style rules are only switched on here, on the throwaway copy of the runner, and never fail the build: each
+      # warning is an entry to judge. After the mutation tests, whose build of the tests (TreatWarningsAsErrors) they
+      # would fail. IDE0005 is only reported with the documentation file, whose missing comments are not an entry.
+      - name: Build with the style rules
+        id: style
+        run: |
+          $rules = @($env:STYLE_RULES -split '\r?\n' | ForEach-Object { ($_ -split ' ', 2)[0] } | Where-Object { $_ })
+          Add-Content .editorconfig -Value (@('', '[*.cs]', 'dotnet_diagnostic.CS1591.severity = none') +
+            ($rules | ForEach-Object { "dotnet_diagnostic.$_.severity = warning" }))
+          dotnet build TVRename.slnx --configuration Release --no-incremental -p:EnforceCodeStyleInBuild=true `
+            -p:GenerateDocumentationFile=true -p:TreatWarningsAsErrors=false "-flp:logfile=$env:RUNNER_TEMP/style.log;warningsonly"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          "rules=$($rules -join ',')" >> $env:GITHUB_OUTPUT
+
+      - name: Update the tracking issue
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          RULES: ${{ steps.style.outputs.rules }}
+          REPORT: ${{ steps.mutation.outputs.report }}
+        run: >-
+          ./scripts/Update-QualityAuditIssue.ps1 -StyleLog "$env:RUNNER_TEMP/style.log" -StyleRules ($env:RULES -split ',')
+          -MutationReport $env:REPORT -Update:($env:GITHUB_REF -eq 'refs/heads/main')
