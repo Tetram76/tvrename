@@ -6,7 +6,7 @@ applies_to:
   - 'TVRename.slnx'
   - 'TVRename/TVRename.csproj'
   - 'tests/*/*.csproj'
-generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:41:05Z }
+generated: { by: claude-code/claude-opus-5-5, at: 2026-11-14T09:55:50Z }
 ---
 
 # Organisation du code
@@ -14,7 +14,7 @@ generated: { by: claude-code/claude-opus-5-5, at: 2026-11-13T22:41:05Z }
 | Projet | Rôle |
 | --- | --- |
 | `TVRename` | L'application héritée du fork, en un seul projet : interface Windows Forms, modèle, sources de données, analyse de la bibliothèque et actions. Son découpage éventuel en projets par responsabilité est une décision à prendre au fil du nettoyage, quand un chantier en montre le besoin, et non un préalable. |
-| `tests/TVRename.Repository.Tests` | Tests du dépôt : confrontent ses fichiers à leurs règles (structure du `.speckit/`, table des moments d'`AGENTS.md`, aucun lien vers l'amont ni vers une licence dans les sources de l'application) et exercent les scripts de l'outillage (`Scripts/`, miroir de `scripts/`), sans référence à l'application. |
+| `tests/TVRename.Repository.Tests` | Tests du dépôt : confrontent ses fichiers à leurs règles (structure du `.speckit/`, table des moments d'`AGENTS.md`, aucun lien vers l'amont ni aucune licence dans les sources de l'application, aucune licence dans l'installeur ni dans le `README.md`) et exercent les scripts de l'outillage (`Scripts/`, miroir de `scripts/`), sans référence à l'application. |
 | `tests/TVRename.Tests` | Tests de l'application : projet miroir de `TVRename`, dont ils reprennent l'arborescence. |
 
 Les tests de l'application vivent sous `tests/`, dans un projet miroir de celui qu'ils testent (`tests/TVRename.Tests` pour `TVRename`), où chaque classe de tests occupe le chemin de la classe qu'elle teste ([Qualité du code](../gestion-projet/gouvernance/qualite-du-code.md), non-régression) ; un projet ajouté à la solution a de même son projet miroir, créé par le premier chantier qui en a besoin.
