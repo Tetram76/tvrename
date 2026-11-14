@@ -1,5 +1,9 @@
 # Journal des changements du .speckit
 
+## 2026-11-14
+
+* **Licence retirée hors de l'application** : les tests du dépôt vérifient aussi qu'aucune licence ne figure dans les commentaires des sources, dans l'installeur ni dans le `README.md` (`choix-implementation/organisation-du-code.md`) (#36).
+
 ## 2026-11-13
 
 * **Usage privé de l'application** (exigence de l'utilisateur) : ajouté à `fonctionnel/contexte.md` ; licence de l'application retirée de `contraintes-techniques/licences.md` et de la reprise depuis l'amont (décision de l'utilisateur) ; les tests du dépôt vérifient qu'aucune source de l'application ne renvoie à l'amont ni à une licence (#26).

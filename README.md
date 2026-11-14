@@ -64,7 +64,3 @@ Use the [issues](https://github.com/Tetram76/tvrename/issues) of this repository
 ## Development
 
 Building, testing and contributing to the project are described in [README.dev.md](README.dev.md) (in French).
-
-## Licence
-
-TV Rename is free software, released under the GNU General Public License, version 3 or later: see [Licence.rtf](Licence.rtf).
