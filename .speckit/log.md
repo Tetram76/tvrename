@@ -2,7 +2,7 @@
 
 ## 2026-11-14
 
-* **Licence retirée hors de l'application** : les tests du dépôt vérifient aussi qu'aucune licence ne figure dans les commentaires des sources, dans l'installeur ni dans le `README.md` (`choix-implementation/organisation-du-code.md`) (#30).
+* **Licence retirée hors de l'application** : les tests du dépôt vérifient aussi qu'aucune licence ne figure dans les commentaires des sources, dans l'installeur ni dans le `README.md` (`choix-implementation/organisation-du-code.md`) (#36).
 
 ## 2026-11-13
 
