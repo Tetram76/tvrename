@@ -17,11 +17,11 @@ namespace TVRename
         {
         }
 
-        protected override DateTime GetValue(OLVListItem lvi, int columnId)
+        protected override DateTime GetValue(OLVListItem x, int columnId)
         {
             try
             {
-                if (lvi.RowObject is Item a)
+                if (x.RowObject is Item a)
                 {
                     return a.AirDate ?? DateTime.Now;
                 }

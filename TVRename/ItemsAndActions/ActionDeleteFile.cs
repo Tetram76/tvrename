@@ -61,9 +61,9 @@ public class ActionDeleteFile : ActionDelete
         return o is ActionDeleteFile cmr && FileHelper.Same(toRemove, cmr.toRemove);
     }
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionDeleteFile cmr || toRemove.Directory is null || cmr.toRemove.Directory is null)
+        if (other is not ActionDeleteFile cmr || toRemove.Directory is null || cmr.toRemove.Directory is null)
         {
             return -1;
         }

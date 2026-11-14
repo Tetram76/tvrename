@@ -15,9 +15,9 @@ using System;
 public class UpdateMediaFileSubtitle : UpdateMediaFileMetaData
 {
     public override string Name => "Update Media File Metadata (subtitle)";
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        UpdateMediaFileSubtitle? nfo = o as UpdateMediaFileSubtitle;
+        UpdateMediaFileSubtitle? nfo = other as UpdateMediaFileSubtitle;
 
         if (nfo?.Where is null)
         {

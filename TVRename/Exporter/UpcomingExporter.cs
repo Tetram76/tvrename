@@ -56,5 +56,5 @@ internal abstract class UpcomingExporter(TVDoc doc) : Exporter
         LOGGER.Trace($"Contents of File are: {contents}");
     }
 
-    protected abstract Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> elist);
+    protected abstract Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> episodes);
 }

@@ -149,9 +149,9 @@ public class ActionTDownload : ActionDownload
 
     public override bool SameAs(Item o) => o is ActionTDownload rss && rss.url == url;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        return o is not ActionTDownload rss ? -1 : string.Compare(url, rss.url, StringComparison.Ordinal);
+        return other is not ActionTDownload rss ? -1 : string.Compare(url, rss.url, StringComparison.Ordinal);
     }
 
     public override IgnoreItem? Ignore => GenerateIgnore(theFileNoExt);

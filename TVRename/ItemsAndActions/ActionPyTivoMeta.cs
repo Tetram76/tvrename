@@ -101,9 +101,9 @@ public class ActionPyTivoMeta : ActionWriteMetadata
         return o is ActionPyTivoMeta meta && meta.Where == Where;
     }
 
-    public override int CompareTo(Item? obj)
+    public override int CompareTo(Item? other)
     {
-        if (obj is not ActionPyTivoMeta nfo)
+        if (other is not ActionPyTivoMeta nfo)
         {
             return -1;
         }

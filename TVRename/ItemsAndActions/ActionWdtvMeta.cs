@@ -183,9 +183,9 @@ public class ActionWdtvMeta : ActionWriteMetadata
 
     public override bool SameAs(Item o) => o is ActionWdtvMeta meta && meta.Where == Where;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionWdtvMeta nfo)
+        if (other is not ActionWdtvMeta nfo)
         {
             return -1;
         }

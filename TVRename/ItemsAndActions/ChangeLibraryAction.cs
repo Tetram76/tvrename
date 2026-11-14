@@ -44,9 +44,9 @@ internal class ActionChangeLibraryRemoveMovie : ActionChangeLibrary, IEquatable<
     }
 
     #region EqualMethods
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionChangeLibraryRemoveMovie r)
+        if (other is not ActionChangeLibraryRemoveMovie r)
         {
             return -1;
         }
@@ -89,9 +89,9 @@ internal class ActionChangeLibraryRemoveShow(ShowConfiguration si, TVDoc doc) : 
     }
 
     #region EqualMethods
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionChangeLibraryRemoveShow r)
+        if (other is not ActionChangeLibraryRemoveShow r)
         {
             return -1;
         }

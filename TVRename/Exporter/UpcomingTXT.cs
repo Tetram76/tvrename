@@ -16,13 +16,13 @@ internal class UpcomingTXT(TVDoc i) : UpcomingExporter(i)
     protected override string Location() => TVSettings.Instance.ExportWTWTXTTo;
     protected override string Name() => "Upcoming TXT Exporter";
 
-    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> elist)
+    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> episodes)
     {
         try
         {
             using System.IO.StreamWriter file = new(str);
             file.WriteLine(HeaderLine());
-            foreach (ProcessedEpisode processedEpisode in elist)
+            foreach (ProcessedEpisode processedEpisode in episodes)
             {
                 file.WriteLine(ConvertToLine(processedEpisode));
             }

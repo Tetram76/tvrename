@@ -16,9 +16,9 @@ internal class UpcomingRSS(TVDoc i) : UpcomingExporter(i)
     protected override string Location() => TVSettings.Instance.ExportWTWRSSTo;
     protected override string Name() => "Upcoming RSS Exporter";
 
-    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode>? elist)
+    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode>? episodes)
     {
-        if (elist is null)
+        if (episodes is null)
         {
             return false;
         }
@@ -39,7 +39,7 @@ internal class UpcomingRSS(TVDoc i) : UpcomingExporter(i)
             writer.WriteElement("title", "Upcoming Shows");
             writer.WriteElement("description", "Upcoming shows, exported by TVRename");
 
-            foreach (ProcessedEpisode ei in elist)
+            foreach (ProcessedEpisode ei in episodes)
             {
                 string niceName = TVSettings.Instance.NamingStyle.NameFor(ei);
 

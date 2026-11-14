@@ -43,14 +43,14 @@ public class LocalCache : MediaCache, ITVSource
     public override int PrimaryKey(ISeriesSpecifier ss) => ss.TvMazeId ?? throw new SourceConsistencyException("Missing Primary Key", TVDoc.ProviderType.TVmaze);
 
     public override string CacheSourceName() => "TVMaze";
-    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cache, bool showIssues, CancellationToken ct)
+    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cacheFile, bool showConnectionIssues, CancellationToken token)
     {
-        System.Diagnostics.Debug.Assert(cache != null);
-        CacheFile = cache;
+        System.Diagnostics.Debug.Assert(cacheFile != null);
+        CacheFile = cacheFile;
 
         LastErrorMessage = string.Empty;
 
-        LoadOk = loadFrom is null || (await CachePersistor.LoadTvCacheAsync(loadFrom, this, ct));
+        LoadOk = loadFrom is null || (await CachePersistor.LoadTvCacheAsync(loadFrom, this, token));
     }
 
     public async Task<bool> ConnectAsync(bool showErrorMsgBox) => true;
@@ -251,7 +251,7 @@ public class LocalCache : MediaCache, ITVSource
     /// <exception cref="SourceConsistencyException">Condition.</exception>
     /// <exception cref="SourceConnectivityException">If there is a problem connecting</exception>
     public override async Task SearchAsync(string text, bool showErrorMsgBox, MediaConfiguration.MediaType type,
-        Locale preferredLocale, CancellationToken token)
+        Locale locale, CancellationToken token)
     {
         if (type == MediaConfiguration.MediaType.tv)
         {
@@ -259,7 +259,7 @@ public class LocalCache : MediaCache, ITVSource
             {
                 if (int.TryParse(text, out int textAsInt))
                 {
-                    SearchSpecifier ss = new(textAsInt, preferredLocale,
+                    SearchSpecifier ss = new(textAsInt, locale,
                         TVDoc.ProviderType.TVmaze, type);
                     try
                     {
@@ -284,17 +284,17 @@ public class LocalCache : MediaCache, ITVSource
     }
 
     /// <exception cref="SourceConsistencyException">Condition.</exception>
-    public void AddOrUpdateEpisode(Episode e)
+    public void AddOrUpdateEpisode(Episode episode)
     {
         {
-            if (!Series.TryGetValue(e.SeriesId, out CachedSeriesInfo? ser))
+            if (!Series.TryGetValue(episode.SeriesId, out CachedSeriesInfo? ser))
             {
                 throw new SourceConsistencyException(
-                    $"Can't find the cachedSeries to add the episode to (TVMaze). EpId:{e.EpisodeId} SeriesId:{e.SeriesId} {e.Name}",
+                    $"Can't find the cachedSeries to add the episode to (TVMaze). EpId:{episode.EpisodeId} SeriesId:{episode.SeriesId} {episode.Name}",
                     TVDoc.ProviderType.TVmaze);
             }
 
-            ser.AddEpisode(e);
+            ser.AddEpisode(episode);
         }
     }
 
@@ -316,7 +316,7 @@ public class LocalCache : MediaCache, ITVSource
     public override TVDoc.ProviderType Provider() => TVDoc.ProviderType.TVmaze;
     TVDoc.ProviderType ITVSource.SourceProvider() => TVDoc.ProviderType.TVmaze;
 
-    public override async Task ReConnectAsync(bool b)
+    public override async Task ReConnectAsync(bool showErrorMsgBox)
     {
         //nothing to be done here
     }

@@ -46,9 +46,9 @@ public class ShowSeasonMissing : ItemMissing, IEquatable<ShowSeasonMissing>
 
     public override bool SameAs(Item o) => o is ShowSeasonMissing missing && CompareTo(missing) == 0;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ShowSeasonMissing miss)
+        if (other is not ShowSeasonMissing miss)
         {
             return -1;
         }

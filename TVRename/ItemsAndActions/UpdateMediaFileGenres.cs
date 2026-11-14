@@ -16,9 +16,9 @@ public class UpdateMediaFileGenres : UpdateMediaFileMetaData
 {
     private readonly string[] targetValue;
     public override string Name => "Update Media File Metadata (Genres)";
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        UpdateMediaFileGenres? nfo = o as UpdateMediaFileGenres;
+        UpdateMediaFileGenres? nfo = other as UpdateMediaFileGenres;
 
         if (nfo?.Where is null)
         {
