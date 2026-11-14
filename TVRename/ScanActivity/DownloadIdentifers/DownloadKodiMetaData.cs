@@ -16,9 +16,7 @@ namespace TVRename;
 
 internal class DownloadKodiMetaData : DownloadIdentifier
 {
-    private static List<string> DoneNfo = null!;
-
-    public DownloadKodiMetaData() => Reset();
+    private List<string> doneNfo = [];
 
     public override DownloadType GetDownloadType() => DownloadType.downloadMetaData;
 
@@ -26,7 +24,7 @@ internal class DownloadKodiMetaData : DownloadIdentifier
     {
         if (file.FullName.EndsWith(".nfo", true, new CultureInfo("en")))
         {
-            DoneNfo.Add(file.FullName);
+            doneNfo.Add(file.FullName);
         }
         base.NotifyComplete(file);
     }
@@ -43,12 +41,12 @@ internal class DownloadKodiMetaData : DownloadIdentifier
             try
             {
                 bool needUpdate = !tvshownfo.Exists || cachedSeriesInfo is null || System.Math.Abs(cachedSeriesInfo.SrvLastUpdated - TimeZoneHelper.Epoch(tvshownfo.LastWriteTime)) > 1;
-                bool alreadyOnTheList = DoneNfo.Contains(tvshownfo.FullName);
+                bool alreadyOnTheList = doneNfo.Contains(tvshownfo.FullName);
 
                 if ((forceRefresh || needUpdate) && !alreadyOnTheList)
                 {
                     theActionList.Add(new ActionNfoShow(tvshownfo, si));
-                    DoneNfo.Add(tvshownfo.FullName);
+                    doneNfo.Add(tvshownfo.FullName);
                 }
                 return theActionList;
             }
@@ -76,12 +74,12 @@ internal class DownloadKodiMetaData : DownloadIdentifier
             }
 
             //If we do not already have plans to put the file into place
-            if (DoneNfo.Contains(nfo.FullName))
+            if (doneNfo.Contains(nfo.FullName))
             {
                 return null;
             }
 
-            DoneNfo.Add(nfo.FullName);
+            doneNfo.Add(nfo.FullName);
             return [new ActionNfoEpisode(nfo, episode)];
         }
         catch (DirectoryNotFoundException ex)
@@ -111,12 +109,12 @@ internal class DownloadKodiMetaData : DownloadIdentifier
             }
 
             //If we do not already have plans to put the file into place
-            if (DoneNfo.Contains(nfo.FullName))
+            if (doneNfo.Contains(nfo.FullName))
             {
                 return null;
             }
 
-            DoneNfo.Add(nfo.FullName);
+            doneNfo.Add(nfo.FullName);
             return [new ActionNfoMovie(nfo, mc)];
         }
         catch (DirectoryNotFoundException ex)
@@ -130,5 +128,5 @@ internal class DownloadKodiMetaData : DownloadIdentifier
         return null;
     }
 
-    public sealed override void Reset() => DoneNfo = [];
+    public sealed override void Reset() => doneNfo = [];
 }
