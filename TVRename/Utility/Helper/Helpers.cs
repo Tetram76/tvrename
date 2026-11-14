@@ -255,7 +255,7 @@ public static class Helpers
     {
         try
         {
-            var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            using var registryKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
             if (registryKey != null)
             {
                 var value = registryKey.GetValue("AppsUseLightTheme");
