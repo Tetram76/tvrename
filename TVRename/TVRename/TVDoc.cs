@@ -871,7 +871,7 @@ public class TVDoc
 
             while (!Args.Hide && Environment.UserInteractive && (scanProgressDlg is null || !scanProgressDlg.Ready))
             {
-                await Task.Delay(10); // wait for thread to create the dialog
+                await Task.Delay(10, settings.Token); // wait for thread to create the dialog
             }
 
             SetProgressDelegate noProgress = NoProgress;
