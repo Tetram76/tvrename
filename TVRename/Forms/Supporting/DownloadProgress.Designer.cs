@@ -86,7 +86,6 @@ namespace TVRename
             txtCurrent.Size = new Size(22, 15);
             txtCurrent.TabIndex = 2;
             txtCurrent.Text = "---";
-            txtCurrent.Click += txtCurrent_Click;
             // 
             // tmrUpdate
             // 
@@ -109,7 +108,6 @@ namespace TVRename
             Name = "DownloadProgress";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Download Progress";
-            Load += DownloadProgress_Load;
             ResumeLayout(false);
             PerformLayout();
 

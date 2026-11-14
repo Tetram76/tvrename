@@ -93,8 +93,4 @@ public partial class RecoverXml : Form
         DialogResult = DialogResult.Cancel;
         Close();
     }
-
-    private void label5_Click(object sender, System.EventArgs e)
-    {
-    }
 }

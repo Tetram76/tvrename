@@ -85,14 +85,4 @@ public partial class DownloadProgress : Form
         pbProgressBar.SetProgress(average);
         UiHelpers.SetProgress(average, ParentForm?.Handle ?? Handle);
     }
-
-    private void DownloadProgress_Load(object sender, System.EventArgs e)
-    {
-
-    }
-
-    private void txtCurrent_Click(object sender, EventArgs e)
-    {
-
-    }
 }
