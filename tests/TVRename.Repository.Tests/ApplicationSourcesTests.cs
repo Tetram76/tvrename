@@ -3,10 +3,11 @@ using System.Text.RegularExpressions;
 namespace TVRename.Repository.Tests;
 
 /// <summary>
-/// The application is for private use, without support, reporting or donation (fonctionnel/contexte.md), and shows
+/// The application is for private use, without support, reporting or donation (fonctionnel/contexte.md), and carries
 /// no licence (decision of the user): it sends its user neither to the sites, forum, issue tracker, manual or donation
-/// page of the original project, which the fork does not control, nor to the text of a licence. Only what the user
-/// sees counts, so comments (licence headers of the sources) are not checked.
+/// page of the original project, which the fork does not control, nor to the text of a licence. A link to the original
+/// project only counts where the user sees it, outside comments; a licence counts anywhere, so the sources carry no
+/// licence header either.
 /// </summary>
 public sealed partial class ApplicationSourcesTests
 {
@@ -36,7 +37,8 @@ public sealed partial class ApplicationSourcesTests
             for (var index = 0; index < lines.Length; index++)
             {
                 var line = lines[index].Trim();
-                if (!line.StartsWith("//", StringComparison.Ordinal) && UpstreamOrLicence().IsMatch(line)
+                var shown = !line.StartsWith("//", StringComparison.Ordinal);
+                if (((shown && Upstream().IsMatch(line)) || Licence().IsMatch(line))
                     && !Exceptions.Any(exception => exception.File == relative && line.Contains(exception.Line, StringComparison.Ordinal)))
                     violations.Add($"{relative}:{index + 1}: {line}");
             }
@@ -52,6 +54,10 @@ public sealed partial class ApplicationSourcesTests
             && !relative.StartsWith("bin/", StringComparison.Ordinal) && !relative.StartsWith("obj/", StringComparison.Ordinal);
     }
 
-    [GeneratedRegex(@"tvrename\.com|TV-Rename/tvrename|groups\.google\.com\S*tvrename|paypal\.(me|com)|LICENSE\.md|General Public License", RegexOptions.IgnoreCase)]
-    private static partial Regex UpstreamOrLicence();
+    [GeneratedRegex(@"tvrename\.com|TV-Rename/tvrename|groups\.google\.com\S*tvrename|paypal\.(me|com)", RegexOptions.IgnoreCase)]
+    private static partial Regex Upstream();
+
+    // Word boundaries keep the acronym from matching inside the base64 data of resources.
+    [GeneratedRegex(@"LICENSE\.md|General Public License|\bGPL(v\d+)?\b", RegexOptions.IgnoreCase)]
+    private static partial Regex Licence();
 }
