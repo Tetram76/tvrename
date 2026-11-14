@@ -1,11 +1,3 @@
-//
-// Main website for TVRename is http://tvrename.com
-//
-// Source code available at https://github.com/TV-Rename/tvrename
-//
-// Copyright (c) TV Rename. This code is released under GPLv3 https://github.com/TV-Rename/tvrename/blob/master/LICENSE.md
-//
-
 // Per-season sets of rules for manipulating episodes from thetvdb into multi-episode files,
 // removing, adding, swapping them around, etc.
 

@@ -1,13 +1,3 @@
-//
-// Main website for TVRename is http://tvrename.com
-//
-// Source code available at https://github.com/TV-Rename/tvrename
-//
-// Copyright (c) TV Rename. This code is released under GPLv3 https://github.com/TV-Rename/tvrename/blob/master/LICENSE.md
-//
-
-
-
 // Control for searching for a source provider code, checking against local cache and
 // searching on various providers
 
