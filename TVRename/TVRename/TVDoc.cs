@@ -417,7 +417,7 @@ public class TVDoc : IDisposable, IAsyncDisposable
     {
         ForceRefreshIdentifiedMedia();
         List<ISeriesSpecifier> idsToDownload = [.. TvLibrary.Shows, .. FilmLibrary.Movies];
-        cacheManager.StartBackgroundDownloadAsync(false, idsToDownload, false, p, cts.Token);
+        cacheManager.StartBackgroundDownloadAsync(idsToDownload, false, p, cts.Token);
         await cacheManager.DownloadThreadAsync();
     }
 

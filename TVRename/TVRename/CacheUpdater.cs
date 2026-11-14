@@ -20,7 +20,6 @@ namespace TVRename;
 public class CacheUpdater : IDisposable, IAsyncDisposable
 {
     private bool downloadOk;
-    private bool downloadStopOnError;
     private bool showErrorMsgBox;
     private Task? mDownloaderThread;
     private ICollection<ISeriesSpecifier> downloadIds;
@@ -36,12 +35,11 @@ public class CacheUpdater : IDisposable, IAsyncDisposable
         downloadIds = [];
     }
 
-    public void StartBackgroundDownloadAsync(bool stopOnError, ICollection<ISeriesSpecifier> shows, bool showMsgBox, DownloadProgressStatus? p,
+    public void StartBackgroundDownloadAsync(ICollection<ISeriesSpecifier> shows, bool showMsgBox, DownloadProgressStatus? p,
         CancellationToken ctsToken)
     {
         if (!DownloadIsHappening())
         {
-            downloadStopOnError = stopOnError; //TODO - Work out what this was for
             showErrorMsgBox = showMsgBox;
             downloadOk = true;
 
@@ -63,7 +61,7 @@ public class CacheUpdater : IDisposable, IAsyncDisposable
 
         Logger.Info("Doing downloads in the foreground...");
 
-        StartBackgroundDownloadAsync(true, shows, showMsgBox, null, cts.Token); //todo hook up progress dialog
+        StartBackgroundDownloadAsync(shows, showMsgBox, null, cts.Token); //todo hook up progress dialog
 
         if (DownloadIsHappening() && showProgress) // downloading still going on, so time to show the dialog if we're not in /hide mode
         {
