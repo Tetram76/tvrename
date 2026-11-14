@@ -17,7 +17,7 @@ namespace TVRename;
 /// Handles the update happening in the background and also presenting a UI and bringing the update into the
 /// foreground
 /// </summary>
-public class CacheUpdater : IDisposable, IAsyncDisposable
+public class CacheUpdater
 {
     private bool downloadOk;
     private bool showErrorMsgBox;
@@ -314,20 +314,6 @@ public class CacheUpdater : IDisposable, IAsyncDisposable
         return type == MediaConfiguration.MediaType.tv
             ? downloadIds.Count(s => s.Provider == provider && s.Media == type && (TVDoc.GetMediaCache(provider).GetSeries(s.IdFor(provider))?.Dirty ?? true))
             : downloadIds.Count(s => s.Provider == provider && s.Media == type && (TVDoc.GetMediaCache(provider).GetMovie(s.IdFor(provider))?.Dirty ?? true));
-    }
-
-
-    async ValueTask IAsyncDisposable.DisposeAsync()
-    {
-        await DownloadThreadAsync();
-        GC.SuppressFinalize(this);
-        Dispose();
-    }
-
-    public void Dispose()
-    {
-        // Ensure finalizer is suppressed
-        GC.SuppressFinalize(this);
     }
 
     public void ClearProblems()

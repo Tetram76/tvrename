@@ -16,7 +16,7 @@ using TVRename.Forms.Tools;
 namespace TVRename;
 
 // ReSharper disable once InconsistentNaming
-public class TVDoc : IDisposable, IAsyncDisposable
+public class TVDoc
 {
     public enum ProviderType
     {
@@ -1684,32 +1684,6 @@ public class TVDoc : IDisposable, IAsyncDisposable
 
         await DoDownloadsBG(updateAction, cts);
         AllowAutoScan();
-    }
-
-    private async Task ReleaseUnmanagedResources()
-    {
-        await cacheManager.DownloadThreadAsync();
-    }
-
-
-    async ValueTask IAsyncDisposable.DisposeAsync()
-    {
-        await ReleaseUnmanagedResources();
-        await Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-    private async Task Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            cacheManager.Dispose();
-        }
-        Dispose();
-    }
-
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
     }
 
     public void PreventAutoScan(string v)
