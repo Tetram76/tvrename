@@ -374,6 +374,15 @@ public class CachedSeriesInfo : CachedMediaInfo
 
     public override string ToString() => $"TVDB:{TvdbCode}/Maze:{TvMazeCode}/TMDB:{TmdbCode}/{Name}";
 
+    public override void UpgradeSearchResultToDirty()
+    {
+        base.UpgradeSearchResultToDirty();
+        if (!Seasons.IsAny())
+        {
+            Dirty = true;
+        }
+    }
+
     public override ProcessedSeason.SeasonType SeasonOrder => SeasonOrderType;
 
     private List<Season> seasons = [];

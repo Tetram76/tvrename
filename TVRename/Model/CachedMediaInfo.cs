@@ -204,19 +204,12 @@ public abstract class CachedMediaInfo(TVDoc.ProviderType source) : ISeriesSpecif
 
     public override string ToString() => $"TMDB:{TmdbCode}/TVDB:{TvdbCode}/Maze:{TvMazeCode}/{Name}";
 
-    public void UpgradeSearchResultToDirty()
+    public virtual void UpgradeSearchResultToDirty()
     {
         if (IsSearchResultOnly)
         {
             Dirty = true;
             IsSearchResultOnly = false;
-        }
-        if (this is CachedSeriesInfo si)
-        {
-            if (!si.Seasons.IsAny())
-            {
-                Dirty = true;
-            }
         }
     }
 
