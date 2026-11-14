@@ -34,9 +34,9 @@ public class ActionMoveRenameDirectory : ActionFileOperation
 
     public override IgnoreItem? Ignore => null;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionMoveRenameDirectory cmr)
+        if (other is not ActionMoveRenameDirectory cmr)
         {
             return -1;
         }

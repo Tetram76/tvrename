@@ -21,7 +21,7 @@ public abstract class Item : IComparable<Item>, INotifyPropertyChanged, IEquatab
     public ProcessedEpisode? Episode { get; protected init; } // associated episode
     public MovieConfiguration? Movie { get; protected init; } // associated movie
 
-    public abstract int CompareTo(Item? obj); // for sorting items in scan list (ActionItemSorter)
+    public abstract int CompareTo(Item? other); // for sorting items in scan list (ActionItemSorter)
 
     public abstract bool SameAs(Item o); // are we the same thing as that other one?
 

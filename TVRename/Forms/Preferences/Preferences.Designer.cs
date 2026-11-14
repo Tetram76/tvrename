@@ -768,7 +768,6 @@ namespace TVRename.Forms
             tbSeasonSearchTerms.Size = new Size(310, 23);
             tbSeasonSearchTerms.TabIndex = 22;
             toolTip1.SetToolTip(tbSeasonSearchTerms, "Which terms should the system look for in directory\r\nnames that indicate that the folder contains a season's\r\nworth of episodes for a show.\r\nThey should be separated by a semi-colon - ; ");
-            tbSeasonSearchTerms.TextChanged += tbSeasonSearchTerms_TextChanged;
             // 
             // chkForceBulkAddToUseSettingsOnly
             // 
@@ -6160,7 +6159,6 @@ namespace TVRename.Forms
             SizeGripStyle = SizeGripStyle.Show;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Preferences";
-            FormClosing += Preferences_FormClosing;
             Load += Preferences_Load;
             cmDefaults.ResumeLayout(false);
             tpDisplay.ResumeLayout(false);

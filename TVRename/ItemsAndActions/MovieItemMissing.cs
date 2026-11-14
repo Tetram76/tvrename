@@ -30,9 +30,9 @@ public class MovieItemMissing : ItemMissing
 
     public override string Name => "Missing Movie";
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not MovieItemMissing miss)
+        if (other is not MovieItemMissing miss)
         {
             return -1;
         }

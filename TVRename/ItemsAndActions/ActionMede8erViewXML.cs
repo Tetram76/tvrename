@@ -57,9 +57,9 @@ public class ActionMede8erViewXML : ActionWriteMetadata, IEquatable<ActionMede8e
         return o is ActionMede8erViewXML xml && xml.Where == Where;
     }
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionMede8erViewXML nfo)
+        if (other is not ActionMede8erViewXML nfo)
         {
             return -1;
         }

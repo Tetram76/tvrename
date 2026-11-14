@@ -14,7 +14,7 @@ namespace TVRename;
 internal static class CachePersistor
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public static string? LoadErr;
+    public static string? LoadErr { get; private set; }
 
     private static void RotateCacheFiles(FileInfo cacheFile)
     {

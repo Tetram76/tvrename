@@ -29,9 +29,9 @@ public class ShowItemMissing : ItemMissing
 
     public override string Name => "Missing Episode";
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ShowItemMissing miss)
+        if (other is not ShowItemMissing miss)
         {
             return -1;
         }

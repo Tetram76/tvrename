@@ -20,9 +20,9 @@ public class UpdateMediaFileDescription : UpdateMediaFileMetaData
 {
     public override string Name => "Update Media File Metadata (description)";
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        UpdateMediaFileDescription? nfo = o as UpdateMediaFileDescription;
+        UpdateMediaFileDescription? nfo = other as UpdateMediaFileDescription;
 
         if (nfo?.Where is null)
         {
@@ -60,9 +60,9 @@ public class UpdateMediaFileDescription : UpdateMediaFileMetaData
 public class UpdateMediaFileComment : UpdateMediaFileMetaData
 {
     public override string Name => "Update Media File Metadata (comment)";
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        UpdateMediaFileComment? nfo = o as UpdateMediaFileComment;
+        UpdateMediaFileComment? nfo = other as UpdateMediaFileComment;
 
         if (nfo?.Where is null)
         {
@@ -101,9 +101,9 @@ public class UpdateMediaFileYear : UpdateMediaFileMetaData
 {
     private readonly uint intValue;
     public override string Name => "Update Media File Metadata (year)";
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        UpdateMediaFileYear? nfo = o as UpdateMediaFileYear;
+        UpdateMediaFileYear? nfo = other as UpdateMediaFileYear;
 
         if (nfo?.Where is null)
         {

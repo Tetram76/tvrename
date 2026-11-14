@@ -36,9 +36,9 @@ internal class ActionTRemove : Action
 
     public override bool SameAs(Item o) => o is ActionTRemove other && other.client == client && other.name == name;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        return o is not ActionTRemove rss ? -1 : string.Compare(name.TorrentFile, rss.name.TorrentFile, StringComparison.Ordinal);
+        return other is not ActionTRemove rss ? -1 : string.Compare(name.TorrentFile, rss.name.TorrentFile, StringComparison.Ordinal);
     }
 
     public override string Name => "Remove Completed Torrent";

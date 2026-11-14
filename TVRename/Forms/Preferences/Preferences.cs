@@ -1701,9 +1701,6 @@ public partial class Preferences : Form
 
     #endregion ColourSelection OnClick Functionality
 
-    private void Preferences_FormClosing(object sender, FormClosingEventArgs e)
-    {
-    }
     protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
     {
         base.ScaleControl(factor, specified);
@@ -2275,10 +2272,5 @@ public partial class Preferences : Form
         }
 
         t.Text = t.Text.IntegerCharactersOnly();
-    }
-
-    private void tbSeasonSearchTerms_TextChanged(object sender, EventArgs e)
-    {
-
     }
 }

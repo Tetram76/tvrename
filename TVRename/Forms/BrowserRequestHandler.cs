@@ -22,7 +22,7 @@ public class BrowserRequestHandler : RequestHandler
         return new BrowserResourceRequestHandler();
     }
 
-    protected override bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect)
+    protected override bool OnBeforeBrowse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect)
     {
         if (request.Url is null)
         {

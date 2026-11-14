@@ -15,7 +15,7 @@ internal class UpcomingXML(TVDoc i) : UpcomingExporter(i)
     protected override string Name() => "Upcoming XML Exporter";
     protected override string Location() => TVSettings.Instance.ExportWTWXMLTo;
 
-    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> elist)
+    protected override async Task<bool> GenerateAsync(System.IO.Stream str, IEnumerable<ProcessedEpisode> episodes)
     {
         DirFilesCache dfc = new();
         XmlWriterSettings settings = new()
@@ -29,7 +29,7 @@ internal class UpcomingXML(TVDoc i) : UpcomingExporter(i)
         writer.WriteStartDocument();
         writer.WriteStartElement("WhenToWatch");
 
-        foreach (ProcessedEpisode ei in elist)
+        foreach (ProcessedEpisode ei in episodes)
         {
             writer.WriteStartElement("item");
             writer.WriteElement("ShowTvdbId", ei.Show.TvdbCode);

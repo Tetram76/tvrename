@@ -743,7 +743,6 @@ namespace TVRename
             txtSeasonFormat.Name = "txtSeasonFormat";
             txtSeasonFormat.Size = new Size(234, 23);
             txtSeasonFormat.TabIndex = 28;
-            txtSeasonFormat.TextChanged += txtSeasonFormat_TextChanged;
             // 
             // bnTags
             // 

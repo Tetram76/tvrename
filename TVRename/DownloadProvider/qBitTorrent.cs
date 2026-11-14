@@ -368,17 +368,17 @@ public class qBitTorrent : IDownloadProvider
     /// <exception cref="WebException">Condition.</exception>
     /// <exception cref="HttpRequestException">Condition.</exception>
     /// <exception cref="TaskCanceledException">.NET Core and .NET 5.0 and later only: The request failed due to timeout.</exception>
-    public async Task RemoveCompletedDownloadAsync(TorrentEntry name)
+    public async Task RemoveCompletedDownloadAsync(TorrentEntry torrent)
     {
         if (string.IsNullOrEmpty(TVSettings.Instance.qBitTorrentHost) || string.IsNullOrEmpty(TVSettings.Instance.qBitTorrentPort))
         {
-            Logger.Warn($"Could not remove {name.DownloadingTo} via qBitTorrent as settings are not entered for host and port");
+            Logger.Warn($"Could not remove {torrent.DownloadingTo} via qBitTorrent as settings are not entered for host and port");
             return;
         }
 
-        if (name.Key is null)
+        if (torrent.Key is null)
         {
-            Logger.Warn($"Could not remove {name.DownloadingTo} via qBitTorrent as the key was not set");
+            Logger.Warn($"Could not remove {torrent.DownloadingTo} via qBitTorrent as the key was not set");
             return;
         }
 
@@ -387,7 +387,7 @@ public class qBitTorrent : IDownloadProvider
         //Annoyingly V1 uses POST, but V2 is a GET...
         if (TVSettings.Instance.qBitTorrentAPIVersion == qBitTorrentAPIVersion.v1)
         {
-            string parametersString = HttpHelper.GetHttpParameters(new Dictionary<string, string?> { { "hashes", name.Key } });
+            string parametersString = HttpHelper.GetHttpParameters(new Dictionary<string, string?> { { "hashes", torrent.Key } });
             await HttpHelper.HttpRequestAsync("POST", url, parametersString.RemoveCharactersFrom("?"), "application/x-www-form-urlencoded", null, null);
         }
         else
@@ -395,30 +395,30 @@ public class qBitTorrent : IDownloadProvider
             try
             {
                 using HttpClient client = new();
-                Dictionary<string, string> values = new() { { "hashes", name.Key }, { "deleteFiles", "false" } };
+                Dictionary<string, string> values = new() { { "hashes", torrent.Key }, { "deleteFiles", "false" } };
                 using FormUrlEncodedContent content = new(values);
                 HttpResponseMessage response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     string message =
-                        $"Tried to remove {name.DownloadingTo} from qBitTorrent via {url}. Got following response {response.StatusCode}";
+                        $"Tried to remove {torrent.DownloadingTo} from qBitTorrent via {url}. Got following response {response.StatusCode}";
 
                     Logger.Warn(message);
                 }
                 else
                 {
-                    Logger.Info($"Removed {name.DownloadingTo} via qBitTorrent using {url}. Got following response {response.StatusCode}");
+                    Logger.Info($"Removed {torrent.DownloadingTo} via qBitTorrent using {url}. Got following response {response.StatusCode}");
                 }
             }
             catch (WebException wex)
             {
-                Logger.Warn($"Could not connect to {wex.Response?.ResponseUri} to remove {name.TorrentFile}, Please check qBitTorrent Settings and ensure qBitTorrent is running with no password required for local connections : {wex.LoggableDetails()}");
+                Logger.Warn($"Could not connect to {wex.Response?.ResponseUri} to remove {torrent.TorrentFile}, Please check qBitTorrent Settings and ensure qBitTorrent is running with no password required for local connections : {wex.LoggableDetails()}");
                 throw;
             }
             catch (AggregateException ex) when (ex.InnerException is HttpRequestException wex)
             {
-                Logger.Warn($"Could not connect to {url} to remove {name.TorrentFile}, Please check qBitTorrent Settings and ensure qBitTorrent is running with no password required for local connections : {wex.LoggableDetails()}");
+                Logger.Warn($"Could not connect to {url} to remove {torrent.TorrentFile}, Please check qBitTorrent Settings and ensure qBitTorrent is running with no password required for local connections : {wex.LoggableDetails()}");
                 throw wex;
             }
         }

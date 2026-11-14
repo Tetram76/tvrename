@@ -27,7 +27,7 @@ public abstract class ListSorter<T> : System.Collections.Generic.IComparer<T>
         return CompareItems(x, y);
     }
 
-    protected abstract int CompareItems(T item, T item1);
+    protected abstract int CompareItems(T x, T y);
 }
 public class DefaultActionItemSorter : ListSorter<Item>
 {

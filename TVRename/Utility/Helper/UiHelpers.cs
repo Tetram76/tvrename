@@ -150,11 +150,11 @@ public static class UiHelpers
         {
             // The control's thread no longer exists (form was closed)
             // Silently ignore as the operation is being cancelled anyway
-            Logger.Warn(ex, "Failed to Invoke on {uiElement.Name}");
+            Logger.Warn(ex, "Failed to Invoke on {ControlName}", uiElement.Name);
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, "Failed to Invoke on {uiElement.Name}");
+            Logger.Error(ex, "Failed to Invoke on {ControlName}", uiElement.Name);
         }
     }
 

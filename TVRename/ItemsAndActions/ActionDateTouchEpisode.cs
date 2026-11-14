@@ -20,9 +20,9 @@ internal class ActionDateTouchEpisode : ActionDateTouchFile
         return o is ActionDateTouchEpisode touch && touch.WhereFile.FullName == WhereFile.FullName;
     }
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionDateTouchEpisode nfo)
+        if (other is not ActionDateTouchEpisode nfo)
         {
             return -1;
         }

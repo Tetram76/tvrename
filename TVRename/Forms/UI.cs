@@ -5413,11 +5413,6 @@ public partial class UI : Form, IDialogParent
         await mDoc.RunExportersAsync(TVSettings.Instance.Filter, TVSettings.Instance.MovieFilter);
     }
 
-    private void txtDLStatusLabel_Click(object sender, EventArgs e)
-    {
-
-    }
-
     private void lvWhenToWatch_BeforeCreatingGroups(object sender, CreateGroupsEventArgs e)
     {
         e.Parameters.ItemComparer = new OlvGroupComparer<ProcessedEpisode>(MapEpisodeColumnToSorter(e.Parameters.PrimarySort), e.Parameters.PrimarySortOrder);

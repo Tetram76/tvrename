@@ -2155,7 +2155,6 @@ namespace TVRename.Forms
             txtDLStatusLabel.TabIndex = 1;
             txtDLStatusLabel.Text = "Background Download: ---";
             txtDLStatusLabel.Visible = false;
-            txtDLStatusLabel.Click += txtDLStatusLabel_Click;
             // 
             // tsNextShowTxt
             // 

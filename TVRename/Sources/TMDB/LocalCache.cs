@@ -68,10 +68,10 @@ public class LocalCache : MediaCache, IMovieSource, ITVSource
 
     public override string CacheSourceName() => "TMDB";
 
-    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cache, bool showIssues, CancellationToken token)
+    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cacheFile, bool showConnectionIssues, CancellationToken token)
     {
-        System.Diagnostics.Debug.Assert(cache != null);
-        CacheFile = cache;
+        System.Diagnostics.Debug.Assert(cacheFile != null);
+        CacheFile = cacheFile;
 
         //assume that the data is up to date (this will be overridden by the value in the XML if we have a prior install)
         //If we have no prior install then the app has no shows and is by definition up-to-date
@@ -330,15 +330,15 @@ public class LocalCache : MediaCache, IMovieSource, ITVSource
 
 
     /// <exception cref="SourceConsistencyException">Condition.</exception>
-    public void AddOrUpdateEpisode(Episode e)
+    public void AddOrUpdateEpisode(Episode episode)
     {
-        if (!Series.TryGetValue(e.SeriesId, out CachedSeriesInfo? ser))
+        if (!Series.TryGetValue(episode.SeriesId, out CachedSeriesInfo? ser))
         {
             throw new SourceConsistencyException(
-                $"Can't find the cachedSeries to add the episode to (TMDB). EpId:{e.EpisodeId} SeriesId:{e.SeriesId} {e.Name}", TVDoc.ProviderType.TMDB);
+                $"Can't find the cachedSeries to add the episode to (TMDB). EpId:{episode.EpisodeId} SeriesId:{episode.SeriesId} {episode.Name}", TVDoc.ProviderType.TMDB);
         }
 
-        ser.AddEpisode(e);
+        ser.AddEpisode(episode);
     }
 
     public void LatestUpdateTimeIs(string time)
@@ -1573,7 +1573,7 @@ public class LocalCache : MediaCache, IMovieSource, ITVSource
         return true;
     }
 
-    public override async Task ReConnectAsync(bool b)
+    public override async Task ReConnectAsync(bool showErrorMsgBox)
     {
         //nothing to be done here
     }

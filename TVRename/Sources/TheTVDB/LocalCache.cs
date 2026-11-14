@@ -63,12 +63,12 @@ public class LocalCache : MediaCache, ITVSource, IMovieSource
 
     public override TVDoc.ProviderType Provider() => TVDoc.ProviderType.TheTVDB;
 
-    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cache, bool showIssues, CancellationToken token)
+    public async Task SetupAsync(FileInfo? loadFrom, FileInfo cacheFile, bool showConnectionIssues, CancellationToken token)
     {
-        showConnectionIssues = showIssues;
+        this.showConnectionIssues = showConnectionIssues;
 
-        System.Diagnostics.Debug.Assert(cache != null);
-        CacheFile = cache;
+        System.Diagnostics.Debug.Assert(cacheFile != null);
+        CacheFile = cacheFile;
 
         if (loadFrom is null)
         {
@@ -574,17 +574,17 @@ public class LocalCache : MediaCache, ITVSource, IMovieSource
     }
 
     /// <exception cref="SourceConsistencyException">Episode's Series Id is not found.</exception>
-    public void AddOrUpdateEpisode(Episode e)
+    public void AddOrUpdateEpisode(Episode episode)
     {
         {
-            if (!Series.TryGetValue(e.SeriesId, out CachedSeriesInfo? ser))
+            if (!Series.TryGetValue(episode.SeriesId, out CachedSeriesInfo? ser))
             {
                 throw new SourceConsistencyException(
-                    $"Can't find the cachedSeries to add the episode to (TheTVDB). EpId:{e.EpisodeId} SeriesId:{e.SeriesId} {e.Name}",
+                    $"Can't find the cachedSeries to add the episode to (TheTVDB). EpId:{episode.EpisodeId} SeriesId:{episode.SeriesId} {episode.Name}",
                     TVDoc.ProviderType.TheTVDB);
             }
 
-            ser.AddEpisode(e);
+            ser.AddEpisode(episode);
         }
     }
 

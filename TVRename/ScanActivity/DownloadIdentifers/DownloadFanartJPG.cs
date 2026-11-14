@@ -14,10 +14,8 @@ namespace TVRename;
 
 internal class DownloadFanartJpg : DownloadIdentifier
 {
-    private static List<string> DoneFanartJpg = null!;
+    private List<string> doneFanartJpg = [];
     private const string DEFAULT_FILE_NAME = "fanart.jpg";
-
-    public DownloadFanartJpg() => Reset();
 
     public override DownloadType GetDownloadType() => DownloadType.downloadImage;
 
@@ -30,7 +28,7 @@ internal class DownloadFanartJpg : DownloadIdentifier
             FileInfo fi = FileHelper.FileInFolder(si.AutoAddFolderBase, DEFAULT_FILE_NAME);
 
             bool doesntExist = !fi.Exists;
-            if ((forceRefresh || doesntExist) && !DoneFanartJpg.Contains(fi.FullName))
+            if ((forceRefresh || doesntExist) && !doneFanartJpg.Contains(fi.FullName))
             {
                 string? bannerPath = si.CachedShow?.GetSeriesFanartPath();
 
@@ -39,7 +37,7 @@ internal class DownloadFanartJpg : DownloadIdentifier
                     theActionList.Add(new ActionDownloadTvShowImage(si, fi, bannerPath));
                 }
 
-                DoneFanartJpg.Add(fi.FullName);
+                doneFanartJpg.Add(fi.FullName);
             }
             return theActionList;
         }
@@ -57,7 +55,7 @@ internal class DownloadFanartJpg : DownloadIdentifier
                 FileInfo fi = FileHelper.FileInFolder(location, DEFAULT_FILE_NAME);
 
                 bool doesntExist = !fi.Exists;
-                if ((forceRefresh || doesntExist) && !DoneFanartJpg.Contains(fi.FullName))
+                if ((forceRefresh || doesntExist) && !doneFanartJpg.Contains(fi.FullName))
                 {
                     string? bannerPath = si.CachedMovie?.FanartUrl;
 
@@ -66,7 +64,7 @@ internal class DownloadFanartJpg : DownloadIdentifier
                         theActionList.Add(new ActionDownloadMovieImage(si, fi, bannerPath));
                     }
 
-                    DoneFanartJpg.Add(fi.FullName);
+                    doneFanartJpg.Add(fi.FullName);
                 }
             }
 
@@ -78,6 +76,6 @@ internal class DownloadFanartJpg : DownloadIdentifier
 
     public sealed override void Reset()
     {
-        DoneFanartJpg = [];
+        doneFanartJpg = [];
     }
 }

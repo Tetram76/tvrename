@@ -17,7 +17,7 @@ internal class uTorrent : IDownloadProvider
     private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
     /// <exception cref="NotSupportedException">Condition.</exception>
-    public async Task RemoveCompletedDownloadAsync(TorrentEntry name)
+    public async Task RemoveCompletedDownloadAsync(TorrentEntry torrent)
     {
         throw new NotSupportedException();
     }

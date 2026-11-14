@@ -20,9 +20,9 @@ internal class ActionDateTouchMovie : ActionDateTouchFile
         return o is ActionDateTouchMovie touch && touch.WhereFile == WhereFile;
     }
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ActionDateTouchMovie nfo)
+        if (other is not ActionDateTouchMovie nfo)
         {
             return -1;
         }

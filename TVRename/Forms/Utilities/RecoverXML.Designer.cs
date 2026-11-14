@@ -259,7 +259,6 @@ namespace TVRename
             this.label5.Size = new System.Drawing.Size(96, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "TMDB local cache";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             //
             // lbTMDB
             //

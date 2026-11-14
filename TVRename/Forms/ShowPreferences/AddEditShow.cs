@@ -840,10 +840,6 @@ public partial class AddEditShow : Form, ICodeWindow
         }
     }
 
-    private void txtSeasonFormat_TextChanged(object sender, EventArgs e)
-    {
-    }
-
     private void rdoProvider_CheckedChanged(object sender, EventArgs e)
     {
         HasChanged = true;

@@ -16,7 +16,7 @@ using TVRename.Forms.Tools;
 namespace TVRename;
 
 // ReSharper disable once InconsistentNaming
-public class TVDoc : IDisposable, IAsyncDisposable
+public class TVDoc
 {
     public enum ProviderType
     {
@@ -417,7 +417,7 @@ public class TVDoc : IDisposable, IAsyncDisposable
     {
         ForceRefreshIdentifiedMedia();
         List<ISeriesSpecifier> idsToDownload = [.. TvLibrary.Shows, .. FilmLibrary.Movies];
-        cacheManager.StartBackgroundDownloadAsync(false, idsToDownload, false, p, cts.Token);
+        cacheManager.StartBackgroundDownloadAsync(idsToDownload, false, p, cts.Token);
         await cacheManager.DownloadThreadAsync();
     }
 
@@ -871,7 +871,7 @@ public class TVDoc : IDisposable, IAsyncDisposable
 
             while (!Args.Hide && Environment.UserInteractive && (scanProgressDlg is null || !scanProgressDlg.Ready))
             {
-                await Task.Delay(10); // wait for thread to create the dialog
+                await Task.Delay(10, settings.Token); // wait for thread to create the dialog
             }
 
             SetProgressDelegate noProgress = NoProgress;
@@ -1684,32 +1684,6 @@ public class TVDoc : IDisposable, IAsyncDisposable
 
         await DoDownloadsBG(updateAction, cts);
         AllowAutoScan();
-    }
-
-    private async Task ReleaseUnmanagedResources()
-    {
-        await cacheManager.DownloadThreadAsync();
-    }
-
-
-    async ValueTask IAsyncDisposable.DisposeAsync()
-    {
-        await ReleaseUnmanagedResources();
-        await Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-    private async Task Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            cacheManager.Dispose();
-        }
-        Dispose();
-    }
-
-    public void Dispose()
-    {
-        GC.SuppressFinalize(this);
     }
 
     public void PreventAutoScan(string v)

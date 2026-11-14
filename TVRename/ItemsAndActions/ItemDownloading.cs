@@ -78,9 +78,9 @@ public class ItemDownloading : Item
 
     public override bool CheckedItem { get => false; set { } }
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        if (o is not ItemDownloading ut)
+        if (other is not ItemDownloading ut)
         {
             return -1;
         }

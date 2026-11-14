@@ -44,9 +44,9 @@ internal abstract class ActionDateTouchDirectory(DirectoryInfo dir, DateTime dat
     public override string? DestinationFile => whereDirectory.Name;
     public override string? TargetFolder => whereDirectory.Name;
 
-    public override int CompareTo(Item? o)
+    public override int CompareTo(Item? other)
     {
-        ActionDateTouchDirectory? nfo = o as ActionDateTouchDirectory;
+        ActionDateTouchDirectory? nfo = other as ActionDateTouchDirectory;
 
         if (nfo?.whereDirectory is null)
         {
