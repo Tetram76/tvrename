@@ -61,7 +61,7 @@ public class CacheUpdater
 
         Logger.Info("Doing downloads in the foreground...");
 
-        StartBackgroundDownloadAsync(shows, showMsgBox, null, cts.Token); //todo hook up progress dialog
+        StartBackgroundDownloadAsync(shows, showMsgBox, null, cts.Token);
 
         if (DownloadIsHappening() && showProgress) // downloading still going on, so time to show the dialog if we're not in /hide mode
         {
