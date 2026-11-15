@@ -2,7 +2,7 @@
 
 ## 2026-11-15
 
-* **Compte GitHub de l'agent** (décision de l'utilisateur) : l'agent agit sur GitHub sous son propre compte, `Tetram76-bot`, seul compte externe autorisé en écriture sur le dépôt, et non plus sous celui de l'utilisateur, qui recevait un courriel à chaque commentaire, revue, fusion et échec du CI de ses Pull Requests ; les commits restent ceux de l'utilisateur. Un hook `SessionStart` donne aux seules commandes de l'agent le jeton de son compte, et `git` demande ses identifiants GitHub à `gh` ; faute de jeton, les commandes GitHub de l'agent échouent (`gestion-projet/depot/repository.md`, `configuration-du-repository-github.md`, `integration-continue-ci.md`).
+* **Compte GitHub de l'agent** (décision de l'utilisateur) : l'agent agit sur GitHub sous son propre compte, `Tetram76-bot`, seul compte externe autorisé en écriture sur le dépôt, et non plus sous celui de l'utilisateur, qui recevait un courriel à chaque commentaire, revue, fusion et échec du CI de ses Pull Requests ; les commits restent ceux de l'utilisateur. Un hook `SessionStart` donne aux seules commandes de l'agent le jeton de son compte, et `git` demande ses identifiants GitHub à `gh` ; faute de jeton, les commandes GitHub de l'agent échouent (`gestion-projet/depot/repository.md`, `configuration-du-repository-github.md`, `integration-continue-ci.md`) (#37).
 
 ## 2026-11-14
 
